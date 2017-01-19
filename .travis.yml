@@ -3,7 +3,7 @@ rvm:
 - 2.3.1
 env:
 - DB=postgresql
-before_install:
+install:
 - gem uninstall bundler -x
 - gem install bundler -v "=1.10.6"
 script:
