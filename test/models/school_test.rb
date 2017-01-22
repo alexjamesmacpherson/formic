@@ -33,13 +33,19 @@ class SchoolTest < ActiveSupport::TestCase
     @school.phone_number = '+441928110011'
     assert @school.valid?
 
+    @school.phone_number = '+44 01928 110011'
+    assert @school.valid?
+
+    @school.phone_number = '01928 110011'
+    assert @school.valid?
+
     @school.phone_number = '+44 1928 110'
     assert_not @school.valid?
 
     @school.phone_number = '1928 110011'
     assert_not @school.valid?
 
-    @school.phone_number = '44 1928 110011'
+    @school.phone_number = '44 01928 110011'
     assert_not @school.valid?
   end
 

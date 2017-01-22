@@ -24,12 +24,12 @@ ActiveRecord::Schema.define(version: 20170122012538) do
   create_table "users", force: :cascade do |t|
     t.integer  "school_id"
     t.string   "email"
-    t.integer  "user_group"
+    t.integer  "user_group", default: 1
     t.string   "name"
     t.text     "bio"
     t.text     "address"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["school_id"], name: "index_users_on_school_id"
   end
