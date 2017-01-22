@@ -1,6 +1,10 @@
 class School < ApplicationRecord
   has_many :users, dependent: :destroy
 
+  # Remove whitespace
+  auto_strip_attributes :name, :address, :motto, :squish => true
+
+  # Record validation
   validates :name,
             presence: true,
             length: { maximum: 255 }

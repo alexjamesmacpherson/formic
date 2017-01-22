@@ -36,10 +36,11 @@ class SchoolsControllerTest < ActionDispatch::IntegrationTest
     get new_school_url
     assert_response :success
     assert_difference 'School.count', 1 do
-      post schools_path, params: { school: {name: 'Test School', address: '41 Test Close, UK', phone_number: '+44 1928 110011'} }
+      post schools_path, params: { school: {name: '   Test     School   ', address: '41 Test Close, UK', phone_number: '+44 1928 110011'} }
     end
     follow_redirect!
     assert_template 'schools/show'
+    # Also assert flash is rendered correctly and strings are trimmed and squished on save
     assert_select '.alert', 'Test School has been created successfully!'
   end
 
@@ -50,6 +51,7 @@ class SchoolsControllerTest < ActionDispatch::IntegrationTest
       post schools_path, params: { school: {name: '', address: '', phone_number: ''} }
     end
     assert_template 'schools/new'
+    # Also assert flash renders correctly
     assert_select '.alert', 'The form contains 4 errors.'
   end
 
@@ -59,6 +61,7 @@ class SchoolsControllerTest < ActionDispatch::IntegrationTest
     patch school_path(@school), params: { school: {name: 'Test School', address: '41 Test Close, UK', phone_number: '+44 1928 110011'} }
     follow_redirect!
     assert_template 'schools/show'
+    # Also assert flash renders correctly
     assert_select '.alert', 'Information for Test School has been updated successfully!'
   end
 
@@ -67,6 +70,7 @@ class SchoolsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     patch school_path(@school), params: { school: {name: '', address: '', phone_number: ''} }
     assert_template 'schools/edit'
+    # Also assert flash renders correctly
     assert_select '.alert', 'The form contains 4 errors.'
   end
 

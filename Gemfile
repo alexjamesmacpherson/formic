@@ -31,6 +31,8 @@ gem 'faker', '1.6.6'
 # Use Paginate to sort lists into manageable pages
 gem 'will_paginate', '3.1.0'
 gem 'bootstrap-will_paginate', '0.0.10'
+# Use AutoStripAttributes to remove trailing whitespace and squish excessive whitespace in records
+gem 'auto_strip_attributes', '~> 2.1'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
