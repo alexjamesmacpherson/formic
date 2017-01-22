@@ -1,7 +1,6 @@
 class SchoolsController < ApplicationController
   # Catch school record not found exception
   rescue_from ActiveRecord::RecordNotFound, :with => :school_not_found
-
   def school_not_found
     flash[:danger] = 'School not found.'
     redirect_to schools_url

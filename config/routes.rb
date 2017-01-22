@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get '/contact'  =>  'static#contact'
 
   resources :schools
+  resources :users
 end

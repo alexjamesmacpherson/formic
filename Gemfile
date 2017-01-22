@@ -50,6 +50,7 @@ end
 
 group :test do
   gem 'rake'
+  gem 'rails-controller-testing'
 end
 
 group :production do
