@@ -1,2 +1,5 @@
-<h1>Schools#edit</h1>
-<p>Find me in app/views/schools/edit.html.erb</p>
+<% provide(:title, "Edit - #{@school.name}") %>
+<h1>Edit - <%= @school.name %></h1>
+
+<% provide(:button_text, 'Save Settings') %>
+<%= render 'settings' %>

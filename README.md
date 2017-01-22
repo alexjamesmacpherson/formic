@@ -40,7 +40,7 @@ To run a server on Windows, use:
 A collection of unit tests has been provided to ensure all modules within the system function as intended. This can be run from the project root using:
 > rails test
 
-The output, assuming all test cases succeed, should look something like this, where *x* is the number of tests run and *y* is the number of successful assertions made by these tests:
+The output, assuming all test cases succeed, should look something like this, where *x* is the number of tests run and *y* is the number of assertions made by these tests:
 > *x* tests, *y* assertions, 0 failures, 0 errors, 0 skips
 
 If *failures* or *errors* exceed 0, an error is present within the system and should be re-cloned from the repository before running.

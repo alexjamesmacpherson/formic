@@ -1,2 +1,5 @@
-<h1>Schools#show</h1>
-<p>Find me in app/views/schools/show.html.erb</p>
+<% provide(:title, @school.name) %>
+<h1><%= @school.name %></h1>
+<h2><%= @school.motto %></h2>
+<h3><%= @school.address %></h3>
+<h3><%= @school.phone_number %></h3>
