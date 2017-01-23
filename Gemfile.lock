@@ -41,7 +41,7 @@ GEM
     arel (7.1.4)
     auto_strip_attributes (2.1.0)
       activerecord (>= 3.0)
-    autoprefixer-rails (6.6.1)
+    autoprefixer-rails (6.7.0)
       execjs
     bcrypt (3.1.11-x86-mingw32)
     bcrypt-ruby (3.1.5-x86-mingw32)
@@ -154,7 +154,7 @@ GEM
       activemodel (>= 5.0)
       debug_inspector
       railties (>= 5.0)
-    websocket-driver (0.6.4)
+    websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     will_paginate (3.1.0)
