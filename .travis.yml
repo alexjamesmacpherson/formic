@@ -10,6 +10,8 @@ install:
 script:
 - bundle exec rake db:migrate RAILS_ENV=test
 - bundle exec rake db:test:prepare
+- bundle exec rake db:migrate:status RAILS_ENV=test
+- bundle exec rake db:migrate:status
 - bundle exec rake
 before_script:
 - psql -c 'create database formic_test' -U postgres
