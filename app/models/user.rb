@@ -1,5 +1,9 @@
 class User < ApplicationRecord
   belongs_to :school
+  has_many :tutors, :class_name => 'Tutor', :foreign_key => 'tutor_id', dependent: :destroy
+  has_many :pupils, :class_name => 'Tutor', :foreign_key => 'pupil_id', dependent: :destroy
+  has_many :parents, :class_name => 'Parent', :foreign_key => 'parent_id', dependent: :destroy
+  has_many :children, :class_name => 'Parent', :foreign_key => 'child_id', dependent: :destroy
 
   # Remove whitespace
   auto_strip_attributes :email, :name, :address, :bio, :squish => true

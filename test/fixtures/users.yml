@@ -5,3 +5,19 @@ test_user:
   name: Timmy Tester
   bio: I love TDD!
   address: Test, Teston, Test Sussex, T35T
+
+test_parent:
+  school: test_college
+  email: parent@test.com
+  user_group: 2
+  name: Parent Tester
+  bio:
+  address: Test, Teston, Test Sussex, T35T
+
+test_teacher:
+  school: test_college
+  email: teacher@test.com
+  user_group: 3
+  name: Teacher Tester
+  bio:
+  address: Test, Teston, Test Sussex, T35T
