@@ -1,0 +1,17 @@
+<% provide(:title, 'Schools') %>
+<h1>All Schools</h1>
+
+<div class="pagination">
+  <%= will_paginate @schools, :container => false %>
+  <div class="center"><%= page_entries_info %></div>
+</div>
+
+<ul class="record-list">
+  <% @schools.each do |school| %>
+      <% all_users = User.all.where(school_id: school.id) %>
+      <li>
+        <%= link_to school.name, school %> |
+        Users: <%= all_users.count %>
+      </li>
+  <% end %>
+</ul>
