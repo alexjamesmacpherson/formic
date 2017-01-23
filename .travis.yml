@@ -9,6 +9,7 @@ install:
 - bundle install
 script:
 - RAILS_ENV=test bundle exec rake db:migrate --trace
+- bin/rails db:migrate RAILS_ENV=test
 - bundle exec rake db:test:prepare
 - bundle exec rake
 before_script:
