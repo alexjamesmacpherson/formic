@@ -42,6 +42,13 @@ class SchoolsController < ApplicationController
     end
   end
 
+  def destroy
+    @school = School.find(params[:id])
+    @school.destroy
+    flash[:info] = "#{@school.name} and all its associated records have been removed."
+    redirect_to schools_url
+  end
+
 private
 
   def school_params

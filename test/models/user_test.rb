@@ -2,8 +2,8 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = users(:test_user)
     @school = schools(:test_college)
+    @user = @school.users.build(email: 'james@test.com', user_group: 1, name: 'James Tester', bio: 'testing', address: 'Test, Teston, Test Sussex, T35T')
   end
 
   test 'user is valid' do
@@ -13,6 +13,13 @@ class UserTest < ActiveSupport::TestCase
   test 'user must belong to school' do
     @user.school = nil
     assert_not @user.valid?
+  end
+
+  test 'users school must exist' do
+    assert School.exists?(@user.school_id)
+
+    @user.school_id = 10
+    assert_not School.exists?(@user.school_id)
   end
 
   test 'user email exists and is well formed' do
