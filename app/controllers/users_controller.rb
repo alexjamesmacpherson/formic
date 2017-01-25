@@ -13,6 +13,15 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    case @user.user_group
+      when 1
+        @relations = get_parents(@user.id)
+        @tutor = get_tutor(@user.id)
+      when 2
+        @relations = get_children(@user.id)
+      when 3
+        @relations = get_tutees(@user.id)
+    end
   end
 
   def new
@@ -56,5 +65,42 @@ private
 
   def user_params
     params.require(:user).permit(:email, :user_group, :name, :address, :bio)
+  end
+
+  def get_parents(id)
+    parents = []
+    relations = Parent.where(child_id: id)
+    if relations
+      relations.each do |parent|
+        parents << User.find(parent.parent_id)
+      end
+    end
+    return parents
+  end
+
+  def get_children(id)
+    children = []
+    relations = Parent.where(parent_id: id)
+    if relations
+      relations.each do |child|
+        children << User.find(child.child_id)
+      end
+    end
+    return children
+  end
+
+  def get_tutor(id)
+    User.find_by(id: Tutor.find_by(pupil_id: id).tutor_id)
+  end
+
+  def get_tutees(id)
+    tutees = []
+    relations = Tutor.where(tutor_id: id)
+    if relations
+      relations.each do |pupil|
+        tutees << User.find(pupil.pupil_id)
+      end
+    end
+    return tutees
   end
 end
