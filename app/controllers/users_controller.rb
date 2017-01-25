@@ -90,7 +90,10 @@ private
   end
 
   def get_tutor(id)
-    User.find_by(id: Tutor.find_by(pupil_id: id).tutor_id)
+    tutor = Tutor.find_by(pupil_id: id)
+    if tutor
+      User.find_by(id: tutor.tutor_id)
+    end
   end
 
   def get_tutees(id)
