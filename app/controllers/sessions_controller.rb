@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :require_login
+
   def new
   end
 
@@ -8,7 +10,7 @@ class SessionsController < ApplicationController
       login @user
       params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
       flash[:info] = "Hi #{@user.name.split.first}, welcome back to Formic Learning!"
-      redirect_to @user
+      redirect_back_or @user
     else
       flash.now[:danger] = 'Invalid email/password.'
       render 'new'

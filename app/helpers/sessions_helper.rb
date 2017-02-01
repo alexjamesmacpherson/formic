@@ -27,6 +27,11 @@ module SessionsHelper
     end
   end
 
+  # Returns true if given user is current user
+  def current_user?(user)
+    user == current_user
+  end
+
   # Remember user in persistent session using cookies
   def remember(user)
     user.remember
@@ -39,5 +44,16 @@ module SessionsHelper
     user.forget
     cookies.delete(:user_id)
     cookies.delete(:remember_token)
+  end
+
+  # Redirects to stored location, if exists, else given
+  def redirect_back_or(location)
+    redirect_to(session[:forwarding_url] || location)
+    session.delete(:forwarding_url)
+  end
+
+  # Stores the URL being accessed for friendly forwarding
+  def store_location
+    session[:forwarding_url] = request.original_url if request.get?
   end
 end

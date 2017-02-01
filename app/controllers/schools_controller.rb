@@ -6,6 +6,11 @@ class SchoolsController < ApplicationController
     redirect_to root_url
   end
 
+  # Schools can only be edited by admin staff
+  before_action :require_admin_staff, only: [:edit, :update]
+  # Pages can only be accessed by users from the same school
+  before_action :require_same_school
+
   def show
     @school = School.find(params[:id])
   end
@@ -28,5 +33,11 @@ private
 
   def school_params
     params.require(:school).permit(:name, :address, :phone_number, :motto)
+  end
+
+  # Redirect to show user's school if trying to access another school
+  def require_same_school
+    @school = School.find(params[:id])
+    redirect_to school_url(current_user.school_id) unless current_user.school_id == @school.id
   end
 end

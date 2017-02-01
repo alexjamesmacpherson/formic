@@ -19,7 +19,13 @@
         <%= f.label :bio %>
         <%= f.text_field :bio, class: 'form-control', placeholder: 'Leave blank for no bio' %>
 
-        <%= f.submit 'Save Profile', class: 'btn btn-primary' %>
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+
+        <%= f.label :password_confirmation, 'Confirmation' %>
+        <%= f.password_field :password_confirmation %>
+
+        <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
     <% end %>
   </div>
 </div>

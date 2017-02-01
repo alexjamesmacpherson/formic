@@ -6,8 +6,15 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
+  # Ensure user is correct user before editing/updating any accounts
+  before_action :require_correct_user,  only: [:edit, :update]
+  # Users can only be added/removed by admin staff
+  before_action :require_admin_staff,   only: [:new, :create, :destroy]
+  # Users can only view and interact with other users from their school
+  before_action :require_same_school,   only: [:show, :edit, :update, :destroy]
+
   def index
-    @school = School.first # WILL BE SET TO CURRENT SCHOOL ONCE LOGIN IS COMPLETE
+    @school = School.find(current_user.school_id)
     @users = @school.users.paginate(page: params[:page], :per_page => 20)
   end
 
@@ -25,12 +32,12 @@ class UsersController < ApplicationController
   end
 
   def new
-    @school = School.first # WILL BE SET TO CURRENT SCHOOL ONCE LOGIN IS COMPLETE
+    @school = School.find(current_user.school_id)
     @user = @school.users.build
   end
 
   def create
-    @school = School.first # WILL BE SET TO CURRENT SCHOOL ONCE LOGIN IS COMPLETE
+    @school = School.find(current_user.school_id)
     @user = @school.users.build(new_user_params)
     if @user.save
       flash[:success] = "#{@user.name}'s account has been created successfully!"
@@ -69,6 +76,21 @@ private
 
   def new_user_params
     params.require(:user).permit(:email, :user_group, :name, :password, :password_confirmation)
+  end
+
+  # Can only edit/update your own records (admin staff can edit anyone's records)
+  def require_correct_user
+    @user = User.find(params[:id])
+    redirect_to root_url unless current_user?(@user) || current_user.user_group == 4
+  end
+
+  # Can only view/manipulate users within the same school
+  def require_same_school
+    @user = User.find(params[:id])
+    if @user.school_id != current_user.school_id
+      flash[:danger] = 'User not found.'
+      redirect_to users_url
+    end
   end
 
   def get_parents(id)

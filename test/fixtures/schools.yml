@@ -3,3 +3,9 @@ test_college:
   motto: Test The Things
   address: Test, Teston, Test Sussex, T35T
   phone_number: 19191 919191
+
+example_college:
+  name: Example College
+  motto: Example Motto!
+  address: EX4M P13
+  phone_number: 19191 919191

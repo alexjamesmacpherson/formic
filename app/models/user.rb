@@ -24,6 +24,7 @@ class User < ApplicationRecord
             length: { maximum: 255 },
             format: { with: VALID_EMAIL_REGEX },
             uniqueness: { case_sensitive: false }
+  # User group: 0: SU, 1: student, 2: parent, 3: teacher, 4: admin staff, 5: governor
   validates :user_group,
             presence: true,
             inclusion: 0..5
@@ -39,7 +40,8 @@ class User < ApplicationRecord
   has_secure_password
   validates :password,
             presence: true,
-            length: { minimum: 6 }
+            length: { minimum: 6 },
+            allow_nil: true
 
   # Methods defined here are of form User.foo()
   class << self
@@ -55,11 +57,13 @@ class User < ApplicationRecord
     end
   end
 
+  # Generate and set persistent session (remember) token
   def remember
     self.remember_token = User.new_token
     update_attribute(:remember_digest, User.digest(remember_token))
   end
 
+  # Forget persistent session (remember) token
   def forget
     update_attribute(:remember_digest, nil)
   end

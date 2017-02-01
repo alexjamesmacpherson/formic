@@ -12,7 +12,6 @@ test_parent:
   email: parent@test.com
   user_group: 2
   name: Parent Tester
-  bio:
   address: Test, Teston, Test Sussex, T35T
   password_digest: <%= User.digest('password') %>
 
@@ -21,6 +20,25 @@ test_teacher:
   email: teacher@test.com
   user_group: 3
   name: Teacher Tester
-  bio:
-  address:
+  password_digest: <%= User.digest('password') %>
+
+test_admin:
+  school: test_college
+  email: admin@test.com
+  user_group: 4
+  name: Admin Tester
+  password_digest: <%= User.digest('password') %>
+
+test_governor:
+  school: test_college
+  email: governor@test.com
+  user_group: 5
+  name: Governor Tester
+  password_digest: <%= User.digest('password') %>
+
+example_admin:
+  school: example_college
+  email: admin@example.com
+  user_group: 4
+  name: Other School Admin
   password_digest: <%= User.digest('password') %>
