@@ -5,6 +5,7 @@ test_user:
   name: Timmy Tester
   bio: I love TDD!
   address: Test, Teston, Test Sussex, T35T
+  password_digest: <%= User.digest('password') %>
 
 test_parent:
   school: test_college
@@ -13,6 +14,7 @@ test_parent:
   name: Parent Tester
   bio:
   address: Test, Teston, Test Sussex, T35T
+  password_digest: <%= User.digest('password') %>
 
 test_teacher:
   school: test_college
@@ -20,4 +22,5 @@ test_teacher:
   user_group: 3
   name: Teacher Tester
   bio:
-  address: Test, Teston, Test Sussex, T35T
+  address:
+  password_digest: <%= User.digest('password') %>

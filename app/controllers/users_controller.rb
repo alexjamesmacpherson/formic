@@ -31,7 +31,7 @@ class UsersController < ApplicationController
 
   def create
     @school = School.first # WILL BE SET TO CURRENT SCHOOL ONCE LOGIN IS COMPLETE
-    @user = @school.users.build(user_params)
+    @user = @school.users.build(new_user_params)
     if @user.save
       flash[:success] = "#{@user.name}'s account has been created successfully!"
       redirect_to @user
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
+    if @user.update_attributes(edit_user_params)
       flash[:success] = "#{@user.name}'s profile has been updated successfully!"
       redirect_to @user
     else
@@ -63,8 +63,12 @@ class UsersController < ApplicationController
 
 private
 
-  def user_params
-    params.require(:user).permit(:email, :user_group, :name, :address, :bio)
+  def edit_user_params
+    params.require(:user).permit(:email, :name, :address, :bio, :password, :password_confirmation)
+  end
+
+  def new_user_params
+    params.require(:user).permit(:email, :user_group, :name, :password, :password_confirmation)
   end
 
   def get_parents(id)

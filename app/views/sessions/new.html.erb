@@ -1,0 +1,19 @@
+<% provide(:title, 'Log In') %>
+<h1>Log In - Formic Learning</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(:session, url: login_path) do |f| %>
+
+        <%= f.label :email %>
+        <%= f.email_field :email, class: 'form-control' %>
+
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control' %>
+
+        <%= f.submit 'Log In', class: 'btn btn-primary' %>
+    <% end %>
+
+    <p>Not registered with Formic Learning? <%= link_to 'Find out how you could be!', features_path %></p>
+  </div>
+</div>

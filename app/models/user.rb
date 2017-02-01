@@ -8,6 +8,9 @@ class User < ApplicationRecord
   # Remove whitespace
   auto_strip_attributes :email, :name, :address, :bio, :squish => true
 
+  # Downcase email address before saving the user
+  before_save :downcase_email
+
   # Record validation
   validates :school,
             presence: true
@@ -23,7 +26,27 @@ class User < ApplicationRecord
             inclusion: 0..5
   validates :name,
             presence: true,
-            length: { minimum: 5, maximum: 255 }
+            length: { maximum: 255 }
   validates :address,
-            presence: true
+            presence: true,
+            allow_blank: true
+  validates :bio,
+            presence: true,
+            allow_blank: true
+  has_secure_password
+  validates :password,
+            presence: true,
+            length: { minimum: 6 }
+
+  # Returns hashed digest of given string, used by user fixtures for tests
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
+  end
+
+private
+
+  def downcase_email
+    email.downcase!
+  end
 end

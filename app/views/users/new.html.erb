@@ -13,11 +13,11 @@
         <%= f.label :email %>
         <%= f.text_field :email, class: 'form-control' %>
 
-        <%= f.label :address %>
-        <%= f.text_area :address, class: 'form-control' %>
+        <%= f.label :password %>
+        <%= f.password_field :password %>
 
-        <%= f.label :bio %>
-        <%= f.text_field :bio, class: 'form-control', placeholder: 'Leave blank for no bio' %>
+        <%= f.label :password_confirmation, 'Confirmation' %>
+        <%= f.password_field :password_confirmation %>
 
         <%= f.submit 'Create Account', class: 'btn btn-primary' %>
     <% end %>

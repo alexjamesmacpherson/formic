@@ -5,8 +5,8 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :email
       t.integer :user_group, default: 1
       t.string :name
-      t.text :bio
-      t.text :address
+      t.text :bio, default: ''
+      t.text :address, default: ''
 
       t.timestamps
     end

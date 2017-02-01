@@ -3,29 +3,11 @@ class SchoolsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, :with => :school_not_found
   def school_not_found
     flash[:danger] = 'School not found.'
-    redirect_to schools_url
-  end
-
-  def index
-    @schools = School.all.paginate(page: params[:page], :per_page => 20)
+    redirect_to root_url
   end
 
   def show
     @school = School.find(params[:id])
-  end
-
-  def new
-    @school = School.new
-  end
-
-  def create
-    @school = School.new(school_params)
-    if @school.save
-      flash[:success] = "#{@school.name} has been created successfully!"
-      redirect_to @school
-    else
-      render 'new'
-    end
   end
 
   def edit
@@ -40,13 +22,6 @@ class SchoolsController < ApplicationController
     else
       render 'edit'
     end
-  end
-
-  def destroy
-    @school = School.find(params[:id])
-    @school.destroy
-    flash[:info] = "#{@school.name} and all its associated records have been removed."
-    redirect_to schools_url
   end
 
 private

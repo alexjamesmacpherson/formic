@@ -29,22 +29,20 @@ class ParentTest < ActiveSupport::TestCase
   end
 
   test 'duplicate relations cannot exist' do
-    @relation.save
     @duplicate = @relation.dup
+    @relation.save
     assert_not @duplicate.save
     assert_not @duplicate.valid?
   end
 
   test 'relation parent must have correct user group' do
-    @parent.user_group = 1
-    @parent.save
+    @parent.update_attribute(:user_group, 1)
     assert_not @relation.valid?
     assert_not @relation.save
   end
 
   test 'relation child must have correct user group' do
-    @child.user_group = 2
-    @child.save
+    @child.update_attribute(:user_group, 2)
     assert_not @relation.valid?
     assert_not @relation.save
   end

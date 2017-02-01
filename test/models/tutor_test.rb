@@ -29,23 +29,21 @@ class TutorTest < ActiveSupport::TestCase
   end
 
   test 'duplicate relations cannot exist' do
-    @relation.save
     @duplicate = @relation.dup
+    @relation.save
     assert_not @duplicate.save
     assert_not @duplicate.valid?
   end
 
   test 'relation tutor must have correct user group' do
-    @tutor.user_group = 1
-    @tutor.save
+    @tutor.update_attribute(:user_group, 1)
     assert_not @relation.valid?
     assert_not @relation.save
   end
 
   test 'relation pupil must have correct user group' do
-    @pupil.user_group = 3
-    @pupil.save
+    @pupil.update_attribute(:user_group, 3)
     assert_not @relation.valid?
     assert_not @relation.save
-  end
+    end
 end
