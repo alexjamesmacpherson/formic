@@ -1,0 +1,7 @@
+Hi <%= @user.name %>!
+
+Welcome to Formic Learning!
+
+An account has just been created for you by <%= @school.name %>. Please navigate to the URL below to activate your account and get started!
+
+<%= edit_account_activation_url(@user.activation_token, email: @user.email) %>

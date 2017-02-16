@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170201155926) do
+ActiveRecord::Schema.define(version: 20170216155831) do
 
   create_table "parents", force: :cascade do |t|
     t.integer  "parent_id"
@@ -44,14 +44,17 @@ ActiveRecord::Schema.define(version: 20170201155926) do
   create_table "users", force: :cascade do |t|
     t.integer  "school_id"
     t.string   "email"
-    t.integer  "user_group",      default: 1
+    t.integer  "user_group",        default: 1
     t.string   "name"
-    t.text     "bio",             default: ""
-    t.text     "address",         default: ""
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.text     "bio",               default: ""
+    t.text     "address",           default: ""
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "password_digest"
     t.string   "remember_digest"
+    t.string   "activation_digest"
+    t.boolean  "activated",         default: false
+    t.datetime "activated_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["school_id"], name: "index_users_on_school_id"
   end

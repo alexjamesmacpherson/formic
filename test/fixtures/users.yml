@@ -6,6 +6,8 @@ test_user:
   bio: I love TDD!
   address: Test, Teston, Test Sussex, T35T
   password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 test_parent:
   school: test_college
@@ -14,6 +16,8 @@ test_parent:
   name: Parent Tester
   address: Test, Teston, Test Sussex, T35T
   password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 test_teacher:
   school: test_college
@@ -21,6 +25,8 @@ test_teacher:
   user_group: 3
   name: Teacher Tester
   password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 test_admin:
   school: test_college
@@ -28,6 +34,8 @@ test_admin:
   user_group: 4
   name: Admin Tester
   password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 test_governor:
   school: test_college
@@ -35,6 +43,8 @@ test_governor:
   user_group: 5
   name: Governor Tester
   password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 example_admin:
   school: example_college
@@ -42,3 +52,5 @@ example_admin:
   user_group: 4
   name: Other School Admin
   password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>

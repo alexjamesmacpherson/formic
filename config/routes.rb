@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   # Schools added/deleted programmatically rather than through system - hence can only be performed by system admin.
   resources :schools, only: [:show, :edit, :update]
   resources :users
+  resources :account_activations, only: [:edit]
 end

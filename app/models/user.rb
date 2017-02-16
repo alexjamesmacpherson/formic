@@ -6,13 +6,14 @@ class User < ApplicationRecord
   has_many :children, :class_name => 'Parent', :foreign_key => 'child_id', dependent: :destroy
 
   # Attribute accessors
-  attr_accessor :remember_token
+  attr_accessor :remember_token, :activation_token
 
   # Remove whitespace
   auto_strip_attributes :email, :name, :address, :bio, :squish => true
 
   # Downcase email address before saving the user
   before_save :downcase_email
+  before_create :create_activation_digest
 
   # Record validation
   validates :school,
@@ -69,14 +70,28 @@ class User < ApplicationRecord
   end
 
   # Checks remember digest against given remember token (from cookie), true if match, false otherwise (catches nil token case)
-  def authenticated?(remember_token)
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
+  end
+
+  def activate
+    update_columns(activated: true, activated_at: Time.zone.now)
+  end
+
+  def send_activation_email
+    UserMailer.account_activation(self).deliver_now
   end
 
 private
 
   def downcase_email
     email.downcase!
+  end
+
+  def create_activation_digest
+    self.activation_token = User.new_token
+    self.activation_digest = User.digest(activation_token)
   end
 end

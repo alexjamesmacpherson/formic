@@ -14,7 +14,7 @@ schools.times do
   address = Faker::Address.street_address.concat(Faker::Address.city)
   School.create!(name: Faker::Educator.secondary_school,
                  address: address,
-                 phone_number: "+44 #{rand(1000...9999)} #{rand(100000...999999)}",
+                 phone_number: "+44 #{rand(9999).to_s.rjust(4,'0')} #{rand(999999).to_s.rjust(6,'0')}",
                  motto: Faker::Lorem.sentence)
   print_flush("\e[0;32m.\e[0m")
 end
@@ -28,7 +28,11 @@ students.times do |n|
                user_group: 1,
                name: Faker::Name.name,
                address: address,
-               bio: Faker::Hacker.say_something_smart)
+               bio: Faker::Hacker.say_something_smart,
+               password: 'password',
+               password_confirmation: 'password',
+               activated: true,
+               activated_at: Time.zone.now)
   print_flush("\e[0;34m.\e[0m")
 end
 # Parents:
@@ -39,7 +43,11 @@ parents.times do |n|
                user_group: 2,
                name: Faker::Name.name,
                address: address,
-               bio: Faker::Company.catch_phrase)
+               bio: Faker::Company.catch_phrase,
+               password: 'password',
+               password_confirmation: 'password',
+               activated: true,
+               activated_at: Time.zone.now)
   print_flush("\e[0;35m.\e[0m")
 end
 # Teachers:
@@ -50,8 +58,27 @@ teachers.times do |n|
                user_group: 3,
                name: Faker::Name.name,
                address: address,
-               bio: Faker::Lorem.paragraph)
+               bio: Faker::Lorem.paragraph,
+               password: 'password',
+               password_confirmation: 'password',
+               activated: true,
+               activated_at: Time.zone.now)
   print_flush("\e[0;36m.\e[0m")
+end
+# Admin Staff:
+5.times do |n|
+  address = Faker::Address.street_address.concat(Faker::Address.city)
+  User.create!(school_id: n.to_i % schools.to_i + 1,
+               email: "admin-#{n}@test.com",
+               user_group: 4,
+               name: Faker::Name.name,
+               address: address,
+               bio: Faker::Lorem.paragraph,
+               password: 'password',
+               password_confirmation: 'password',
+               activated: true,
+               activated_at: Time.zone.now)
+  print_flush("\e[0;33m.\e[0m")
 end
 
 puts "\n\nSEEDING RELATIONS:"

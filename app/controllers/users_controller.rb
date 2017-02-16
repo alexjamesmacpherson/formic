@@ -15,11 +15,15 @@ class UsersController < ApplicationController
 
   def index
     @school = School.find(current_user.school_id)
-    @users = @school.users.paginate(page: params[:page], :per_page => 20)
+    @users = @school.users.where(activated: true).paginate(page: params[:page], :per_page => 20)
   end
 
   def show
     @user = User.find(params[:id])
+    unless @user.activated?
+      flash[:danger] = 'User not found.'
+      redirect_to users_url
+    end
     case @user.user_group
       when 1
         @relations = get_parents(@user.id)
@@ -28,6 +32,8 @@ class UsersController < ApplicationController
         @relations = get_children(@user.id)
       when 3
         @relations = get_tutees(@user.id)
+      else
+        @relations = nil
     end
   end
 
@@ -40,8 +46,9 @@ class UsersController < ApplicationController
     @school = School.find(current_user.school_id)
     @user = @school.users.build(new_user_params)
     if @user.save
-      flash[:success] = "#{@user.name}'s account has been created successfully!"
-      redirect_to @user
+      @user.send_activation_email
+      flash[:info] = "Account created: #{@user.name} has been sent an email to activate their account."
+      redirect_to new_user_url
     else
       render 'new'
     end
