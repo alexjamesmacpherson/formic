@@ -1,0 +1,15 @@
+<% provide(:title, 'Users') %>
+<h1>All Users</h1>
+
+<div class="pagination">
+  <%= will_paginate @users, :container => false %>
+  <div class="center"><%= page_entries_info %></div>
+</div>
+
+<ul class="record-list">
+  <% @users.each do |user| %>
+      <li>
+        <%= link_to user.name, user %>
+      </li>
+  <% end %>
+</ul>

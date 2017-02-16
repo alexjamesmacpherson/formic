@@ -11,7 +11,7 @@ The system was developed using the following, so support for previous versions c
 All further dependencies are managed by the system's Gemfile, detailed below.
 
 ## Live Build
-A live build with the latest stable version can be found on Heroku at [https://formic.herokuapp.com/](https://formic.herokuapp.com/ "View Live Build on Heroku")
+A live build with the latest stable version of the master branch can be found on Heroku at [https://formic.herokuapp.com/](https://formic.herokuapp.com/ "View Live Build on Heroku")
 
 ## Configuring the System
 If you wish to download and tinker with the most recent build, simply clone this repository. With this done, you must first ensure all system dependencies and required modules are installed and updated using:
@@ -22,6 +22,9 @@ If you wish to download and tinker with the most recent build, simply clone this
 
 You should then be able to run *bundle install* without issue. With dependencies handled, the database must then be initialised prior to running the system. This can be done from the project root using:
 > rails db:migrate
+
+To ensure the database has successfully been migrated, you can use the following to check all migrations are *'up':*
+> rails db:migrate:status
 
 Once migrated, the database can be optionally seeded with dummy data using:
 > rails db:seed
@@ -37,10 +40,16 @@ To run a server on Windows, use:
 > bin\rails server
 
 ## Running the Test Suite
-A collection of unit tests has been provided to ensure all modules within the system function as intended. This can be run from the project root using:
+A collection of unit tests has been provided to ensure all modules within the system function as intended. Before running the test suite, a *test-environment database* must be initialised from the project root with:
+> rails db:migrate RAILS_ENV=test
+
+As before, you can check all migrations within the database are *'up'* using:
+> rails db:migrate:status RAILS_ENV=test
+
+The test suite can now be run from the project root by typing:
 > rails test
 
-The output, assuming all test cases succeed, should look something like this, where *x* is the number of tests run and *y* is the number of successful assertions made by these tests:
+The output, assuming all test cases succeed, should look something like this, where *x* is the number of tests run and *y* is the number of assertions made by these tests:
 > *x* tests, *y* assertions, 0 failures, 0 errors, 0 skips
 
 If *failures* or *errors* exceed 0, an error is present within the system and should be re-cloned from the repository before running.

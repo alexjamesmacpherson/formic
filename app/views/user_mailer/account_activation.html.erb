@@ -1,0 +1,7 @@
+<p>Hi <%= @user.name %>!</p>
+
+<p>Welcome to Formic Learning!</p>
+
+<p>An account has just been created for you by <%= @school.name %>. Please click on the link below to get started!</p>
+
+<p><%= link_to 'Activate Your Account', edit_account_activation_url(@user.activation_token, email: @user.email) %></p>

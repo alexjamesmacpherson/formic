@@ -1,0 +1,145 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+@mixin box_sizing {
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+}
+
+body {
+  padding-top: 60px;
+  font-family: 'Rubik', sans-serif;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+#error_explanation {
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 30px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .has-error;
+  .form-control {
+    color: $state-danger-text;
+  }
+}
+
+.checkbox {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  span {
+    margin-left: 20px;
+    font-weight: normal;
+  }
+}
+
+#session_remember_me {
+  width: auto;
+  margin-left: 0;
+}
+
+.form-check-label {
+  margin-top: 0px;
+  span {
+    font-weight: bold;
+  }
+}
+
+.center {
+  text-align: center;
+
+  h1 {
+    margin-bottom: 10px;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
+h1, h2, h3 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
+h2, h3 {
+  font-size: 2.1em;
+  letter-spacing: -1.5px;
+  font-weight: normal;
+  color: $gray-light;
+}
+
+h3 {
+  font-size: 1.5em;
+  letter-spacing: -1px;
+}
+
+.jumbotron h1{
+  font-family: 'Bree Serif', serif;
+  font-weight: normal;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+  word-wrap: break-word;
+}
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}
+
+.alert {
+  cursor: default;
+  text-align: center;
+}
+
+.record-list {
+  list-style: none;
+  margin: 0;
+
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-bottom: 1px solid $gray-lighter;
+    color: #999;
+  }
+}
+
+.pagination .center {
+  color: $gray-light;
+  font-size: 0.9em;
+}
+
+.pagination a {
+  margin-bottom: 5px;
+}
