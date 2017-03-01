@@ -8,6 +8,7 @@ schools = 5 #25
 students = 50 #325
 parents = 10 #50
 teachers = 10 #75
+year_groups = 2 # per school
 
 puts "\e[0m\nSEEDING SCHOOLS:"
 schools.times do
@@ -19,19 +20,29 @@ schools.times do
   print_flush("\e[0;32m.\e[0m")
 end
 
+puts "\n\nSEEDING YEAR GROUPS:"
+years = schools * year_groups
+years.times do |n|
+  YearGroup.create!(school_id: n.to_i % schools.to_i + 1,
+                    name: "Year #{(n%2 + 10)}")
+  print_flush("\e[1;49;31m.\e[0m")
+end
+
 puts "\n\nSEEDING USERS:"
 # Students:
 students.times do |n|
-  User.create!(school_id: rand(1...schools),
+  school = rand(1...schools)
+  User.create!(school_id: school,
                email: "student-#{n}@test.com",
                group: 1,
                name: Faker::Name.name,
                bio: Faker::Hacker.say_something_smart,
+               year_group: YearGroup.all.where(school_id: school)[n%2],
                password: 'password',
                password_confirmation: 'password',
                activated: true,
                activated_at: Time.zone.now)
-  print_flush("\e[1;49m.\e[0m")
+  print_flush("\e[1;49;34m.\e[0m")
 end
 # Parents:
 parents.times do |n|

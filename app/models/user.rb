@@ -1,10 +1,19 @@
 class User < ApplicationRecord
   belongs_to :school
+  belongs_to :year_group
   has_many :tutors, :class_name => 'Tutor', :foreign_key => 'tutor_id', dependent: :destroy
   has_many :pupils, :class_name => 'Tutor', :foreign_key => 'pupil_id', dependent: :destroy
+
   has_many :parents, :class_name => 'Parent', :foreign_key => 'parent_id', dependent: :destroy
   has_many :children, :class_name => 'Parent', :foreign_key => 'child_id', dependent: :destroy
-  has_many :departments, :class_name => 'Department', :foreign_key => 'head_id', dependent: :nullify
+
+  has_many :departments, :foreign_key => 'head_id', dependent: :nullify
+
+  has_many :pupils, :class_name => 'Study', :foreign_key => 'pupil_id', dependent: :destroy
+  has_many :subjects, through: :studies
+
+  has_many :teachers, :class_name => 'Teach', :foreign_key => 'teacher_id', dependent: :destroy
+  has_many :subjects, through: :teaches
 
   # Attribute accessors
   attr_accessor :remember_token, :activation_token, :reset_token
@@ -43,8 +52,12 @@ class User < ApplicationRecord
             presence: true,
             length: { minimum: 6 },
             allow_nil: true
-  # Validate user cannot be added to a non-existent school
+  validates :year_group,
+            presence: true,
+            if: :is_student?
+  # Validate user cannot be added to a non-existent school or year group
   validate :school_exists
+  validate :year_group_exists
 
   # Methods defined here are of form User.foo()
   class << self
@@ -125,5 +138,15 @@ private
     if school_id && !School.exists?(school_id)
       errors.add(:school, 'must exist')
     end
+  end
+
+  def year_group_exists
+    if year_group_id && !YearGroup.exists?(year_group_id)
+      errors.add(:year_group, 'must exist')
+    end
+  end
+
+  def is_student?
+    is?(:group, 1)
   end
 end

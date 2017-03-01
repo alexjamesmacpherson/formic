@@ -4,6 +4,9 @@ class DepartmentTest < ActiveSupport::TestCase
   def setup
     @school = schools(:test_college)
     @head = users(:test_teacher)
+    @head.year_group = year_groups(:test_year)
+    @head.save
+
     @dept = @school.departments.build(name: 'Science Department')
   end
 
@@ -61,5 +64,8 @@ class DepartmentTest < ActiveSupport::TestCase
       @dept.name = invalid
       assert_not @dept.valid?, "#{invalid.inspect} should not be a valid name"
     end
+
+    @dept.name = 'a' * 50
+    assert @dept.valid?
   end
 end

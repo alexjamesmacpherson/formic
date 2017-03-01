@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301163245) do
+ActiveRecord::Schema.define(version: 20170301203758) do
 
   create_table "departments", force: :cascade do |t|
     t.integer  "school_id"
@@ -41,6 +41,38 @@ ActiveRecord::Schema.define(version: 20170301163245) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "studies", force: :cascade do |t|
+    t.integer  "subject_id"
+    t.integer  "pupil_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "target",     default: ""
+    t.string   "expected",   default: ""
+    t.index ["pupil_id"], name: "index_studies_on_pupil_id"
+    t.index ["subject_id", "pupil_id"], name: "index_studies_on_subject_id_and_pupil_id", unique: true
+    t.index ["subject_id"], name: "index_studies_on_subject_id"
+  end
+
+  create_table "subjects", force: :cascade do |t|
+    t.integer  "department_id"
+    t.string   "name"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "year_group_id"
+    t.index ["department_id"], name: "index_subjects_on_department_id"
+    t.index ["year_group_id"], name: "index_subjects_on_year_group_id"
+  end
+
+  create_table "teaches", force: :cascade do |t|
+    t.integer  "subject_id"
+    t.integer  "teacher_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subject_id", "teacher_id"], name: "index_teaches_on_subject_id_and_teacher_id", unique: true
+    t.index ["subject_id"], name: "index_teaches_on_subject_id"
+    t.index ["teacher_id"], name: "index_teaches_on_teacher_id"
+  end
+
   create_table "tutors", force: :cascade do |t|
     t.integer  "tutor_id"
     t.integer  "pupil_id"
@@ -66,8 +98,18 @@ ActiveRecord::Schema.define(version: 20170301163245) do
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
+    t.integer  "year_group_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["school_id"], name: "index_users_on_school_id"
+    t.index ["year_group_id"], name: "index_users_on_year_group_id"
+  end
+
+  create_table "year_groups", force: :cascade do |t|
+    t.integer  "school_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_year_groups_on_school_id"
   end
 
 end
