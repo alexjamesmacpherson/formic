@@ -9,10 +9,10 @@ class User < ApplicationRecord
 
   has_many :departments, :foreign_key => 'head_id', dependent: :nullify
 
-  has_many :pupils, :class_name => 'Study', :foreign_key => 'pupil_id', dependent: :destroy
+  has_many :studies, :foreign_key => 'pupil_id', dependent: :destroy
   has_many :subjects, through: :studies
 
-  has_many :teachers, :class_name => 'Teach', :foreign_key => 'teacher_id', dependent: :destroy
+  has_many :teaches, :foreign_key => 'teacher_id', dependent: :destroy
   has_many :subjects, through: :teaches
 
   # Attribute accessors
