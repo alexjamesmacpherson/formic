@@ -61,5 +61,8 @@ class DepartmentTest < ActiveSupport::TestCase
       @dept.name = invalid
       assert_not @dept.valid?, "#{invalid.inspect} should not be a valid name"
     end
+
+    @dept.name = 'a' * 50
+    assert @dept.valid?
   end
 end

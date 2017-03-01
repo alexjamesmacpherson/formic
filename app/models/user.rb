@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :pupils, :class_name => 'Tutor', :foreign_key => 'pupil_id', dependent: :destroy
   has_many :parents, :class_name => 'Parent', :foreign_key => 'parent_id', dependent: :destroy
   has_many :children, :class_name => 'Parent', :foreign_key => 'child_id', dependent: :destroy
-  has_many :departments, :class_name => 'Department', :foreign_key => 'head_id', dependent: :nullify
+  has_many :departments, :foreign_key => 'head_id', dependent: :nullify
 
   # Attribute accessors
   attr_accessor :remember_token, :activation_token, :reset_token

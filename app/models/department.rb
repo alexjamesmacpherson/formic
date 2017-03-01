@@ -1,6 +1,7 @@
 class Department < ApplicationRecord
   belongs_to :school
   belongs_to :head, :class_name => 'User'
+  has_many :subjects, dependent: :destroy
 
   # Remove whitespace
   auto_strip_attributes :name, :squish => true
