@@ -17,9 +17,10 @@ class UserTest < ActiveSupport::TestCase
 
   test 'users school must exist' do
     assert School.exists?(@user.school_id)
+    assert_not School.exists?(10)
 
     @user.school_id = 10
-    assert_not School.exists?(@user.school_id)
+    assert_not @user.valid?
   end
 
   test 'user email exists and is well formed' do

@@ -88,13 +88,13 @@ private
   # Can only edit/update your own records (admin staff can edit anyone's records)
   def require_correct_user
     @user = User.find(params[:id])
-    redirect_to root_url unless current_user?(@user) || current_user.group?(4)
+    redirect_to root_url unless current_user?(@user) || current_user.is?(:group, 4)
   end
 
   # Can only view/manipulate users within the same school
   def require_same_school
     @user = User.find(params[:id])
-    if @user.school_id != current_user.school_id
+    unless @user.is?(:school_id, current_user.school_id)
       flash[:danger] = 'User not found.'
       redirect_to users_url
     end
@@ -108,7 +108,7 @@ private
         parents << User.find(parent.parent_id)
       end
     end
-    return parents
+    parents
   end
 
   def get_children(id)
@@ -119,7 +119,7 @@ private
         children << User.find(child.child_id)
       end
     end
-    return children
+    children
   end
 
   def get_tutor(id)
@@ -137,6 +137,6 @@ private
         tutees << User.find(pupil.pupil_id)
       end
     end
-    return tutees
+    tutees
   end
 end
