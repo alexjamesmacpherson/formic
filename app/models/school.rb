@@ -5,6 +5,9 @@ class School < ApplicationRecord
   auto_strip_attributes :name, :motto, :phone, :squish => true
   auto_strip_attributes :address, :convert_non_breaking_spaces => true
 
+  # Cleanse address to add commas to ends of line if they don't already exist
+  before_save :cleanse_address
+
   # Record validation
   validates :name,
             presence: true,
@@ -19,4 +22,24 @@ class School < ApplicationRecord
             format: { with: VALID_PHONE_NUMBER_REGEX }
   validates :motto,
             length: { maximum: 255 }
+
+private
+
+  def cleanse_address
+    if address
+      addr = ''
+      address.each_line do |line|
+        unless line.blank?
+          line.gsub!(/(^[ ]+)|([ ]+$)/, '')
+          line.gsub!(/([ ]*\r$)/, "\r")
+          if /,\r$/.match(line)
+            addr += line.gsub(/(^[ ]+)|([ ]+$)/, '').gsub(/([ ]*,\r$)/, ",\r")
+          else
+            addr += line.gsub(/(^[ ]+)/, '').gsub(/[ ]*\r/, ",\r")
+          end
+        end
+      end
+      self.address = addr
+    end
+  end
 end

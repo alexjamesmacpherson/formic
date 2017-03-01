@@ -12,8 +12,9 @@ class User < ApplicationRecord
   auto_strip_attributes :email, :name, :squish => true
   auto_strip_attributes :bio, :convert_non_breaking_spaces => true
 
-  # Downcase email address before saving the user
+  # Record cleansing before saving/creation
   before_save :downcase_email
+  before_save :titlize_name
   before_create :create_activation_digest
 
   # Record validation
@@ -95,14 +96,21 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
+  # Assert whether the user's group is equal to the given group
   def group?(number)
     group == number
   end
 
 private
 
+  # Downcase email address before saving the user
   def downcase_email
     email.downcase!
+  end
+
+  # Titlize name before saving the user
+  def titlize_name
+    self.name = name.titleize
   end
 
   def create_activation_digest
