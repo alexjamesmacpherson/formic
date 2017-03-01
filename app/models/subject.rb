@@ -2,6 +2,12 @@ class Subject < ApplicationRecord
   belongs_to :department
   belongs_to :year_group
 
+  has_many :studies, dependent: :destroy
+  has_many :pupils, through: :studies
+
+  has_many :teaches, dependent: :destroy
+  has_many :teachers, through: :teaches
+
   # Remove whitespace
   auto_strip_attributes :name, :squish => true
 
