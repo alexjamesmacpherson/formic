@@ -56,4 +56,32 @@ class StudyTest < ActiveSupport::TestCase
     @relation.pupil_id = 10
     assert_not @relation.valid?
   end
+
+  test 'expected grade can be blank but cannot exceed 255 chars' do
+    valid_grades = ['', 'a', 'a' * 255]
+    valid_grades.each do |valid|
+      @relation.expected = valid
+      assert @relation.valid?, "#{valid.inspect} should be a valid expected grade"
+    end
+
+    invalid_grades = ['a' * 256, 'a' * 1000]
+    invalid_grades.each do |invalid|
+      @relation.expected = invalid
+      assert_not @relation.valid?, "#{invalid.inspect} should not be a valid expected grade"
+    end
+  end
+
+  test 'target grade can be blank but cannot exceed 255 chars' do
+    valid_grades = ['', 'a', 'a' * 255]
+    valid_grades.each do |valid|
+      @relation.target = valid
+      assert @relation.valid?, "#{valid.inspect} should be a valid target grade"
+    end
+
+    invalid_grades = ['a' * 256, 'a' * 1000]
+    invalid_grades.each do |invalid|
+      @relation.target = invalid
+      assert_not @relation.valid?, "#{invalid.inspect} should not be a valid target grade"
+    end
+  end
 end

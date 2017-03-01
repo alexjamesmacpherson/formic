@@ -8,6 +8,14 @@ class Study < ApplicationRecord
             uniqueness: { scope: :pupil }
   validates :pupil,
             presence: true
+  validates :target,
+            presence: true,
+            allow_blank: true,
+            length: { maximum: 255 }
+  validates :expected,
+            presence: true,
+            allow_blank: true,
+            length: { maximum: 255 }
   # Validate both users actually exist
   validate :subject_exists
   validate :pupil_exists
