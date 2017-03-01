@@ -20,7 +20,7 @@ class SchoolsControllerTest < ActionDispatch::IntegrationTest
 
     get edit_school_path(@school)
     assert_response :success
-    patch school_path(@school), params: { school: {name: 'Test School', address: '41 Test Close, UK', phone_number: '+44 1928 110011'} }
+    patch school_path(@school), params: { school: {name: 'Test School', address: '41 Test Close, UK', phone: '+44 1928 110011'} }
     assert_redirected_to @school
     follow_and_assert(true, 'schools/show', 'Information for Test School has been updated successfully!')
   end
@@ -30,7 +30,7 @@ class SchoolsControllerTest < ActionDispatch::IntegrationTest
 
     get edit_school_path(@school)
     assert_response :success
-    patch school_path(@school), params: { school: {name: '', address: '', phone_number: ''} }
+    patch school_path(@school), params: { school: {name: '', address: '', phone: ''} }
     follow_and_assert(false, 'schools/edit', 'The form contains 4 errors.')
   end
 

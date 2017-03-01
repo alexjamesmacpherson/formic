@@ -13,17 +13,14 @@
         <%= f.label :email %>
         <%= f.text_field :email, class: 'form-control' %>
 
-        <%= f.label :address %>
-        <%= f.text_area :address, class: 'form-control' %>
-
         <%= f.label :bio %>
-        <%= f.text_field :bio, class: 'form-control', placeholder: 'Leave blank for no bio' %>
+        <%= f.text_area :bio, rows: '4', class: 'form-control', placeholder: 'Leave blank for no bio' %>
 
         <%= f.label :password %>
-        <%= f.password_field :password %>
+        <%= f.password_field :password, class: 'form-control' %>
 
         <%= f.label :password_confirmation, 'Confirmation' %>
-        <%= f.password_field :password_confirmation %>
+        <%= f.password_field :password_confirmation, class: 'form-control' %>
 
         <%= f.submit 'Save Changes', class: 'btn btn-primary' %>
     <% end %>

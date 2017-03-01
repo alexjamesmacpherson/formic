@@ -36,13 +36,13 @@ class TutorTest < ActiveSupport::TestCase
   end
 
   test 'relation tutor must have correct user group' do
-    @tutor.update_attribute(:user_group, 1)
+    @tutor.update_attribute(:group, 1)
     assert_not @relation.valid?
     assert_not @relation.save
   end
 
   test 'relation pupil must have correct user group' do
-    @pupil.update_attribute(:user_group, 3)
+    @pupil.update_attribute(:group, 3)
     assert_not @relation.valid?
     assert_not @relation.save
     end

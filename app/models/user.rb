@@ -9,7 +9,8 @@ class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
 
   # Remove whitespace
-  auto_strip_attributes :email, :name, :address, :bio, :squish => true
+  auto_strip_attributes :email, :name, :squish => true
+  auto_strip_attributes :bio, :convert_non_breaking_spaces => true
 
   # Downcase email address before saving the user
   before_save :downcase_email
@@ -26,15 +27,12 @@ class User < ApplicationRecord
             format: { with: VALID_EMAIL_REGEX },
             uniqueness: { case_sensitive: false }
   # User group: 0: SU, 1: student, 2: parent, 3: teacher, 4: admin staff, 5: governor
-  validates :user_group,
+  validates :group,
             presence: true,
             inclusion: 0..5
   validates :name,
             presence: true,
             length: { maximum: 255 }
-  validates :address,
-            presence: true,
-            allow_blank: true
   validates :bio,
             presence: true,
             allow_blank: true
@@ -95,6 +93,10 @@ class User < ApplicationRecord
 
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+
+  def group?(number)
+    group == number
   end
 
 private

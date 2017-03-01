@@ -14,9 +14,9 @@ class Tutor < ApplicationRecord
 private
 
   def correct_user_group
-    if self.tutor_id != nil && User.find(self.tutor_id).user_group != 3
+    if tutor_id && !User.find(tutor_id).group?(3)
       errors.add(:tutor, 'must have correct user group')
-    elsif self.pupil_id != nil && User.find(self.pupil_id).user_group != 1
+    elsif pupil_id && !User.find(pupil_id).group?(1)
       errors.add(:pupil, 'must have correct user group')
     end
   end

@@ -3,10 +3,9 @@ class CreateUsers < ActiveRecord::Migration[5.0]
     create_table :users do |t|
       t.references :school, foreign_key: true
       t.string :email
-      t.integer :user_group, default: 1
+      t.integer :group, default: 1
       t.string :name
       t.text :bio, default: ''
-      t.text :address, default: ''
 
       t.timestamps
     end

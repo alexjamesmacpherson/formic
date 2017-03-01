@@ -14,9 +14,9 @@ class Parent < ApplicationRecord
 private
 
   def correct_user_group
-    if self.parent_id != nil && User.find(self.parent_id).user_group != 2
+    if parent_id && !User.find(parent_id).group?(2)
       errors.add(:parent, 'must have correct user group')
-    elsif self.child_id != nil && User.find(self.child_id).user_group != 1
+    elsif child_id && !User.find(child_id).group?(1)
       errors.add(:child, 'must have correct user group')
     end
   end

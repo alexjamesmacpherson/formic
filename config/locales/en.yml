@@ -20,4 +20,17 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      school:
+        one: School
+        other: Schools
+        name: 'School Name'
+        phone: 'Phone Number'
+        motto: 'School Motto'
+      user:
+        one: User
+        other: Users
+        email: 'Email Address'
+        group: 'User Group'
+        bio: 'Personal Bio'
