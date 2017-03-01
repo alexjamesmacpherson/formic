@@ -3,7 +3,8 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
   def setup
     @school = schools(:test_college)
-    @user = @school.users.build(email: 'james@test.com', name: 'James Tester', password: 'foobar', password_confirmation: 'foobar')
+    @year = year_groups(:test_year)
+    @user = @school.users.build(email: 'james@test.com', name: 'James Tester', password: 'foobar', password_confirmation: 'foobar', year_group: @year)
   end
 
   test 'user is valid' do
@@ -101,5 +102,27 @@ class UserTest < ActiveSupport::TestCase
 
   test 'authenticated? should return false for user with nil digest' do
     assert_not @user.authenticated?(:remember, '')
+  end
+
+  test 'year group only required if user is student' do
+    (0..5).each do |n|
+      @user.group = n
+
+      @user.year_group = @year
+      assert @user.valid?
+
+      @user.year_group = nil
+      if n == 1
+        assert_not @user.valid?
+      else
+        assert @user.valid?
+      end
+    end
+  end
+
+  test 'user cannot belong to non-existent year group' do
+    assert_not YearGroup.exists?(10)
+    @user.year_group_id = 10
+    assert_not @user.valid?
   end
 end

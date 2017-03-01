@@ -1,5 +1,6 @@
 class Subject < ApplicationRecord
   belongs_to :department
+  belongs_to :year_group
 
   # Remove whitespace
   auto_strip_attributes :name, :squish => true
@@ -10,14 +11,21 @@ class Subject < ApplicationRecord
   validates :name,
             presence: true,
             length: { maximum: 255 }
-  # Validate subject cannot be added to a non-existent department
+  # Validate subject cannot be added to a non-existent department or year group
   validate :department_exists
+  validate :year_group_exists
 
 private
 
   def department_exists
     if department_id && !Department.exists?(department_id)
       errors.add(:department, 'must exist')
+    end
+  end
+
+  def year_group_exists
+    if year_group_id && !YearGroup.exists?(year_group_id)
+      errors.add(:year_group, 'must exist')
     end
   end
 end

@@ -2,9 +2,8 @@ require 'test_helper'
 
 class SubjectTest < ActiveSupport::TestCase
   def setup
-    @school = schools(:test_college)
-    @dept = @school.departments.build(name: 'Science Department')
-    @dept.save
+    @dept = departments(:test_department)
+    @year = year_groups(:test_year)
 
     @subject = @dept.subjects.build(name: 'Science-1')
   end
@@ -35,5 +34,19 @@ class SubjectTest < ActiveSupport::TestCase
 
     @subject.name = 'a' * 50
     assert @subject.valid?
+  end
+
+  test 'subject year group is not required' do
+    @subject.year_group = nil
+    assert @subject.valid?
+
+    @subject.year_group = @year
+    assert @subject.valid?
+  end
+
+  test 'subject cannot belong to non-existent year group' do
+    assert_not YearGroup.exists?(10)
+    @subject.year_group_id = 10
+    assert_not @subject.valid?
   end
 end

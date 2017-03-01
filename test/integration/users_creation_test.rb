@@ -4,6 +4,7 @@ class UsersCreationTest < ActionDispatch::IntegrationTest
   def setup
     @admin = users(:test_admin)
     @user = users(:test_user)
+    @year = year_groups(:test_year)
     ActionMailer::Base.deliveries.clear
   end
 
@@ -13,7 +14,7 @@ class UsersCreationTest < ActionDispatch::IntegrationTest
     get new_user_path
     assert_response :success
     assert_difference 'User.count', 1 do
-      post users_path, params: { user: { email: 'john@test.com', name: 'John Tester', password: 'foobar', password_confirmation: 'foobar' } }
+      post users_path, params: { user: { email: 'john@test.com', name: 'John Tester', password: 'foobar', password_confirmation: 'foobar', year_group_id: @year.id } }
     end
     new_user = assigns(:user)
     follow_and_assert(true, 'users/new', 'Account created: John Tester has been sent an email to activate their account.')
@@ -56,7 +57,7 @@ class UsersCreationTest < ActionDispatch::IntegrationTest
     get new_user_path
     assert_response :success
     assert_no_difference 'User.count' do
-      post users_path, params: { user: { email: 'test@test.com', name: '', password: 'foo', password_confirmation: 'bar' } }
+      post users_path, params: { user: { email: 'test@test.com', name: '', password: 'foo', password_confirmation: 'bar', year_group_id: @year.id } }
     end
     follow_and_assert(false, 'users/new', 'The form contains 4 errors.')
   end

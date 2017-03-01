@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301181017) do
+ActiveRecord::Schema.define(version: 20170301182929) do
 
   create_table "departments", force: :cascade do |t|
     t.integer  "school_id"
@@ -46,7 +46,9 @@ ActiveRecord::Schema.define(version: 20170301181017) do
     t.string   "name"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "year_group_id"
     t.index ["department_id"], name: "index_subjects_on_department_id"
+    t.index ["year_group_id"], name: "index_subjects_on_year_group_id"
   end
 
   create_table "tutors", force: :cascade do |t|
@@ -74,8 +76,18 @@ ActiveRecord::Schema.define(version: 20170301181017) do
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
+    t.integer  "year_group_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["school_id"], name: "index_users_on_school_id"
+    t.index ["year_group_id"], name: "index_users_on_year_group_id"
+  end
+
+  create_table "year_groups", force: :cascade do |t|
+    t.integer  "school_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_year_groups_on_school_id"
   end
 
 end
