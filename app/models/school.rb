@@ -1,5 +1,6 @@
 class School < ApplicationRecord
   has_many :users, dependent: :destroy
+  has_many :departments, dependent: :destroy
 
   # Remove whitespace
   auto_strip_attributes :name, :motto, :phone, :squish => true

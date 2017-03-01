@@ -16,6 +16,6 @@ class ApplicationController < ActionController::Base
 
   # Can only access page if user is admin staff
   def require_admin_staff
-    redirect_to root_url unless current_user.group?(4)
+    redirect_to root_url unless current_user.is?(:group, 4)
   end
 end

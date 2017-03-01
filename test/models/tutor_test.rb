@@ -46,4 +46,20 @@ class TutorTest < ActiveSupport::TestCase
     assert_not @relation.valid?
     assert_not @relation.save
     end
+
+  test 'relation cannot have non-existent tutor' do
+    assert User.exists?(@relation.tutor_id)
+    assert_not User.exists?(10)
+
+    @relation.tutor_id = 10
+    assert_not @relation.valid?
+  end
+
+  test 'relation cannot have non-existent pupil' do
+    assert User.exists?(@relation.pupil_id)
+    assert_not User.exists?(10)
+
+    @relation.pupil_id = 10
+    assert_not @relation.valid?
+  end
 end

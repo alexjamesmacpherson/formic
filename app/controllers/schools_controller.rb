@@ -38,6 +38,6 @@ private
   # Redirect to show user's school if trying to access another school
   def require_same_school
     @school = School.find(params[:id])
-    redirect_to school_url(current_user.school_id) unless current_user.school_id == @school.id
+    redirect_to school_url(current_user.school_id) unless current_user.is?(:school, @school)
   end
 end

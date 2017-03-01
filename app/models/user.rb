@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :pupils, :class_name => 'Tutor', :foreign_key => 'pupil_id', dependent: :destroy
   has_many :parents, :class_name => 'Parent', :foreign_key => 'parent_id', dependent: :destroy
   has_many :children, :class_name => 'Parent', :foreign_key => 'child_id', dependent: :destroy
+  has_many :departments, :class_name => 'Department', :foreign_key => 'head_id', dependent: :nullify
 
   # Attribute accessors
   attr_accessor :remember_token, :activation_token, :reset_token
@@ -42,6 +43,8 @@ class User < ApplicationRecord
             presence: true,
             length: { minimum: 6 },
             allow_nil: true
+  # Validate user cannot be added to a non-existent school
+  validate :school_exists
 
   # Methods defined here are of form User.foo()
   class << self
@@ -96,9 +99,9 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  # Assert whether the user's group is equal to the given group
-  def group?(number)
-    group == number
+  # Generic equality method for any user attribute
+  def is?(attribute, value)
+    send(attribute) == value
   end
 
 private
@@ -116,5 +119,11 @@ private
   def create_activation_digest
     self.activation_token = User.new_token
     self.activation_digest = User.digest(activation_token)
+  end
+
+  def school_exists
+    if school_id && !School.exists?(school_id)
+      errors.add(:school, 'must exist')
+    end
   end
 end

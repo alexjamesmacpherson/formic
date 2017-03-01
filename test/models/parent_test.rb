@@ -46,4 +46,20 @@ class ParentTest < ActiveSupport::TestCase
     assert_not @relation.valid?
     assert_not @relation.save
   end
+
+  test 'relation cannot have non-existent child' do
+    assert User.exists?(@relation.child_id)
+    assert_not User.exists?(10)
+
+    @relation.child_id = 10
+    assert_not @relation.valid?
+  end
+
+  test 'relation cannot have non-existent parent' do
+    assert User.exists?(@relation.parent_id)
+    assert_not User.exists?(10)
+
+    @relation.parent_id = 10
+    assert_not @relation.valid?
+  end
 end
