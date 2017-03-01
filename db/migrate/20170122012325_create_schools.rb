@@ -4,7 +4,7 @@ class CreateSchools < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :motto
       t.text :address
-      t.string :phone_number
+      t.string :phone
 
       t.timestamps
     end

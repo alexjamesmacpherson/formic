@@ -1,5 +1,5 @@
 <% provide(:title, @school.name) %>
 <h1><%= @school.name %></h1>
 <h2><%= @school.motto %></h2>
-<h3><%= @school.address %></h3>
-<h3><%= @school.phone_number %></h3>
+<h3><%= simple_format(@school.address) %></h3>
+<h3><%= @school.phone %></h3>

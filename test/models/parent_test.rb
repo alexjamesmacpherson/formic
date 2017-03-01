@@ -36,13 +36,13 @@ class ParentTest < ActiveSupport::TestCase
   end
 
   test 'relation parent must have correct user group' do
-    @parent.update_attribute(:user_group, 1)
+    @parent.update_attribute(:group, 1)
     assert_not @relation.valid?
     assert_not @relation.save
   end
 
   test 'relation child must have correct user group' do
-    @child.update_attribute(:user_group, 2)
+    @child.update_attribute(:group, 2)
     assert_not @relation.valid?
     assert_not @relation.save
   end

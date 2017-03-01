@@ -55,13 +55,13 @@ class UserTest < ActiveSupport::TestCase
 
   test 'user has valid group' do
     (0..5).each do |n|
-      @user.user_group = n
+      @user.group = n
       assert @user.valid?, "#{n.inspect} should be a valid user group"
     end
 
     invalid_groups = [nil, -1, 6, 1000]
     invalid_groups.each do |invalid|
-      @user.user_group = invalid
+      @user.group = invalid
       assert_not @user.valid?, "#{invalid.inspect} should not be a valid user group"
     end
   end
@@ -71,14 +71,6 @@ class UserTest < ActiveSupport::TestCase
     invalid_names.each do |invalid|
       @user.name = invalid
       assert_not @user.valid?, "#{invalid.inspect} should not be a valid name"
-    end
-  end
-
-  test 'user address valid even if blank' do
-    addresses = ['', 'Test, Teston, Test Sussex, T35T', 'a' * 256]
-    addresses.each do |address|
-      @user.address = address
-      assert @user.valid?, "#{address.inspect} should be a valid address"
     end
   end
 

@@ -26,9 +26,9 @@ ActiveRecord::Schema.define(version: 20170216200400) do
     t.string   "name"
     t.string   "motto"
     t.text     "address"
-    t.string   "phone_number"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tutors", force: :cascade do |t|
@@ -44,10 +44,9 @@ ActiveRecord::Schema.define(version: 20170216200400) do
   create_table "users", force: :cascade do |t|
     t.integer  "school_id"
     t.string   "email"
-    t.integer  "user_group",        default: 1
+    t.integer  "group",             default: 1
     t.string   "name"
     t.text     "bio",               default: ""
-    t.text     "address",           default: ""
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.string   "password_digest"

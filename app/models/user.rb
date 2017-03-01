@@ -9,10 +9,12 @@ class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
 
   # Remove whitespace
-  auto_strip_attributes :email, :name, :address, :bio, :squish => true
+  auto_strip_attributes :email, :name, :squish => true
+  auto_strip_attributes :bio, :convert_non_breaking_spaces => true
 
-  # Downcase email address before saving the user
+  # Record cleansing before saving/creation
   before_save :downcase_email
+  before_save :titlize_name
   before_create :create_activation_digest
 
   # Record validation
@@ -26,15 +28,12 @@ class User < ApplicationRecord
             format: { with: VALID_EMAIL_REGEX },
             uniqueness: { case_sensitive: false }
   # User group: 0: SU, 1: student, 2: parent, 3: teacher, 4: admin staff, 5: governor
-  validates :user_group,
+  validates :group,
             presence: true,
             inclusion: 0..5
   validates :name,
             presence: true,
             length: { maximum: 255 }
-  validates :address,
-            presence: true,
-            allow_blank: true
   validates :bio,
             presence: true,
             allow_blank: true
@@ -97,10 +96,21 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
+  # Assert whether the user's group is equal to the given group
+  def group?(number)
+    group == number
+  end
+
 private
 
+  # Downcase email address before saving the user
   def downcase_email
     email.downcase!
+  end
+
+  # Titlize name before saving the user
+  def titlize_name
+    self.name = name.titleize
   end
 
   def create_activation_digest

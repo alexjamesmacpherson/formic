@@ -24,7 +24,7 @@ class UsersController < ApplicationController
       flash[:danger] = 'User not found.'
       redirect_to users_url
     end
-    case @user.user_group
+    case @user.group
       when 1
         @relations = get_parents(@user.id)
         @tutor = get_tutor(@user.id)
@@ -78,17 +78,17 @@ class UsersController < ApplicationController
 private
 
   def edit_user_params
-    params.require(:user).permit(:email, :name, :address, :bio, :password, :password_confirmation)
+    params.require(:user).permit(:email, :name, :bio, :password, :password_confirmation)
   end
 
   def new_user_params
-    params.require(:user).permit(:email, :user_group, :name, :password, :password_confirmation)
+    params.require(:user).permit(:email, :group, :name, :password, :password_confirmation)
   end
 
   # Can only edit/update your own records (admin staff can edit anyone's records)
   def require_correct_user
     @user = User.find(params[:id])
-    redirect_to root_url unless current_user?(@user) || current_user.user_group == 4
+    redirect_to root_url unless current_user?(@user) || current_user.group?(4)
   end
 
   # Can only view/manipulate users within the same school
