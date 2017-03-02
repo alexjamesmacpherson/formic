@@ -51,4 +51,15 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     log_in_as(@user, remember_me: '0')
     assert_empty cookies['remember_token']
   end
+
+  test 'login as inactive user' do
+    @user.activated = false
+    @user.save
+
+    get login_path
+    assert_template 'sessions/new'
+
+    post login_path, params: { session: { email: @user.email, password: 'password' } }
+    follow_and_assert(true, 'static/home', 'Account not activated, please check your emails for the activation link.')
+  end
 end

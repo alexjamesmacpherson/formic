@@ -24,6 +24,20 @@ class SchoolTest < ActiveSupport::TestCase
     assert_not @school.valid?
   end
 
+  test 'address is correctly formatted on save' do
+    @school.address = "41 Test Close\r\nUK"
+    @school.save
+    assert_equal "41 Test Close,\r\nUK", @school.reload.address
+
+    @school.address = "41 Test Close          \r\nUK       "
+    @school.save
+    assert_equal "41 Test Close,\r\nUK", @school.reload.address
+
+    @school.address = "41 Test Close     ,     \r\nUK"
+    @school.save
+    assert_equal "41 Test Close,\r\nUK", @school.reload.address
+  end
+
   test 'phone number must exist' do
     @school.phone = ''
     assert_not @school.valid?
