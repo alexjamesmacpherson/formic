@@ -6,8 +6,9 @@ class YearGroupTest < ActiveSupport::TestCase
     @year = @school.year_groups.build(name: 'Year X')
   end
 
-  test 'year group is valid' do
+  test 'year group is valid and can be saved' do
     assert @year.valid?
+    assert @year.save
   end
 
   test 'year group must belong to school' do
