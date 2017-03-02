@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302162433) do
+ActiveRecord::Schema.define(version: 20170302224538) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "subject_id"
@@ -32,6 +32,28 @@ ActiveRecord::Schema.define(version: 20170302162433) do
     t.index ["school_id"], name: "index_departments_on_school_id"
   end
 
+  create_table "lessons", force: :cascade do |t|
+    t.integer  "subject_id"
+    t.integer  "period_id"
+    t.integer  "location_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["location_id", "period_id"], name: "index_lessons_on_location_id_and_period_id", unique: true
+    t.index ["location_id"], name: "index_lessons_on_location_id"
+    t.index ["period_id"], name: "index_lessons_on_period_id"
+    t.index ["subject_id", "period_id"], name: "index_lessons_on_subject_id_and_period_id", unique: true
+    t.index ["subject_id"], name: "index_lessons_on_subject_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.integer  "school_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id", "name"], name: "index_locations_on_school_id_and_name", unique: true
+    t.index ["school_id"], name: "index_locations_on_school_id"
+  end
+
   create_table "parents", force: :cascade do |t|
     t.integer  "parent_id"
     t.integer  "child_id"
@@ -40,6 +62,16 @@ ActiveRecord::Schema.define(version: 20170302162433) do
     t.index ["child_id"], name: "index_parents_on_child_id"
     t.index ["parent_id", "child_id"], name: "index_parents_on_parent_id_and_child_id", unique: true
     t.index ["parent_id"], name: "index_parents_on_parent_id"
+  end
+
+  create_table "periods", force: :cascade do |t|
+    t.integer  "school_id"
+    t.string   "name"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_periods_on_school_id"
   end
 
   create_table "schools", force: :cascade do |t|
@@ -100,6 +132,18 @@ ActiveRecord::Schema.define(version: 20170302162433) do
     t.index ["subject_id", "teacher_id"], name: "index_teaches_on_subject_id_and_teacher_id", unique: true
     t.index ["subject_id"], name: "index_teaches_on_subject_id"
     t.index ["teacher_id"], name: "index_teaches_on_teacher_id"
+  end
+
+  create_table "terms", force: :cascade do |t|
+    t.integer  "school_id"
+    t.string   "name"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "halfterm_start_date"
+    t.datetime "halfterm_end_date"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["school_id"], name: "index_terms_on_school_id"
   end
 
   create_table "tutors", force: :cascade do |t|
