@@ -1,5 +1,6 @@
 class Location < ApplicationRecord
   belongs_to :school
+  has_many :lessons, dependent: :destroy
 
   # Remove whitespace
   auto_strip_attributes :name, :squish => true
