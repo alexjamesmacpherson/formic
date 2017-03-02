@@ -4,7 +4,6 @@ class SubmissionTest < ActiveSupport::TestCase
   def setup
     @assignment = assignments(:test_assignment)
     @pupil = users(:test_user)
-    @teacher = users(:test_teacher)
     @submission = Submission.new(assignment: @assignment, pupil: @pupil)
   end
 
