@@ -1,0 +1,5 @@
+test_assignment:
+  subject: test_subject
+  name: Test Assignment
+  information: This is a test assignment!
+  due: <%= Time.zone.now %>

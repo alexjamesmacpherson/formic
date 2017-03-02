@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   belongs_to :school
   belongs_to :year_group
+
   has_many :tutors, :class_name => 'Tutor', :foreign_key => 'tutor_id', dependent: :destroy
   has_many :pupils, :class_name => 'Tutor', :foreign_key => 'pupil_id', dependent: :destroy
 
@@ -9,11 +10,14 @@ class User < ApplicationRecord
 
   has_many :departments, :foreign_key => 'head_id', dependent: :nullify
 
-  has_many :studies, :foreign_key => 'pupil_id', dependent: :destroy
+  has_many :grades, :class_name => 'Study', :foreign_key => 'pupil_id', dependent: :destroy
   has_many :subjects, through: :studies
 
   has_many :teaches, :foreign_key => 'teacher_id', dependent: :destroy
   has_many :subjects, through: :teaches
+
+  has_many :submissions, :foreign_key => 'pupil_id', dependent: :destroy
+  has_many :submitted, :class_name => 'Submission', :foreign_key => 'marker_id', dependent: :destroy
 
   # Attribute accessors
   attr_accessor :remember_token, :activation_token, :reset_token
