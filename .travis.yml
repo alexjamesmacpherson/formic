@@ -1,13 +1,18 @@
+addons:
+  code_climate:
+    repo_token: 85519967099a37ff215958e1dd4aa3a256a5c94681fea606798f8c428d91cf3c
 language: ruby
 rvm:
-- 2.3.1
+  - 2.3.1
 install:
-- gem uninstall bundler -x
-- gem install bundler -v "=1.10.6"
-- bundle install
+  - gem uninstall bundler -x
+  - gem install bundler -v "=1.10.6"
+  - bundle install
 script:
-- RAILS_ENV=test bundle exec rake db:migrate --trace
-- bundle exec rake db:migrate:status
-- bundle exec rake
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:migrate:status
+  - bundle exec rake
 notifications:
   email: false
+after_success:
+  - bundle exec codeclimate-test-reporter
