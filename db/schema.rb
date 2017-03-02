@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301203758) do
+ActiveRecord::Schema.define(version: 20170302132708) do
+
+  create_table "assignments", force: :cascade do |t|
+    t.integer  "subject_id"
+    t.string   "name"
+    t.text     "information"
+    t.datetime "due"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["subject_id"], name: "index_assignments_on_subject_id"
+  end
 
   create_table "departments", force: :cascade do |t|
     t.integer  "school_id"

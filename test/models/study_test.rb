@@ -84,4 +84,15 @@ class StudyTest < ActiveSupport::TestCase
       assert_not @relation.valid?, "#{invalid.inspect} should not be a valid target grade"
     end
   end
+
+  test 'pupil can fetch grades directly from self with has_many relation' do
+    @relation.target = 'abc'
+    @relation.expected = 'xyz'
+    @relation.save
+
+    @pupil.grades.each do |grade|
+      assert_equal 'abc', grade.target
+      assert_equal 'xyz', grade.expected
+    end
+  end
 end

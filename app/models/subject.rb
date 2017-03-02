@@ -8,6 +8,8 @@ class Subject < ApplicationRecord
   has_many :teaches, dependent: :destroy
   has_many :teachers, through: :teaches
 
+  has_many :assignments, dependent: :destroy
+
   # Remove whitespace
   auto_strip_attributes :name, :squish => true
 
