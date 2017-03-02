@@ -10,7 +10,7 @@ class CreateSubmissions < ActiveRecord::Migration[5.0]
       t.boolean :marked, default: false
       t.datetime :marked_at
       t.text :feedback
-      t.string :grade
+      t.integer :grade
 
       t.timestamps
     end

@@ -54,10 +54,10 @@ ActiveRecord::Schema.define(version: 20170302162433) do
   create_table "studies", force: :cascade do |t|
     t.integer  "subject_id"
     t.integer  "pupil_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.string   "target",     default: ""
-    t.string   "expected",   default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "target"
+    t.integer  "expected"
     t.index ["pupil_id"], name: "index_studies_on_pupil_id"
     t.index ["subject_id", "pupil_id"], name: "index_studies_on_subject_id_and_pupil_id", unique: true
     t.index ["subject_id"], name: "index_studies_on_subject_id"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 20170302162433) do
     t.boolean  "marked",        default: false
     t.datetime "marked_at"
     t.text     "feedback"
-    t.string   "grade"
+    t.integer  "grade"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.index ["assignment_id", "pupil_id"], name: "index_submissions_on_assignment_id_and_pupil_id", unique: true

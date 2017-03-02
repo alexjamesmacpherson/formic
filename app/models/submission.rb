@@ -4,7 +4,6 @@ class Submission < ApplicationRecord
   belongs_to :marker, :class_name => 'User'
 
   # Remove whitespace
-  auto_strip_attributes :grade, :squish => true
   auto_strip_attributes :feedback, :convert_non_breaking_spaces => true
 
   # Record validation
@@ -29,12 +28,12 @@ class Submission < ApplicationRecord
             if: :marked?
   validates :grade,
             presence: true,
-            length: { maximum: 255 },
             if: :marked?
   validate :pupil_exists
   validate :pupil_is_student
   validate :marker_exists
   validate :marker_is_teacher
+  validate :grade_percentage
 
   def submitted?
     submitted
@@ -67,6 +66,12 @@ private
   def marker_is_teacher
     if marker_id && User.exists?(marker_id) && !User.find(marker_id).is?(:group, 3)
       errors.add(:marker, 'must have correct user group')
+    end
+  end
+
+  def grade_percentage
+    if grade && !(0 <= grade && grade <= 100)
+      errors.add(:grade, 'must be a percentage between 0-100%')
     end
   end
 end

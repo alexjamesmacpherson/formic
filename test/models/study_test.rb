@@ -57,28 +57,28 @@ class StudyTest < ActiveSupport::TestCase
     assert_not @relation.valid?
   end
 
-  test 'expected grade can be blank but cannot exceed 255 chars' do
-    valid_grades = ['', 'a', 'a' * 255]
+  test 'expected grade can be blank but must be a number between 0 and 100' do
+    valid_grades = [nil, 0, 55, 100]
     valid_grades.each do |valid|
       @relation.expected = valid
       assert @relation.valid?, "#{valid.inspect} should be a valid expected grade"
     end
 
-    invalid_grades = ['a' * 256, 'a' * 1000]
+    invalid_grades = [101, -1, 1000]
     invalid_grades.each do |invalid|
       @relation.expected = invalid
       assert_not @relation.valid?, "#{invalid.inspect} should not be a valid expected grade"
     end
   end
 
-  test 'target grade can be blank but cannot exceed 255 chars' do
-    valid_grades = ['', 'a', 'a' * 255]
+  test 'target grade can be blank but must be a number between 0 and 100' do
+    valid_grades = [nil, 0, 55, 100]
     valid_grades.each do |valid|
       @relation.target = valid
       assert @relation.valid?, "#{valid.inspect} should be a valid target grade"
     end
 
-    invalid_grades = ['a' * 256, 'a' * 1000]
+    invalid_grades = [101, -1, 1000]
     invalid_grades.each do |invalid|
       @relation.target = invalid
       assert_not @relation.valid?, "#{invalid.inspect} should not be a valid target grade"
@@ -86,13 +86,13 @@ class StudyTest < ActiveSupport::TestCase
   end
 
   test 'pupil can fetch grades directly from self with has_many relation' do
-    @relation.target = 'abc'
-    @relation.expected = 'xyz'
+    @relation.target = 90
+    @relation.expected = 70
     @relation.save
 
     @pupil.grades.each do |grade|
-      assert_equal 'abc', grade.target
-      assert_equal 'xyz', grade.expected
+      assert_equal 90, grade.target
+      assert_equal 70, grade.expected
     end
   end
 end
