@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302132708) do
+ActiveRecord::Schema.define(version: 20170302162433) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "subject_id"
@@ -71,6 +71,25 @@ ActiveRecord::Schema.define(version: 20170302132708) do
     t.integer  "year_group_id"
     t.index ["department_id"], name: "index_subjects_on_department_id"
     t.index ["year_group_id"], name: "index_subjects_on_year_group_id"
+  end
+
+  create_table "submissions", force: :cascade do |t|
+    t.integer  "assignment_id"
+    t.integer  "pupil_id"
+    t.string   "file"
+    t.boolean  "submitted",     default: false
+    t.datetime "submitted_at"
+    t.integer  "marker_id"
+    t.boolean  "marked",        default: false
+    t.datetime "marked_at"
+    t.text     "feedback"
+    t.string   "grade"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.index ["assignment_id", "pupil_id"], name: "index_submissions_on_assignment_id_and_pupil_id", unique: true
+    t.index ["assignment_id"], name: "index_submissions_on_assignment_id"
+    t.index ["marker_id"], name: "index_submissions_on_marker_id"
+    t.index ["pupil_id"], name: "index_submissions_on_pupil_id"
   end
 
   create_table "teaches", force: :cascade do |t|

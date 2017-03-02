@@ -16,6 +16,9 @@ class User < ApplicationRecord
   has_many :teaches, :foreign_key => 'teacher_id', dependent: :destroy
   has_many :subjects, through: :teaches
 
+  has_many :submissions, :foreign_key => 'pupil_id', dependent: :destroy
+  has_many :submitted, :class_name => 'Submission', :foreign_key => 'marker_id', dependent: :destroy
+
   # Attribute accessors
   attr_accessor :remember_token, :activation_token, :reset_token
 

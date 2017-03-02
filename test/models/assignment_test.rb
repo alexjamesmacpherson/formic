@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AssignmentTest < ActiveSupport::TestCase
   def setup
-    @class = subjects(:test_subject)
+    @class = subjects(:test_class)
     @assignment = Assignment.new(subject: @class, name: 'Assignment X', information: 'This is a test assignment!', due: Time.zone.now)
   end
 

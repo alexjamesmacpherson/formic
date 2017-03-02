@@ -1,3 +1,7 @@
 test_subject:
   department: test_department
   name: Test Subject
+
+test_class:
+  department: test_department
+  name: Test Class

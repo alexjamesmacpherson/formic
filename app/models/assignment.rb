@@ -1,5 +1,6 @@
 class Assignment < ApplicationRecord
   belongs_to :subject
+  has_many :submissions, dependent: :destroy
 
   # Remove whitespace
   auto_strip_attributes :name, :information, :squish => true
