@@ -16,7 +16,7 @@ class Period < ApplicationRecord
   validate :school_exists
   validate :cannot_end_before_start
 
-  private
+private
 
   def school_exists
     unless School.exists?(school_id)
