@@ -12,6 +12,9 @@ class Department < ApplicationRecord
   validates :name,
             presence: true,
             length: { maximum: 255 }
+  validates :head,
+            presence: true,
+            allow_nil: true
   # Validate department cannot be added to a non-existent school
   validate :school_exists
   validate :head_exists
@@ -20,7 +23,7 @@ class Department < ApplicationRecord
 private
 
   def school_exists
-    if school_id && !School.exists?(school_id)
+    unless School.exists?(school_id)
       errors.add(:school, 'must exist')
     end
   end
@@ -32,7 +35,7 @@ private
   end
 
   def head_is_teacher
-    if head_id && User.exists?(head_id) && !User.find(head_id).is?(:group, 3)
+    if User.exists?(head_id) && !User.find(head_id).is?(:group, 3)
       errors.add(:head, 'must be a teacher')
     end
   end

@@ -1,6 +1,6 @@
+# Thesis Project: Formic Learning (CS310)
 [![Build Status](https://travis-ci.org/alexjamesmacpherson/formic.svg?branch=master)](https://travis-ci.org/alexjamesmacpherson/formic) [![Code Climate](https://codeclimate.com/github/alexjamesmacpherson/formic/badges/gpa.svg)](https://codeclimate.com/github/alexjamesmacpherson/formic) [![Test Coverage](https://codeclimate.com/github/alexjamesmacpherson/formic/badges/coverage.svg)](https://codeclimate.com/github/alexjamesmacpherson/formic/coverage)
 
-# Thesis Project: Formic Learning (CS310)
 Undergraduate dissertation project surmising the development of a feature-rich social VLE to promote student performance in schools. For more information, refer to the [system specification](http://www.alexmacpherson.uk/specification.pdf "View System Specification") or [progress report](http://www.alexmacpherson.uk/progress-report.pdf "View Progress Report"), or [visit my website](http://www.alexmacpherson.uk/ "Portfolio").
 
 ## Dependencies

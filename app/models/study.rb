@@ -24,29 +24,29 @@ class Study < ApplicationRecord
   private
 
   def subject_exists
-    if subject_id && !Subject.exists?(subject_id)
+    unless Subject.exists?(subject_id)
       errors.add(:subject, 'must exist')
     end
   end
 
   def pupil_exists
-    if pupil_id && !User.exists?(pupil_id)
+    unless User.exists?(pupil_id)
       errors.add(:pupil, 'must exist')
     end
   end
 
   def user_is_student
-    if pupil_id && User.exists?(pupil_id) && !User.find(pupil_id).is?(:group, 1)
+    if User.exists?(pupil_id) && !User.find(pupil_id).is?(:group, 1)
       errors.add(:pupil, 'must have correct user group')
     end
   end
 
   def grade_percentage
-    if expected && !(0 <= expected && expected <= 100)
+    if expected && !(0..100).include?(expected)
       errors.add(:expected, 'must be a percentage between 0-100%')
     end
 
-    if target && !(0 <= target && target <= 100)
+    if target && !(0..100).include?(target)
       errors.add(:target, 'must be a percentage between 0-100%')
     end
   end

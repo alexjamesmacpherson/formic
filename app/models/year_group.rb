@@ -18,7 +18,7 @@ class YearGroup < ApplicationRecord
 private
 
   def school_exists
-    if school_id && !School.exists?(school_id)
+    unless School.exists?(school_id)
       errors.add(:school, 'must exist')
     end
   end

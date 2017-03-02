@@ -139,13 +139,13 @@ private
   end
 
   def school_exists
-    if school_id && !School.exists?(school_id)
+    unless School.exists?(school_id)
       errors.add(:school, 'must exist')
     end
   end
 
   def year_group_exists
-    if year_group_id && !YearGroup.exists?(year_group_id)
+    if is_student? && !YearGroup.exists?(year_group_id)
       errors.add(:year_group, 'must exist')
     end
   end

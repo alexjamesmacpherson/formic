@@ -17,19 +17,19 @@ class Teach < ApplicationRecord
   private
 
   def subject_exists
-    if subject_id && !Subject.exists?(subject_id)
+    unless Subject.exists?(subject_id)
       errors.add(:subject, 'must exist')
     end
   end
 
   def teacher_exists
-    if teacher_id && !User.exists?(teacher_id)
+    unless User.exists?(teacher_id)
       errors.add(:teacher, 'must exist')
     end
   end
 
   def user_is_teacher
-    if teacher_id && User.exists?(teacher_id) && !User.find(teacher_id).is?(:group, 3)
+    if User.exists?(teacher_id) && !User.find(teacher_id).is?(:group, 3)
       errors.add(:teacher, 'must have correct user group')
     end
   end

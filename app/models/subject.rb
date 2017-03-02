@@ -26,7 +26,7 @@ class Subject < ApplicationRecord
 private
 
   def department_exists
-    if department_id && !Department.exists?(department_id)
+    unless Department.exists?(department_id)
       errors.add(:department, 'must exist')
     end
   end

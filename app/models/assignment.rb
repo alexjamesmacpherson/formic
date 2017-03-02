@@ -22,7 +22,7 @@ class Assignment < ApplicationRecord
   private
 
   def subject_exists
-    if subject_id && !Subject.exists?(subject_id)
+    unless Subject.exists?(subject_id)
       errors.add(:subject, 'must exist')
     end
   end

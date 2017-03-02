@@ -46,13 +46,13 @@ class Submission < ApplicationRecord
 private
 
   def pupil_exists
-    if pupil_id && !User.exists?(pupil_id)
+    unless User.exists?(pupil_id)
       errors.add(:pupil, 'must exist')
     end
   end
 
   def pupil_is_student
-    if pupil_id && User.exists?(pupil_id) && !User.find(pupil_id).is?(:group, 1)
+    if User.exists?(pupil_id) && !User.find(pupil_id).is?(:group, 1)
       errors.add(:pupil, 'must have correct user group')
     end
   end
@@ -64,13 +64,13 @@ private
   end
 
   def marker_is_teacher
-    if marker_id && User.exists?(marker_id) && !User.find(marker_id).is?(:group, 3)
+    if User.exists?(marker_id) && !User.find(marker_id).is?(:group, 3)
       errors.add(:marker, 'must have correct user group')
     end
   end
 
   def grade_percentage
-    if grade && !(0 <= grade && grade <= 100)
+    if grade && !(0..100).include?(grade)
       errors.add(:grade, 'must be a percentage between 0-100%')
     end
   end
