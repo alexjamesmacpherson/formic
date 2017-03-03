@@ -29,7 +29,7 @@ class Teach < ApplicationRecord
   end
 
   def user_is_teacher
-    if User.exists?(teacher_id) && !User.find(teacher_id).is?(:group, 3)
+    if User.exists_but_not_group?(teacher_id, 3)
       errors.add(:teacher, 'must have correct user group')
     end
   end

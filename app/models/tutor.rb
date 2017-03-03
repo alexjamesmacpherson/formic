@@ -26,11 +26,11 @@ private
   end
 
   def correct_user_group
-    if User.exists?(tutor_id) && !User.find(tutor_id).is?(:group, 3)
+    if User.exists_but_not_group?(tutor_id, 3)
       errors.add(:tutor, 'must have correct user group')
     end
 
-    if User.exists?(pupil_id) && !User.find(pupil_id).is?(:group, 1)
+    if User.exists_but_not_group?(pupil_id, 1)
       errors.add(:pupil, 'must have correct user group')
     end
   end

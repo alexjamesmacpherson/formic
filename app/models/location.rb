@@ -14,7 +14,7 @@ class Location < ApplicationRecord
   # Validate period cannot be added to a non-existent school
   validate :school_exists
 
-  private
+private
 
   def school_exists
     unless School.exists?(school_id)

@@ -26,11 +26,11 @@ private
   end
 
   def correct_user_group
-    if User.exists?(parent_id) && !User.find(parent_id).is?(:group, 2)
+    if User.exists_but_not_group?(parent_id, 2)
       errors.add(:parent, 'must have correct user group')
     end
 
-    if User.exists?(child_id) && !User.find(child_id).is?(:group, 1)
+    if User.exists_but_not_group?(child_id, 1)
       errors.add(:child, 'must have correct user group')
     end
   end

@@ -65,6 +65,11 @@ class TermTest < ActiveSupport::TestCase
     assert_not @term.valid?
   end
 
+  test 'can ascertain whether a date is during term or not' do
+    assert @term.in_term?(Time.zone.now + 4.days)
+    assert_not @term.in_term?(Time.zone.now - 4.days)
+  end
+
   test 'term must contain half term' do
     @term.halfterm_start_date = @term.start_date - 1.day
     assert_not @term.valid?
@@ -74,5 +79,10 @@ class TermTest < ActiveSupport::TestCase
 
     @term.halfterm_start_date = @term.start_date + 1.day
     assert_not @term.valid?
+  end
+
+  test 'can ascertain whether a date is during half term or not' do
+    assert @term.in_halfterm?(Time.zone.now + 3.days)
+    assert_not @term.in_halfterm?(Time.zone.now + 1.day)
   end
 end

@@ -75,6 +75,10 @@ class User < ApplicationRecord
     def new_token
       SecureRandom.urlsafe_base64
     end
+
+    def exists_but_not_group?(user_id, group)
+      User.exists?(user_id) && !User.find(user_id).is?(:group, group)
+    end
   end
 
   # Generate and set persistent session (remember) token

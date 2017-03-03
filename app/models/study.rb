@@ -36,7 +36,7 @@ class Study < ApplicationRecord
   end
 
   def user_is_student
-    if User.exists?(pupil_id) && !User.find(pupil_id).is?(:group, 1)
+    if User.exists_but_not_group?(pupil_id, 1)
       errors.add(:pupil, 'must have correct user group')
     end
   end

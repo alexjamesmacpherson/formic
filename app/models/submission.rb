@@ -52,7 +52,7 @@ private
   end
 
   def pupil_is_student
-    if User.exists?(pupil_id) && !User.find(pupil_id).is?(:group, 1)
+    if User.exists_but_not_group?(pupil_id, 1)
       errors.add(:pupil, 'must have correct user group')
     end
   end
@@ -64,7 +64,7 @@ private
   end
 
   def marker_is_teacher
-    if User.exists?(marker_id) && !User.find(marker_id).is?(:group, 3)
+    if User.exists_but_not_group?(marker_id, 3)
       errors.add(:marker, 'must have correct user group')
     end
   end

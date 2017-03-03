@@ -35,7 +35,7 @@ private
   end
 
   def head_is_teacher
-    if User.exists?(head_id) && !User.find(head_id).is?(:group, 3)
+    if User.exists_but_not_group?(head_id, 3)
       errors.add(:head, 'must be a teacher')
     end
   end
