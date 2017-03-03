@@ -6,8 +6,7 @@ class MessageTest < ActiveSupport::TestCase
     @sender = @chat.users.first
     @invalid_sender = users(:test_admin)
 
-    @message = @chat.messages.new(sender: @sender, text: 'This is a test message!')
-    @message.save
+    @message = @chat.messages.create(sender: @sender, text: 'This is a test message!')
   end
 
   test 'message is valid and can be saved' do

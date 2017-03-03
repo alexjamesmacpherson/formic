@@ -28,6 +28,7 @@ class User < ApplicationRecord
   has_many :chats, through: :converses, source: :chat
   has_many :converses, dependent: :destroy
   has_many :messages, foreign_key: 'sender_id', dependent: :destroy
+  has_many :unread_messages, foreign_key: 'recipient_id', dependent: :destroy
 
   # Attribute accessors
   attr_accessor :remember_token, :activation_token, :reset_token

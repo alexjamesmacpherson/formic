@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170303175859) do
+ActiveRecord::Schema.define(version: 20170303185954) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "subject_id"
@@ -170,6 +170,15 @@ ActiveRecord::Schema.define(version: 20170303175859) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.index ["school_id"], name: "index_terms_on_school_id"
+  end
+
+  create_table "unread_messages", force: :cascade do |t|
+    t.integer  "message_id"
+    t.integer  "recipient_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["message_id"], name: "index_unread_messages_on_message_id"
+    t.index ["recipient_id"], name: "index_unread_messages_on_recipient_id"
   end
 
   create_table "users", force: :cascade do |t|

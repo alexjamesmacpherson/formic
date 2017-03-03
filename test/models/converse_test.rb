@@ -6,8 +6,7 @@ class ConverseTest < ActiveSupport::TestCase
     @pupil = users(:test_user)
     @tutor = users(:test_teacher)
 
-    @relation = @chat.converses.new(chat: @chat, user: @pupil)
-    @relation.save
+    @relation = @chat.converses.create(user: @pupil)
   end
 
   test 'relation is valid and can be saved' do
