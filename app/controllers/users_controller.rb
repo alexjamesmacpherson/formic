@@ -24,6 +24,7 @@ class UsersController < ApplicationController
       flash[:danger] = 'User not found.'
       redirect_to users_url
     end
+    @relations = @user.parents + @user.children + @user.tutees
   end
 
   def new

@@ -54,14 +54,14 @@ ActiveRecord::Schema.define(version: 20170302224538) do
     t.index ["school_id"], name: "index_locations_on_school_id"
   end
 
-  create_table "parents", force: :cascade do |t|
+  create_table "parent_relations", force: :cascade do |t|
     t.integer  "parent_id"
     t.integer  "child_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["child_id"], name: "index_parents_on_child_id"
-    t.index ["parent_id", "child_id"], name: "index_parents_on_parent_id_and_child_id", unique: true
-    t.index ["parent_id"], name: "index_parents_on_parent_id"
+    t.index ["child_id"], name: "index_parent_relations_on_child_id"
+    t.index ["parent_id", "child_id"], name: "index_parent_relations_on_parent_id_and_child_id", unique: true
+    t.index ["parent_id"], name: "index_parent_relations_on_parent_id"
   end
 
   create_table "periods", force: :cascade do |t|

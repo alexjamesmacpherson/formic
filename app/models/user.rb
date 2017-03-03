@@ -5,21 +5,24 @@ class User < ApplicationRecord
   has_many :tutees, class_name: 'User', foreign_key: 'tutor_id', dependent: :nullify
   belongs_to :tutor, class_name: 'User', optional: true
 
-  has_many :parents, :class_name => 'Parent', :foreign_key => 'parent_id', dependent: :destroy
-  has_many :children, :class_name => 'Parent', :foreign_key => 'child_id', dependent: :destroy
+  has_many :parents, through: :parent_relations, source: :parent
+  has_many :parent_relations, class_name: 'ParentRelation', foreign_key: 'child_id', dependent: :destroy
 
-  has_many :departments, :foreign_key => 'head_id', dependent: :nullify
+  has_many :children, through: :child_relations, source: :child
+  has_many :child_relations, class_name: 'ParentRelation', foreign_key: 'parent_id', dependent: :destroy
+
+  has_many :departments, foreign_key: 'head_id', dependent: :nullify
 
   # Get student's grades/subjects
-  has_many :grades, :class_name => 'Study', :foreign_key => 'pupil_id', dependent: :destroy
-  has_many :studies, :class_name => 'Subject', through: :studies
+  has_many :grades, class_name: 'Study', foreign_key: 'pupil_id', dependent: :destroy
+  has_many :studies, class_name: 'Subject', through: :studies
 
   # Get lessons a teacher takes
-  has_many :teaching_relations, :class_name => 'Teach', :foreign_key => 'teacher_id', dependent: :destroy
-  has_many :teaches, :class_name => 'Subject', through: :teaching_relations
+  has_many :teaching_relations, class_name: 'Teach', foreign_key: 'teacher_id', dependent: :destroy
+  has_many :teaches, class_name: 'Subject', through: :teaching_relations
 
-  has_many :submissions, :foreign_key => 'pupil_id', dependent: :destroy
-  has_many :submitted, :class_name => 'Submission', :foreign_key => 'marker_id', dependent: :nullify
+  has_many :submissions, foreign_key: 'pupil_id', dependent: :destroy
+  has_many :submitted, class_name: 'Submission', foreign_key: 'marker_id', dependent: :nullify
 
   # Attribute accessors
   attr_accessor :remember_token, :activation_token, :reset_token

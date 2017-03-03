@@ -12,9 +12,9 @@
       </li>
     <% end %>
   <% end %>
-  <% if @tutor %>
+  <% if @user.tutor %>
     <li>
-      <%= link_to @tutor.name, @tutor %>
+      <%= link_to @user.tutor.name, @user.tutor %>
     </li>
   <% end %>
 </ul>
