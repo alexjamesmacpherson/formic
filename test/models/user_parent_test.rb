@@ -1,15 +1,21 @@
 require 'test_helper'
 
-class ParentTest < ActiveSupport::TestCase
+class UserParentTest < ActiveSupport::TestCase
   def setup
     @child = users(:test_user)
     @parent = users(:test_parent)
-    @relation = Parent.new(parent: @parent, child: @child)
+    @relation = ParentRelation.new(parent: @parent, child: @child)
   end
 
   test 'relation is valid and can be saved' do
     assert @relation.valid?
     assert @relation.save
+  end
+
+  test 'child can get parents and parent can get children' do
+    assert @relation.save
+    assert_equal @child, @parent.children.last
+    assert_equal @parent, @child.parents.last
   end
 
   test 'relation must have parent' do

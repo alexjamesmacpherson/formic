@@ -24,17 +24,7 @@ class UsersController < ApplicationController
       flash[:danger] = 'User not found.'
       redirect_to users_url
     end
-    case @user.group
-      when 1
-        @relations = get_parents(@user.id)
-        @tutor = get_tutor(@user.id)
-      when 2
-        @relations = get_children(@user.id)
-      when 3
-        @relations = get_tutees(@user.id)
-      else
-        @relations = nil
-    end
+    @relations = @user.parents + @user.children + @user.tutees
   end
 
   def new
@@ -98,45 +88,5 @@ private
       flash[:danger] = 'User not found.'
       redirect_to users_url
     end
-  end
-
-  def get_parents(id)
-    parents = []
-    relations = Parent.where(child_id: id)
-    if relations
-      relations.each do |parent|
-        parents << User.find(parent.parent_id)
-      end
-    end
-    parents
-  end
-
-  def get_children(id)
-    children = []
-    relations = Parent.where(parent_id: id)
-    if relations
-      relations.each do |child|
-        children << User.find(child.child_id)
-      end
-    end
-    children
-  end
-
-  def get_tutor(id)
-    tutor = Tutor.find_by(pupil_id: id)
-    if tutor
-      User.find_by(id: tutor.tutor_id)
-    end
-  end
-
-  def get_tutees(id)
-    tutees = []
-    relations = Tutor.where(tutor_id: id)
-    if relations
-      relations.each do |pupil|
-        tutees << User.find(pupil.pupil_id)
-      end
-    end
-    tutees
   end
 end

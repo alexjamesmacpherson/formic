@@ -89,7 +89,7 @@ puts "\n\nSEEDING RELATIONS:"
 @parents.each do |parent|
   child = User.where(school_id: parent.school_id, group: 1).sample
   if child
-    Parent.create(parent_id: parent.id, child_id: child.id)
+    ParentRelation.create(parent_id: parent.id, child_id: child.id)
   end
   print_flush("\e[0;35m.\e[0m")
 end
@@ -97,7 +97,8 @@ end
 @students.each do |pupil|
   tutor = User.where(school_id: pupil.school_id, group: 3).sample
   if tutor
-    Tutor.create(tutor_id: tutor.id, pupil_id: pupil.id)
+    pupil.tutor = tutor
+    pupil.save
   end
   print_flush("\e[0;36m.\e[0m")
 end

@@ -10,11 +10,11 @@ class Teach < ApplicationRecord
             presence: true
   # Validate existence and further correctness
   validate :subject_exists?
-  validate :teacher_correct_and_real?
+  validate :teacher_correct_if_real?
 
 private
 
-  def teacher_correct_and_real?
-    user_is_correct_and_real?(:teacher, self.teacher_id, 3)
+  def teacher_correct_if_real?
+    user_is_correct_if_real?(:teacher, self.teacher_id, 3)
   end
 end

@@ -54,14 +54,14 @@ ActiveRecord::Schema.define(version: 20170302224538) do
     t.index ["school_id"], name: "index_locations_on_school_id"
   end
 
-  create_table "parents", force: :cascade do |t|
+  create_table "parent_relations", force: :cascade do |t|
     t.integer  "parent_id"
     t.integer  "child_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["child_id"], name: "index_parents_on_child_id"
-    t.index ["parent_id", "child_id"], name: "index_parents_on_parent_id_and_child_id", unique: true
-    t.index ["parent_id"], name: "index_parents_on_parent_id"
+    t.index ["child_id"], name: "index_parent_relations_on_child_id"
+    t.index ["parent_id", "child_id"], name: "index_parent_relations_on_parent_id_and_child_id", unique: true
+    t.index ["parent_id"], name: "index_parent_relations_on_parent_id"
   end
 
   create_table "periods", force: :cascade do |t|
@@ -146,18 +146,9 @@ ActiveRecord::Schema.define(version: 20170302224538) do
     t.index ["school_id"], name: "index_terms_on_school_id"
   end
 
-  create_table "tutors", force: :cascade do |t|
-    t.integer  "tutor_id"
-    t.integer  "pupil_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["pupil_id"], name: "index_tutors_on_pupil_id"
-    t.index ["tutor_id", "pupil_id"], name: "index_tutors_on_tutor_id_and_pupil_id", unique: true
-    t.index ["tutor_id"], name: "index_tutors_on_tutor_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.integer  "school_id"
+    t.integer  "tutor_id"
     t.string   "email"
     t.integer  "group",             default: 1
     t.string   "name"
@@ -174,6 +165,7 @@ ActiveRecord::Schema.define(version: 20170302224538) do
     t.integer  "year_group_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["school_id"], name: "index_users_on_school_id"
+    t.index ["tutor_id"], name: "index_users_on_tutor_id"
     t.index ["year_group_id"], name: "index_users_on_year_group_id"
   end
 

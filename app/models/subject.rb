@@ -22,13 +22,5 @@ class Subject < ApplicationRecord
             length: { maximum: 255 }
   # Validate subject cannot be added to a non-existent department or year group
   validate :department_exists?
-  validate :year_group_correct_if_real?
-
-private
-
-  def year_group_correct_if_real?
-    if YearGroup.id_but_nonexistent?(year_group_id)
-      errors.add(:year_group, 'must exist')
-    end
-  end
+  validate :year_group_exists?
 end

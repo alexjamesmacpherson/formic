@@ -1,48 +1,36 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  class << self
-    def id_but_nonexistent?(id)
-      id && !self.exists?(id)
+  def is_record?(attr, model, id)
+    if id && !model.exists?(id)
+      errors.add(attr, 'must exist')
     end
   end
 
   def school_exists?
-    unless School.exists?(school_id)
-      errors.add(:school, 'must exist')
-    end
+    is_record?(:school, School, school_id)
   end
 
   def subject_exists?
-    unless Subject.exists?(subject_id)
-      errors.add(:subject, 'must exist')
-    end
+    is_record?(:subject, Subject, subject_id)
   end
 
   def period_exists?
-    unless Period.exists?(period_id)
-      errors.add(:period, 'must exist')
-    end
+    is_record?(:period, Period, period_id)
   end
 
   def department_exists?
-    unless Department.exists?(department_id)
-      errors.add(:department, 'must exist')
-    end
+    is_record?(:department, Department, department_id)
+  end
+
+  def year_group_exists?
+    is_record?(:year_group, YearGroup, year_group_id)
   end
 
   def user_is_correct_if_real?(attr, id, group)
-    if User.id_but_nonexistent?(id)
-      errors.add(attr, 'must exist')
-    elsif User.exists_but_not_group?(id, group)
-      errors.add(attr, 'must have correct user group')
-    end
-  end
+    is_record?(:attr, User, id)
 
-  def user_is_correct_and_real?(attr, id, group)
-    if !User.exists?(id)
-      errors.add(attr, 'must exist')
-    elsif User.exists_but_not_group?(id, group)
+    if User.exists_but_not_group?(id, group)
       errors.add(attr, 'must have correct user group')
     end
   end

@@ -22,8 +22,6 @@ class Lesson < ApplicationRecord
 private
 
   def location_exists?
-    unless Location.exists?(location_id)
-      errors.add(:location, 'must exist')
-    end
+    is_record?(:location, Location, location_id)
   end
 end
