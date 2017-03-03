@@ -27,6 +27,10 @@ class ApplicationRecord < ActiveRecord::Base
     is_record?(:year_group, YearGroup, year_group_id)
   end
 
+  def chat_exists?
+    is_record?(:chat, Chat, chat_id)
+  end
+
   def user_is_correct_if_real?(attr, id, group)
     is_record?(:attr, User, id)
 

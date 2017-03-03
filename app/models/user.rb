@@ -24,6 +24,10 @@ class User < ApplicationRecord
   has_many :submissions, foreign_key: 'pupil_id', dependent: :destroy
   has_many :submitted, class_name: 'Submission', foreign_key: 'marker_id', dependent: :nullify
 
+  # Conversations
+  has_many :chats, through: :converses, source: :chat
+  has_many :converses, dependent: :destroy
+
   # Attribute accessors
   attr_accessor :remember_token, :activation_token, :reset_token
 

@@ -2,12 +2,17 @@ require 'test_helper'
 
 class ChatTest < ActiveSupport::TestCase
   def setup
+    @pupil = users(:test_user)
+    @tutor = users(:test_teacher)
+
     @chat = Chat.new(name: 'Test Conversation')
+    @chat.converses.new(user: @pupil)
+    @chat.converses.new(user: @tutor)
+    @chat.save
   end
 
-  test 'chat is valid and can be saved' do
+  test 'chat is valid' do
     assert @chat.valid?
-    assert @chat.save
   end
 
   test 'chat has name of valid length' do
@@ -19,5 +24,14 @@ class ChatTest < ActiveSupport::TestCase
 
     @chat.name = 'a' * 50
     assert @chat.valid?
+  end
+
+  test 'chat cannot have fewer than 2 users post-creation and is deleted if so' do
+    assert_equal 2, @chat.converses.length
+    assert_difference 'Converse.count', -1 do
+      @chat.converses.first.destroy
+    end
+
+    assert_not @chat.reload.valid?
   end
 end
