@@ -29,9 +29,8 @@ class Submission < ApplicationRecord
   validates :grade,
             presence: true,
             if: :marked?
-  validate :pupil_exists_and_student?
-  validate :marker_exists_and_teacher?
-  validate :grade_percentage?
+  validate :users_correct_and_if_real?
+  validate :percentage_grade?
 
   def submitted?
     submitted
@@ -43,25 +42,12 @@ class Submission < ApplicationRecord
 
 private
 
-  def pupil_exists_and_student?
-    if !User.exists?(pupil_id)
-      errors.add(:pupil, 'must exist')
-    elsif User.exists_but_not_group?(pupil_id, 1)
-      errors.add(:pupil, 'must have correct user group')
-    end
+  def users_correct_and_if_real?
+    user_is_correct_and_real?(:pupil, self.pupil_id, 1)
+    user_is_correct_if_real?(:marker, self.marker_id, 3)
   end
 
-  def marker_exists_and_teacher?
-    if User.id_but_nonexistent?(marker_id)
-      errors.add(:marker, 'must exist')
-    elsif User.exists_but_not_group?(marker_id, 3)
-      errors.add(:marker, 'must have correct user group')
-    end
-  end
-
-  def grade_percentage?
-    if grade && !(0..100).include?(grade)
-      errors.add(:grade, 'must be a percentage between 0-100%')
-    end
+  def percentage_grade?
+    grade_percentage?(:grade, self.grade)
   end
 end

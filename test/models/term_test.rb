@@ -3,7 +3,7 @@ require 'test_helper'
 class TermTest < ActiveSupport::TestCase
   def setup
     @school = schools(:test_college)
-    @term = @school.terms.build(name: 'Term X', start_date: Time.zone.now, end_date: Time.zone.now + 1.week, halfterm_start_date: Time.zone.now + 2.days, halfterm_end_date: Time.zone.now + 4.days)
+    @term = @school.terms.build(name: 'Term X', starts: Time.zone.now, ends: Time.zone.now + 1.week, halfterm_starts: Time.zone.now + 2.days, halfterm_ends: Time.zone.now + 4.days)
   end
 
   test 'term is valid and can be saved' do
@@ -36,32 +36,32 @@ class TermTest < ActiveSupport::TestCase
   end
 
   test 'term must have start date' do
-    @term.start_date = nil
+    @term.starts = nil
     assert_not @term.valid?
   end
 
   test 'term must have end date' do
-    @term.end_date = nil
+    @term.ends = nil
     assert_not @term.valid?
   end
 
   test 'term must start before it finishes' do
-    @term.start_date = @term.end_date + 1.day
+    @term.starts = @term.ends + 1.day
     assert_not @term.valid?
   end
 
   test 'term must have half term start date' do
-    @term.halfterm_start_date = nil
+    @term.halfterm_starts = nil
     assert_not @term.valid?
   end
 
   test 'term must have half term end date' do
-    @term.halfterm_end_date = nil
+    @term.halfterm_ends = nil
     assert_not @term.valid?
   end
 
   test 'half term must start before it finishes' do
-    @term.halfterm_start_date = @term.halfterm_end_date + 1.day
+    @term.halfterm_starts = @term.halfterm_ends + 1.day
     assert_not @term.valid?
   end
 
@@ -71,13 +71,13 @@ class TermTest < ActiveSupport::TestCase
   end
 
   test 'term must contain half term' do
-    @term.halfterm_start_date = @term.start_date - 1.day
+    @term.halfterm_starts = @term.starts - 1.day
     assert_not @term.valid?
 
-    @term.halfterm_end_date = @term.end_date + 1.day
+    @term.halfterm_ends = @term.ends + 1.day
     assert_not @term.valid?
 
-    @term.halfterm_start_date = @term.start_date + 1.day
+    @term.halfterm_starts = @term.starts + 1.day
     assert_not @term.valid?
   end
 

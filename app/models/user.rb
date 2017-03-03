@@ -60,8 +60,8 @@ class User < ApplicationRecord
             presence: true,
             if: :is_student?
   # Validate user cannot be added to a non-existent school or year group
-  validate :school_exists
-  validate :year_group_exists
+  validate :school_exists?
+  validate :year_group_exists?
 
   # Methods defined here are of form User.foo()
   class << self
@@ -142,13 +142,7 @@ private
     self.activation_digest = User.digest(activation_token)
   end
 
-  def school_exists
-    unless School.exists?(school_id)
-      errors.add(:school, 'must exist')
-    end
-  end
-
-  def year_group_exists
+  def year_group_exists?
     if is_student? && !YearGroup.exists?(year_group_id)
       errors.add(:year_group, 'must exist')
     end

@@ -9,20 +9,12 @@ class Parent < ApplicationRecord
   validates :child,
             presence: true
   # Validate both users actually exist and are of correct user groups
-  validate :users_exist_and_correct?
+  validate :users_correct_and_real?
 
 private
 
-  def users_exist_and_correct?
-    is_correct_and_real?(:parent, parent_id, 2)
-    is_correct_and_real?(:child, child_id, 1)
-  end
-
-  def is_correct_and_real?(attr, id, group)
-    if !User.exists?(id)
-      errors.add(attr, 'must exist')
-    elsif User.exists_but_not_group?(id, group)
-      errors.add(attr, 'must have correct user group')
-    end
+  def users_correct_and_real?
+    user_is_correct_and_real?(:parent, self.parent_id, 2)
+    user_is_correct_and_real?(:child, self.child_id, 1)
   end
 end

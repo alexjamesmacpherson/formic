@@ -15,34 +15,18 @@ class Study < ApplicationRecord
             presence: true,
             allow_nil: true
   # Validate existence and further correctness
-  validate :subject_exists
-  validate :pupil_exists_and_student?
-  validate :grades_percentages?
+  validate :subject_exists?
+  validate :pupil_correct_and_real?
+  validate :percentage_grades?
 
 private
 
-  def subject_exists
-    unless Subject.exists?(subject_id)
-      errors.add(:subject, 'must exist')
-    end
+  def pupil_correct_and_real?
+    user_is_correct_and_real?(:pupil, self.pupil_id, 1)
   end
 
-  def pupil_exists_and_student?
-    if !User.exists?(pupil_id)
-      errors.add(:pupil, 'must exist')
-    elsif User.exists_but_not_group?(pupil_id, 1)
-      errors.add(:pupil, 'must have correct user group')
-    end
-  end
-
-  def grades_percentages?
-    grade_percentage?(:target, target)
-    grade_percentage?(:expected, expected)
-  end
-
-  def grade_percentage?(attr, grade)
-    if grade && !(0..100).include?(grade)
-      errors.add(:attr, 'must be a percentage between 0-100%')
-    end
+  def percentage_grades?
+    grade_percentage?(:target, self.target)
+    grade_percentage?(:expected, self.expected)
   end
 end
