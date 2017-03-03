@@ -8,27 +8,22 @@ module ApplicationHelper
       page_title + ' | ' + base_title
     end
   end
-  
+
+  def notify(user, message, link)
+    user.notifications.create(message: message, link: link)
+  end
+
   def score_to_grade(score)
-    case score
-      when 90..100
-        'A*'
-      when 80..89
-        'A'
-      when 70..79
-        'B'
-      when 60..69
-        'C'
-      when 50..59
-        'D'
-      when 40..49
-        'E'
-      when 30..39
-        'F'
-      when 10..29
-        'U'
-      else
-        'X'
+    if score == 100
+      'A*'
+    elsif score < 10
+      'X'
+    elsif score < 30
+      'U'
+    else
+      grades = ['F', 'E', 'D', 'C', 'B' ,'A' ,'A*']
+      ix = (score / 10).floor - 3
+      grades[ix]
     end
   end
 end

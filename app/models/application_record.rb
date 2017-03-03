@@ -11,6 +11,10 @@ class ApplicationRecord < ActiveRecord::Base
     is_record?(:school, School, school_id)
   end
 
+  def user_exists?
+    is_record?(:user, User, user_id)
+  end
+
   def subject_exists?
     is_record?(:subject, Subject, subject_id)
   end

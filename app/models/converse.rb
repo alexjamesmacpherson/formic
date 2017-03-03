@@ -11,10 +11,4 @@ class Converse < ApplicationRecord
   # Validate user and chat actually exist
   validate :user_exists?
   validate :chat_exists?
-
-private
-
-  def user_exists?
-    is_record?(:user, User, user_id)
-  end
 end

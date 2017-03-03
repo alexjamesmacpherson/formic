@@ -1,23 +1,25 @@
 class User < ApplicationRecord
+  # School-related attributes
   belongs_to :school
   belongs_to :year_group
+  has_many :departments, foreign_key: 'head_id', dependent: :nullify
 
+  # Tutor group
   has_many :tutees, class_name: 'User', foreign_key: 'tutor_id', dependent: :nullify
   belongs_to :tutor, class_name: 'User', optional: true
 
+  # Family (parents/children)
   has_many :parents, through: :parent_relations, source: :parent
   has_many :parent_relations, class_name: 'ParentRelation', foreign_key: 'child_id', dependent: :destroy
 
   has_many :children, through: :child_relations, source: :child
   has_many :child_relations, class_name: 'ParentRelation', foreign_key: 'parent_id', dependent: :destroy
 
-  has_many :departments, foreign_key: 'head_id', dependent: :nullify
-
-  # Get student's grades/subjects
+  # Student's grades/subjects
   has_many :grades, class_name: 'Study', foreign_key: 'pupil_id', dependent: :destroy
   has_many :studies, class_name: 'Subject', through: :studies
 
-  # Get lessons a teacher takes
+  # Teacher's lessons
   has_many :teaching_relations, class_name: 'Teach', foreign_key: 'teacher_id', dependent: :destroy
   has_many :teaches, class_name: 'Subject', through: :teaching_relations
 
@@ -29,6 +31,9 @@ class User < ApplicationRecord
   has_many :converses, dependent: :destroy
   has_many :messages, foreign_key: 'sender_id', dependent: :destroy
   has_many :unread_messages, foreign_key: 'recipient_id', dependent: :destroy
+
+  # Notifications
+  has_many :notifications, dependent: :destroy
 
   # Attribute accessors
   attr_accessor :remember_token, :activation_token, :reset_token
