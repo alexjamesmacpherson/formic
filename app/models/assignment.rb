@@ -17,13 +17,5 @@ class Assignment < ApplicationRecord
   validates :due,
             presence: true
   # Validate assignment cannot be added to a non-existent subject
-  validate :subject_exists
-
-  private
-
-  def subject_exists
-    unless Subject.exists?(subject_id)
-      errors.add(:subject, 'must exist')
-    end
-  end
+  validate :subject_exists?
 end

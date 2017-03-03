@@ -10,55 +10,43 @@ class Term < ApplicationRecord
   validates :name,
             presence: true,
             length: { maximum: 255 }
-  validates :start_date, :end_date, :halfterm_start_date, :halfterm_end_date,
+  validates :starts, :ends, :halfterm_starts, :halfterm_ends,
             presence: true
   # Validate term cannot be added to a non-existent school nor end before it starts
-  validate :school_exists
-  validate :term_cannot_end_before_start
-  validate :half_cannot_end_before_start
+  validate :school_exists?
+  validate :term_ends_before_start?
+  validate :half_term_ends_before_start?
   validate :halfterm_within_term
 
   def in_term?(date)
-    (start_date..end_date).cover?(date)
+    if starts && ends && date
+      (starts..ends).cover?(date)
+    else
+      false
+    end
   end
 
   def in_halfterm?(date)
-    (halfterm_start_date..halfterm_end_date).cover?(date)
+    (halfterm_starts..halfterm_ends).cover?(date)
   end
 
 private
 
-  def school_exists
-    unless School.exists?(school_id)
-      errors.add(:school, 'must exist')
-    end
+  def term_ends_before_start?
+    ends_before_start?(:ends, starts, ends)
   end
 
-  def term_cannot_end_before_start
-    return unless start_date && end_date
-
-    if start_date > end_date
-      errors.add(:end_date, 'cannot be before start of term')
-    end
-  end
-
-  def half_cannot_end_before_start
-    return unless halfterm_start_date && halfterm_end_date
-
-    if halfterm_start_date > halfterm_end_date
-      errors.add(:halfterm_end_date, 'cannot be before start of half term')
-    end
+  def half_term_ends_before_start?
+    ends_before_start?(:halfterm_ends, halfterm_starts, halfterm_ends)
   end
 
   def halfterm_within_term
-    return unless start_date && halfterm_start_date && end_date && halfterm_end_date
-
-    unless in_term?(halfterm_start_date)
-      errors.add(:halfterm_start_date, 'cannot be before start of term')
+    unless in_term?(halfterm_starts)
+      errors.add(:halfterm_starts, 'cannot be before start of term')
     end
 
-    unless in_term?(halfterm_end_date)
-      errors.add(:halfterm_end_date, 'cannot be after end of term')
+    unless in_term?(halfterm_ends)
+      errors.add(:halfterm_ends, 'cannot be after end of term')
     end
   end
 end

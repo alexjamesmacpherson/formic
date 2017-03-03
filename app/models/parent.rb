@@ -8,30 +8,13 @@ class Parent < ApplicationRecord
             uniqueness: { scope: :child }
   validates :child,
             presence: true
-  # Validate both users actually exist
-  validate :users_exist
-  # Validate correct user groups
-  validate :correct_user_group
+  # Validate both users actually exist and are of correct user groups
+  validate :users_correct_and_real?
 
 private
 
-  def users_exist
-    unless User.exists?(parent_id)
-      errors.add(:parent, 'must exist')
-    end
-
-    unless User.exists?(child_id)
-      errors.add(:child, 'must exist')
-    end
-  end
-
-  def correct_user_group
-    if User.exists?(parent_id) && !User.find(parent_id).is?(:group, 2)
-      errors.add(:parent, 'must have correct user group')
-    end
-
-    if User.exists?(child_id) && !User.find(child_id).is?(:group, 1)
-      errors.add(:child, 'must have correct user group')
-    end
+  def users_correct_and_real?
+    user_is_correct_and_real?(:parent, self.parent_id, 2)
+    user_is_correct_and_real?(:child, self.child_id, 1)
   end
 end

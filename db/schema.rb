@@ -67,8 +67,8 @@ ActiveRecord::Schema.define(version: 20170302224538) do
   create_table "periods", force: :cascade do |t|
     t.integer  "school_id"
     t.string   "name"
-    t.datetime "starts_at"
-    t.datetime "ends_at"
+    t.datetime "starts"
+    t.datetime "ends"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["school_id"], name: "index_periods_on_school_id"
@@ -137,12 +137,12 @@ ActiveRecord::Schema.define(version: 20170302224538) do
   create_table "terms", force: :cascade do |t|
     t.integer  "school_id"
     t.string   "name"
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.datetime "halfterm_start_date"
-    t.datetime "halfterm_end_date"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "starts"
+    t.datetime "ends"
+    t.datetime "halfterm_starts"
+    t.datetime "halfterm_ends"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.index ["school_id"], name: "index_terms_on_school_id"
   end
 

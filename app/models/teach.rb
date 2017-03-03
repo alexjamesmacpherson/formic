@@ -8,29 +8,13 @@ class Teach < ApplicationRecord
             uniqueness: { scope: :teacher }
   validates :teacher,
             presence: true
-  # Validate both users actually exist
-  validate :subject_exists
-  validate :teacher_exists
-  # Validate correct user group
-  validate :user_is_teacher
+  # Validate existence and further correctness
+  validate :subject_exists?
+  validate :teacher_correct_and_real?
 
-  private
+private
 
-  def subject_exists
-    unless Subject.exists?(subject_id)
-      errors.add(:subject, 'must exist')
-    end
-  end
-
-  def teacher_exists
-    unless User.exists?(teacher_id)
-      errors.add(:teacher, 'must exist')
-    end
-  end
-
-  def user_is_teacher
-    if User.exists?(teacher_id) && !User.find(teacher_id).is?(:group, 3)
-      errors.add(:teacher, 'must have correct user group')
-    end
+  def teacher_correct_and_real?
+    user_is_correct_and_real?(:teacher, self.teacher_id, 3)
   end
 end

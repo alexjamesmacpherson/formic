@@ -13,13 +13,5 @@ class YearGroup < ApplicationRecord
             presence: true,
             length: { maximum: 255 }
   # Validate year group cannot be added to a non-existent school
-  validate :school_exists
-
-private
-
-  def school_exists
-    unless School.exists?(school_id)
-      errors.add(:school, 'must exist')
-    end
-  end
+  validate :school_exists?
 end

@@ -3,7 +3,7 @@ require 'test_helper'
 class PeriodTest < ActiveSupport::TestCase
   def setup
     @school = schools(:test_college)
-    @period = @school.periods.build(name: 'Test Period', starts_at: Time.zone.now, ends_at: Time.zone.now + 1.hour)
+    @period = @school.periods.build(name: 'Test Period', starts: Time.zone.now, ends: Time.zone.now + 1.hour)
   end
 
   test 'period is valid and can be saved' do
@@ -36,17 +36,17 @@ class PeriodTest < ActiveSupport::TestCase
   end
 
   test 'period must have start time' do
-    @period.starts_at = nil
+    @period.starts = nil
     assert_not @period.valid?
   end
 
   test 'period must have end time' do
-    @period.ends_at = nil
+    @period.ends = nil
     assert_not @period.valid?
   end
 
   test 'period must start before it finishes' do
-    @period.starts_at = @period.ends_at + 1.hour
+    @period.starts = @period.ends + 1.hour
     assert_not @period.valid?
   end
 end

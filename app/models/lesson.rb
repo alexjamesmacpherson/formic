@@ -14,25 +14,14 @@ class Lesson < ApplicationRecord
   validates :location,
             presence: true,
             uniqueness: { scope: :period }
-  validate :subject_exists
-  validate :period_exists
-  validate :location_exists
+  # Validate all records exist within the database if declared
+  validate :subject_exists?
+  validate :period_exists?
+  validate :location_exists?
 
 private
 
-  def subject_exists
-    unless Subject.exists?(subject_id)
-      errors.add(:subject, 'must exist')
-    end
-  end
-
-  def period_exists
-    unless Period.exists?(period_id)
-      errors.add(:period, 'must exist')
-    end
-  end
-
-  def location_exists
+  def location_exists?
     unless Location.exists?(location_id)
       errors.add(:location, 'must exist')
     end
