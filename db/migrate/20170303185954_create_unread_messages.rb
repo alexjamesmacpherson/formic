@@ -6,6 +6,6 @@ class CreateUnreadMessages < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-    add_foreign_key :messages, :users, column: :recipient_id
+    add_foreign_key :unread_messages, :users, column: :recipient_id
   end
 end
