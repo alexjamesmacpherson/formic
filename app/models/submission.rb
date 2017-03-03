@@ -29,8 +29,9 @@ class Submission < ApplicationRecord
   validates :grade,
             presence: true,
             if: :marked?
-  validate :users_correct_and_if_real?
-  validate :percentage_grade?
+  validate :users_correct_if_real?
+  validate :percentage_grade?,
+           if: :marked?
 
   def submitted?
     submitted
@@ -42,8 +43,8 @@ class Submission < ApplicationRecord
 
 private
 
-  def users_correct_and_if_real?
-    user_is_correct_and_real?(:pupil, self.pupil_id, 1)
+  def users_correct_if_real?
+    user_is_correct_if_real?(:pupil, self.pupil_id, 1)
     user_is_correct_if_real?(:marker, self.marker_id, 3)
   end
 

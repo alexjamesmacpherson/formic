@@ -16,17 +16,17 @@ class Study < ApplicationRecord
             allow_nil: true
   # Validate existence and further correctness
   validate :subject_exists?
-  validate :pupil_correct_and_real?
+  validate :pupil_correct_if_real?
   validate :percentage_grades?
 
 private
 
-  def pupil_correct_and_real?
-    user_is_correct_and_real?(:pupil, self.pupil_id, 1)
+  def pupil_correct_if_real?
+    user_is_correct_if_real?(:pupil, pupil_id, 1)
   end
 
   def percentage_grades?
-    grade_percentage?(:target, self.target)
-    grade_percentage?(:expected, self.expected)
+    grade_percentage?(:target, target)
+    grade_percentage?(:expected, expected)
   end
 end

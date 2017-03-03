@@ -2,22 +2,30 @@ class User < ApplicationRecord
   belongs_to :school
   belongs_to :year_group
 
-  has_many :tutors, :class_name => 'Tutor', :foreign_key => 'tutor_id', dependent: :destroy
-  has_many :pupils, :class_name => 'Tutor', :foreign_key => 'pupil_id', dependent: :destroy
+  # TBC: boil this down to a has-and-belongs-to-many relation
+  has_many :tutor_relations, :class_name => 'Tutor', :foreign_key => 'tutor_id', dependent: :destroy
+  has_many :pupil_relations, :class_name => 'Tutor', :foreign_key => 'pupil_id', dependent: :destroy
+  has_many :parent_relations, :class_name => 'Parent', :foreign_key => 'parent_id', dependent: :destroy
+  has_many :child_relations, :class_name => 'Parent', :foreign_key => 'child_id', dependent: :destroy
 
-  has_many :parents, :class_name => 'Parent', :foreign_key => 'parent_id', dependent: :destroy
-  has_many :children, :class_name => 'Parent', :foreign_key => 'child_id', dependent: :destroy
+  # Useful relative references:
+  has_many :tutors, :class_name => 'User', :through => :tutor_relations
+  has_many :pupils, :class_name => 'User', :through => :pupil_relations
+  has_many :parents, :class_name => 'User', :through => :parent_relations
+  has_many :children, :class_name => 'User', :through => :child_relations
 
   has_many :departments, :foreign_key => 'head_id', dependent: :nullify
 
+  # Get student's grades/subjects
   has_many :grades, :class_name => 'Study', :foreign_key => 'pupil_id', dependent: :destroy
-  has_many :subjects, through: :studies
+  has_many :studies, :class_name => 'Subject', through: :studies
 
-  has_many :teaches, :foreign_key => 'teacher_id', dependent: :destroy
-  has_many :subjects, through: :teaches
+  # Get lessons a teacher takes
+  has_many :teaching_relations, :class_name => 'Teach', :foreign_key => 'teacher_id', dependent: :destroy
+  has_many :teaches, :class_name => 'Subject', through: :teaching_relations
 
   has_many :submissions, :foreign_key => 'pupil_id', dependent: :destroy
-  has_many :submitted, :class_name => 'Submission', :foreign_key => 'marker_id', dependent: :destroy
+  has_many :submitted, :class_name => 'Submission', :foreign_key => 'marker_id', dependent: :nullify
 
   # Attribute accessors
   attr_accessor :remember_token, :activation_token, :reset_token
@@ -61,7 +69,8 @@ class User < ApplicationRecord
             if: :is_student?
   # Validate user cannot be added to a non-existent school or year group
   validate :school_exists?
-  validate :year_group_exists?
+  validate :year_group_exists?,
+           if: :is_student?
 
   # Methods defined here are of form User.foo()
   class << self
@@ -76,8 +85,8 @@ class User < ApplicationRecord
       SecureRandom.urlsafe_base64
     end
 
-    def exists_but_not_group?(user_id, group)
-      User.exists?(user_id) && !User.find(user_id).is?(:group, group)
+    def exists_but_not_group?(id, group)
+      User.exists?(id) && !User.find(id).is?(:group, group)
     end
   end
 
@@ -140,12 +149,6 @@ private
   def create_activation_digest
     self.activation_token = User.new_token
     self.activation_digest = User.digest(activation_token)
-  end
-
-  def year_group_exists?
-    if is_student? && !YearGroup.exists?(year_group_id)
-      errors.add(:year_group, 'must exist')
-    end
   end
 
   def is_student?
