@@ -8,30 +8,21 @@ class Tutor < ApplicationRecord
             uniqueness: { scope: :pupil }
   validates :pupil,
             presence: true
-  # Validate both users actually exist
-  validate :users_exist
-  # Validate correct user groups
-  validate :correct_user_group
+  # Validate both users actually exist and are of correct user groups
+  validate :users_exist_and_correct?
 
 private
 
-  def users_exist
-    unless User.exists?(tutor_id)
-      errors.add(:tutor, 'must exist')
-    end
-
-    unless User.exists?(pupil_id)
-      errors.add(:pupil, 'must exist')
-    end
+  def users_exist_and_correct?
+    is_correct_and_real?(:tutor, tutor_id, 3)
+    is_correct_and_real?(:pupil, pupil_id, 1)
   end
 
-  def correct_user_group
-    if User.exists_but_not_group?(tutor_id, 3)
-      errors.add(:tutor, 'must have correct user group')
-    end
-
-    if User.exists_but_not_group?(pupil_id, 1)
-      errors.add(:pupil, 'must have correct user group')
+  def is_correct_and_real?(attr, id, group)
+    if !User.exists?(id)
+      errors.add(attr, 'must exist')
+    elsif User.exists_but_not_group?(id, group)
+      errors.add(attr, 'must have correct user group')
     end
   end
 end

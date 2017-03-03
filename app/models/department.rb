@@ -17,8 +17,7 @@ class Department < ApplicationRecord
             allow_nil: true
   # Validate department cannot be added to a non-existent school
   validate :school_exists
-  validate :head_exists
-  validate :head_is_teacher
+  validate :head_exists_and_teacher?
 
 private
 
@@ -28,14 +27,10 @@ private
     end
   end
 
-  def head_exists
-    if head_id && !User.exists?(head_id)
+  def head_exists_and_teacher?
+    if User.id_but_nonexistent?(head_id)
       errors.add(:head, 'must exist')
-    end
-  end
-
-  def head_is_teacher
-    if User.exists_but_not_group?(head_id, 3)
+    elsif User.exists_but_not_group?(head_id, 3)
       errors.add(:head, 'must be a teacher')
     end
   end

@@ -33,7 +33,7 @@ private
   end
 
   def year_group_exists
-    if year_group_id && !YearGroup.exists?(year_group_id)
+    if YearGroup.id_but_nonexistent?(year_group_id)
       errors.add(:year_group, 'must exist')
     end
   end
