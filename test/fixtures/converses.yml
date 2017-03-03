@@ -1,0 +1,7 @@
+one:
+  chat: one
+  user: test_user
+
+two:
+  chat: one
+  user: test_teacher

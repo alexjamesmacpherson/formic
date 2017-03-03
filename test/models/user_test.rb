@@ -7,8 +7,9 @@ class UserTest < ActiveSupport::TestCase
     @user = @school.users.build(email: 'james@test.com', name: 'James Tester', password: 'foobar', password_confirmation: 'foobar', year_group: @year)
   end
 
-  test 'user is valid' do
+  test 'user is valid and can be saved' do
     assert @user.valid?
+    assert @user.save
   end
 
   test 'user must belong to school' do

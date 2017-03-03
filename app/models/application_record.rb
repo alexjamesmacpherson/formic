@@ -11,6 +11,10 @@ class ApplicationRecord < ActiveRecord::Base
     is_record?(:school, School, school_id)
   end
 
+  def user_exists?
+    is_record?(:user, User, user_id)
+  end
+
   def subject_exists?
     is_record?(:subject, Subject, subject_id)
   end
@@ -25,6 +29,10 @@ class ApplicationRecord < ActiveRecord::Base
 
   def year_group_exists?
     is_record?(:year_group, YearGroup, year_group_id)
+  end
+
+  def chat_exists?
+    is_record?(:chat, Chat, chat_id)
   end
 
   def user_is_correct_if_real?(attr, id, group)

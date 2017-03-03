@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302224538) do
+ActiveRecord::Schema.define(version: 20170303200622) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "subject_id"
@@ -20,6 +20,22 @@ ActiveRecord::Schema.define(version: 20170302224538) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["subject_id"], name: "index_assignments_on_subject_id"
+  end
+
+  create_table "chats", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "converses", force: :cascade do |t|
+    t.integer  "chat_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id", "user_id"], name: "index_converses_on_chat_id_and_user_id", unique: true
+    t.index ["chat_id"], name: "index_converses_on_chat_id"
+    t.index ["user_id"], name: "index_converses_on_user_id"
   end
 
   create_table "departments", force: :cascade do |t|
@@ -52,6 +68,26 @@ ActiveRecord::Schema.define(version: 20170302224538) do
     t.datetime "updated_at", null: false
     t.index ["school_id", "name"], name: "index_locations_on_school_id_and_name", unique: true
     t.index ["school_id"], name: "index_locations_on_school_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "chat_id"
+    t.integer  "sender_id"
+    t.text     "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["sender_id"], name: "index_messages_on_sender_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "user_id"
+    t.boolean  "seen",       default: false
+    t.string   "message"
+    t.string   "link"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "parent_relations", force: :cascade do |t|
@@ -144,6 +180,15 @@ ActiveRecord::Schema.define(version: 20170302224538) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.index ["school_id"], name: "index_terms_on_school_id"
+  end
+
+  create_table "unread_messages", force: :cascade do |t|
+    t.integer  "message_id"
+    t.integer  "recipient_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["message_id"], name: "index_unread_messages_on_message_id"
+    t.index ["recipient_id"], name: "index_unread_messages_on_recipient_id"
   end
 
   create_table "users", force: :cascade do |t|
