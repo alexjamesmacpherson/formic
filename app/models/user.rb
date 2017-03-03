@@ -2,17 +2,11 @@ class User < ApplicationRecord
   belongs_to :school
   belongs_to :year_group
 
-  # TBC: boil this down to a has-and-belongs-to-many relation
-  has_many :tutor_relations, :class_name => 'Tutor', :foreign_key => 'tutor_id', dependent: :destroy
-  has_many :pupil_relations, :class_name => 'Tutor', :foreign_key => 'pupil_id', dependent: :destroy
-  has_many :parent_relations, :class_name => 'Parent', :foreign_key => 'parent_id', dependent: :destroy
-  has_many :child_relations, :class_name => 'Parent', :foreign_key => 'child_id', dependent: :destroy
+  has_many :tutees, class_name: 'User', foreign_key: 'tutor_id', dependent: :nullify
+  belongs_to :tutor, class_name: 'User', optional: true
 
-  # Useful relative references:
-  has_many :tutors, :class_name => 'User', :through => :tutor_relations
-  has_many :pupils, :class_name => 'User', :through => :pupil_relations
-  has_many :parents, :class_name => 'User', :through => :parent_relations
-  has_many :children, :class_name => 'User', :through => :child_relations
+  has_many :parents, :class_name => 'Parent', :foreign_key => 'parent_id', dependent: :destroy
+  has_many :children, :class_name => 'Parent', :foreign_key => 'child_id', dependent: :destroy
 
   has_many :departments, :foreign_key => 'head_id', dependent: :nullify
 
@@ -67,10 +61,18 @@ class User < ApplicationRecord
   validates :year_group,
             presence: true,
             if: :is_student?
+  validates :tutor,
+            presence: true,
+            allow_nil: true,
+            if: :is_student?
+  validates :tutor,
+            absence: true,
+            unless: :is_student?
   # Validate user cannot be added to a non-existent school or year group
   validate :school_exists?
   validate :year_group_exists?,
            if: :is_student?
+  validate :tutor_correct_if_real?
 
   # Methods defined here are of form User.foo()
   class << self
@@ -153,5 +155,9 @@ private
 
   def is_student?
     is?(:group, 1)
+  end
+
+  def tutor_correct_if_real?
+    user_is_correct_if_real?(:tutor, tutor_id, 3)
   end
 end

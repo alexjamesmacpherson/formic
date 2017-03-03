@@ -146,18 +146,9 @@ ActiveRecord::Schema.define(version: 20170302224538) do
     t.index ["school_id"], name: "index_terms_on_school_id"
   end
 
-  create_table "tutors", force: :cascade do |t|
-    t.integer  "tutor_id"
-    t.integer  "pupil_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["pupil_id"], name: "index_tutors_on_pupil_id"
-    t.index ["tutor_id", "pupil_id"], name: "index_tutors_on_tutor_id_and_pupil_id", unique: true
-    t.index ["tutor_id"], name: "index_tutors_on_tutor_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.integer  "school_id"
+    t.integer  "tutor_id"
     t.string   "email"
     t.integer  "group",             default: 1
     t.string   "name"
@@ -174,6 +165,7 @@ ActiveRecord::Schema.define(version: 20170302224538) do
     t.integer  "year_group_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["school_id"], name: "index_users_on_school_id"
+    t.index ["tutor_id"], name: "index_users_on_tutor_id"
     t.index ["year_group_id"], name: "index_users_on_year_group_id"
   end
 

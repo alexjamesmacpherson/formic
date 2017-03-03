@@ -2,7 +2,7 @@
 <h1><%= @user.name %></h1>
 <h2><%= simple_format(@user.bio) %></h2>
 <h3><%= @user.email %></h3>
-<h3><%= School.find(@user.school_id).name %></h3>
+<h3><%= @user.school.name %></h3>
 
 <ul class="record-list">
   <% if @relations %>
