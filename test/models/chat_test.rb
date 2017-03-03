@@ -16,7 +16,7 @@ class ChatTest < ActiveSupport::TestCase
   end
 
   test 'chat has name of valid length' do
-    invalid_names = ['', 'a' * 256]
+    invalid_names = [nil, '', 'a' * 256]
     invalid_names.each do |invalid|
       @chat.name = invalid
       assert_not @chat.valid?, "#{invalid.inspect} should not be a valid chat name"
@@ -26,12 +26,12 @@ class ChatTest < ActiveSupport::TestCase
     assert @chat.valid?
   end
 
-  test 'chat cannot have fewer than 2 users post-creation and is deleted if so' do
+  test 'chat cannot have fewer than 2 users post-creation' do
     assert_equal 2, @chat.converses.length
     assert_difference 'Converse.count', -1 do
       @chat.converses.first.destroy
     end
-
+    # Ideally need a function to flush all invalidated records from database, but this will be very slow given validation time
     assert_not @chat.reload.valid?
   end
 end
