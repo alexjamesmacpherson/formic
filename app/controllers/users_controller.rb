@@ -74,11 +74,11 @@ class UsersController < ApplicationController
 private
 
   def edit_user_params
-    params.require(:user).permit(:email, :name, :bio, :password, :password_confirmation, :avatar)
+    params.require(:user).permit(:email, :name, :bio, :password, :password_confirmation, :avatar, :avatar_cache, :remove_avatar)
   end
 
   def new_user_params
-    params.require(:user).permit(:email, :group_id, :year_group_id, :name, :password, :password_confirmation)
+    params.require(:user).permit(:email, :group_id, :year_group_id, :name)
   end
 
   # Can only edit/update your own records (admin staff can edit anyone's records)

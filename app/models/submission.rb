@@ -3,6 +3,9 @@ class Submission < ApplicationRecord
   belongs_to :pupil, :class_name => 'User'
   belongs_to :marker, :class_name => 'User'
 
+  # Mount avatar uploader
+  mount_uploader :file, FileUploader
+
   # Remove whitespace
   auto_strip_attributes :feedback, :convert_non_breaking_spaces => true
 
@@ -14,7 +17,6 @@ class Submission < ApplicationRecord
             presence: true
   validates :file,
             presence: true,
-            length: { maximum: 255 },
             if: :submitted?
   validates :submitted_at,
             presence: true,

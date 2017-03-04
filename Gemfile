@@ -34,6 +34,8 @@ gem 'bootstrap-will_paginate', '0.0.10'
 gem 'auto_strip_attributes', '~> 2.1'
 # CarrierWave for file uploads
 gem 'carrierwave', '~> 1.0'
+gem 'fog-aws'
+gem 'mini_magick', '4.6.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
