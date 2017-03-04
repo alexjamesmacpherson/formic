@@ -4,7 +4,7 @@
 <h3><%= @user.email %></h3>
 <h3><%= @user.school.name %></h3>
 
-<img class="avatar" src="<%= @user.avatar.url %>" />
+<%= image_tag(@user.avatar.url, class: 'avatar') %>
 
 <ul class="record-list">
   <% if @relations %>
