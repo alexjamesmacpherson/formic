@@ -5,21 +5,22 @@ class SubmissionSubmittedTest < ActiveSupport::TestCase
     @assignment = assignments(:test_assignment)
     @pupil = users(:test_user)
 
-    @submission = Submission.new(assignment: @assignment, pupil: @pupil, file: User.new_token, submitted: true, submitted_at: Time.zone.now)
+    @submission = Submission.new(assignment: @assignment, pupil: @pupil, file: File.open(file_fixture('logo-v.jpg')), submitted: true, submitted_at: Time.zone.now)
   end
 
   test 'submission is valid and can be saved' do
-    puts @file_uploader.url
     assert @submission.valid?
     assert @submission.save
   end
 
   test 'submitted file cannot be nil' do
-    invalid_names = [nil, '']
-    invalid_names.each do |invalid|
-      @submission.file = invalid
-      assert_not @submission.valid?, "#{invalid.inspect} should not be a valid file"
-    end
+    @submission.file = nil
+    assert_not @submission.valid?
+    assert_not @submission.save
+  end
+
+  test 'uploaded file is correct file' do
+    assert_equal 'logo-v.jpg', @submission.file.filename
   end
 
   test 'submission must have submission datetime' do
