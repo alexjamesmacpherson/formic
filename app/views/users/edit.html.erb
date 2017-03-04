@@ -14,7 +14,7 @@
         <%= f.text_field :email, class: 'form-control' %>
 
         <%= f.label :avatar %>
-        <%= image_tag(@user.avatar_url, class: 'avatar') if @user.avatar? %>
+        <%= image_tag(@user.avatar.url, class: 'avatar') %>
         <%= f.file_field :avatar, accept:'image/*', class: 'form-control' %>
         <%= f.hidden_field :avatar_cache %>
 
