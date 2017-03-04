@@ -1,0 +1,9 @@
+<div class="top-bar">
+  <%= form_tag users_path, :method => 'get' do %>
+      <%= text_field_tag :search, params[:search], class: '', placeholder: 'Search...', autocomplete: :off %>
+      <%= button_tag(type: 'submit', class: 'search-button') do %>
+          <i class="material-icons">search</i>
+      <% end %>
+  <% end %>
+  <div class="divider"></div>
+</div>

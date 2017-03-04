@@ -61,4 +61,16 @@ class SchoolTest < ActiveSupport::TestCase
     @school.motto = 'a' * 256
     assert_not @school.valid?
   end
+
+  test 'school can upload custom logo' do
+    @school.logo = File.open(file_fixture('logo-v.jpg'))
+    assert @school.valid?
+    assert @school.save
+  end
+
+  test 'logo can be blank' do
+    @school.logo = nil
+    assert @school.valid?
+    assert @school.save
+  end
 end

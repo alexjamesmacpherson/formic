@@ -149,8 +149,19 @@ class User < ApplicationRecord
   end
 
   # Generic equality method for any user attribute
-  def is?(attribute, value)
-    send(attribute) == value
+  def is?(attribute, values)
+    is_attr = false
+
+    if values.is_a?(Array)
+      values.each do |value|
+        is_attr = is_attr || send(attribute) == value
+        break if is_attr
+      end
+    else
+      is_attr = send(attribute) == values
+    end
+
+    is_attr
   end
 
 private

@@ -1,5 +1,35 @@
 <% provide(:title, "Edit - #{@school.name}") %>
 <h1>Edit - <%= @school.name %></h1>
 
-<% provide(:button_text, 'Save Settings') %>
-<%= render 'settings' %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for @school do |f| %>
+        <% @error = @school %>
+        <%= render 'layouts/errors' %>
+
+        <%= f.label :logo %>
+        <%= image_tag(@school.logo.url, class: 'logo') if @school.logo? %>
+        <%= f.file_field :logo, accept:'image/*', class: 'form-control' %>
+        <%= f.hidden_field :logo_cache %>
+
+        <%= f.label :remove_logo, class: 'checkbox inline' do %>
+            <%= f.check_box :remove_logo %>
+            <span>Remove Logo</span>
+        <% end %>
+
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+
+        <%= f.label :address %>
+        <%= f.text_area :address, rows: '4', class: 'form-control' %>
+
+        <%= f.label :phone %>
+        <%= f.text_field :phone, class: 'form-control' %>
+
+        <%= f.label :motto %>
+        <%= f.text_field :motto, class: 'form-control', placeholder: 'Leave blank for no motto' %>
+
+        <%= f.submit 'Save Settings', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
