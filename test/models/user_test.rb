@@ -126,4 +126,16 @@ class UserTest < ActiveSupport::TestCase
     @user.year_group_id = 10
     assert_not @user.valid?
   end
+
+  test 'user can upload custom avatar' do
+    @user.avatar = File.open(file_fixture('logo-v.jpg'))
+    assert @user.valid?
+    assert @user.save
+  end
+
+  test 'avatar can be blank' do
+    @user.avatar = nil
+    assert @user.valid?
+    assert @user.save
+  end
 end

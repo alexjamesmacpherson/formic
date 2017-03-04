@@ -35,6 +35,9 @@ class User < ApplicationRecord
   # Notifications
   has_many :notifications, dependent: :destroy
 
+  # Mount avatar uploader
+  mount_uploader :avatar, AvatarUploader
+
   # Attribute accessors
   attr_accessor :remember_token, :activation_token, :reset_token
 

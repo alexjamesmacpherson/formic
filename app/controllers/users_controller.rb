@@ -35,6 +35,12 @@ class UsersController < ApplicationController
   def create
     @school = School.find(current_user.school_id)
     @user = @school.users.build(new_user_params)
+
+    # Set random password on user creation
+    random_password = User.new_token
+    @user.password = random_password
+    @user.password_confirmation = random_password
+
     if @user.save
       @user.send_activation_email
       flash[:info] = "Account created: #{@user.name} has been sent an email to activate their account."
@@ -68,11 +74,11 @@ class UsersController < ApplicationController
 private
 
   def edit_user_params
-    params.require(:user).permit(:email, :name, :bio, :password, :password_confirmation)
+    params.require(:user).permit(:email, :name, :bio, :password, :password_confirmation, :avatar, :avatar_cache, :remove_avatar)
   end
 
   def new_user_params
-    params.require(:user).permit(:email, :group_id, :year_group_id, :name, :password, :password_confirmation)
+    params.require(:user).permit(:email, :group_id, :year_group_id, :name)
   end
 
   # Can only edit/update your own records (admin staff can edit anyone's records)
