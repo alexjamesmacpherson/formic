@@ -32,6 +32,8 @@ gem 'will_paginate', '3.1.0'
 gem 'bootstrap-will_paginate', '0.0.10'
 # Use AutoStripAttributes to remove trailing whitespace and squish excessive whitespace in records
 gem 'auto_strip_attributes', '~> 2.1'
+# CarrierWave for file uploads
+gem 'carrierwave', '~> 1.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -39,7 +41,7 @@ gem 'auto_strip_attributes', '~> 2.1'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-# Use sqlite3 as the database for Active Record
+  # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
   gem 'coffee-script-source', '1.8.0'
 end
@@ -52,11 +54,13 @@ end
 group :test do
   gem 'rake'
   gem 'rails-controller-testing'
+  # Test coverage reporting and integration with code climate
   gem 'simplecov'
   gem 'codeclimate-test-reporter', '~> 1.0.0'
 end
 
 group :production do
+  # PostgreSQL database in deployment environment
   gem 'pg', '0.18.4'
 end
 
