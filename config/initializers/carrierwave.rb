@@ -7,20 +7,17 @@ CarrierWave.configure do |config|
       aws_secret_access_key:  ENV['S3_SECRET'],
       region:                 ENV['S3_REGION']
   }
+  config.storage = :fog
 
   # For testing, upload files to local `tmp` folder.
   if Rails.env.test?
     config.storage = :file
     config.enable_processing = false
     config.root = "#{Rails.root}/tmp"
-  else
-    config.storage = :fog
   end
 
   # To let CarrierWave work on heroku
-  if Rails.env.production?
-    config.cache_dir = "#{Rails.root}/tmp/uploads"
-  end
+  config.cache_dir = "#{Rails.root}/tmp/uploads" if Rails.env.production?
 
   config.fog_directory    = ENV['S3_BUCKET_NAME']
   config.fog_public       = false
