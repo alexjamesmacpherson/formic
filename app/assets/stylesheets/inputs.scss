@@ -5,7 +5,7 @@
 }
 
 textarea, input, button {
-  outline: none;
+  outline: none !important;
 }
 
 textarea {
@@ -21,4 +21,116 @@ input, textarea, select, .uneditable-input {
 
 input {
   height: auto !important;
+}
+
+.formic-form {
+  padding: 6px 0;
+  font-size: 20px;
+  border: none;
+  border-bottom: solid 4px #b0b0b0;
+  border-radius: 2px;
+  background: none;
+  box-shadow: none;
+  transition: .25s ease-in-out;
+  color: #555555;
+}
+
+.formic-form:hover, .formic-form:focus {
+  padding: 6px 12px;
+  border-bottom: solid 4px #909090;
+}
+
+.formic-form:focus {
+  background: $front-alt;
+  border-radius: 5px;
+  border-bottom: solid 4px $accent-dark;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  -webkit-text-fill-color: #555555 !important;
+  border-radius: 5px;
+  padding: 6px 6px;
+}
+
+.form-text {
+  display: block;
+  margin: -5px 0 20px;
+  text-align: center;
+}
+
+.form-row {
+  display: flex;
+  margin: 0 0 20px;
+  justify-content: space-around;
+}
+
+.formic-button {
+  color: $front;
+  background: $accent;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  margin: 10px 0;
+  transition: .25s ease-in-out;
+}
+
+.formic-button:hover, .formic-button:focus, .formic-button:active {
+  color: $front-alt;
+  background: $accent-dark;
+}
+
+.formic-button:active {
+  transition: .1s ease-in-out;
+  background: $accent-alt;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin: 0;
+
+  input {
+    display: none;
+  }
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #b0b0b0;
+  transition: .25s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: $front-alt;
+  transition: .25s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: $accent;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px $accent-alt;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }

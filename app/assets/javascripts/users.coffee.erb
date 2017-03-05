@@ -12,14 +12,16 @@ ready = ->
   ), true
 
   $('.alert').click (e) ->
-    alert = $('.alert')
-    alert.css('opacity', 0)
-    setTimeout (->
-      alert.css('display','none')
-    ), 600
+    alert = $(this)
+    if !alert.hasClass('login-alert')
+      alert.css('opacity', 0)
+      setTimeout (->
+        alert.css('display','none')
+      ), 600
 
   setTimeout (->
-    $('.alert').css('display','none')
+    if !$('.alert').hasClass('login-alert')
+      $('.alert').css('display','none')
   ), 6000
 
 $(document).on 'turbolinks:load', ready

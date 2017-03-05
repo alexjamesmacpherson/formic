@@ -1,25 +1,36 @@
-<% provide(:title, 'Log In') %>
+<% provide(:title, 'Sign In') %>
 <% provide(:static, 'static') %>
+<% provide(:login, 'login') %>
 
 <div class="static-land"></div>
-<div class="static-center" style="width: 450px; padding: 50px; background: #f5f5f5; border-radius: 25px; box-shadow: #000000 0 0 25px -5px;">
-  <h1>Sign In</h1>
+<div class="static-center login-panel">
+  <div class="login-panel-head">
+    <h1>Sign In</h1>
+  </div>
 
-  <%= form_for(:session, url: login_path) do |f| %>
-      <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control' %>
-
-      <%= f.label :password %>
-      <%= link_to '(forgot password)', new_password_reset_path %>
-      <%= f.password_field :password, class: 'form-control' %>
-
-      <%= f.label :remember_me, class: 'checkbox inline' do %>
-          <%= f.check_box :remember_me %>
-          <span>Remember me</span>
-      <% end %>
-
-      <%= f.submit 'Log In', class: 'btn btn-primary' %>
+  <% flash.each do |message_type, message| %>
+      <%= content_tag(:div, message, class: "alert alert-#{message_type} login-alert") %>
   <% end %>
 
-  <p>Not registered with Formic Learning? <%= link_to 'Find out how you could be!', features_path %></p>
+  <div class="login-panel-body">
+    <%= form_for(:session, url: login_path) do |f| %>
+
+        <%= f.email_field :email, class: 'formic-form', placeholder: 'Email Address' %>
+        <%= f.password_field :password, class: 'formic-form', placeholder: 'Password' %>
+
+        <div class="form-row">
+          <span style="margin:6px 0 6px 40px; font-weight:bold; font-size:16px;">Remember me</span>
+          <%= f.label :remember_me, class: 'switch', style: 'margin:0 40px 0 0;' do %>
+              <%= f.check_box :remember_me %>
+              <div class="slider"></div>
+          <% end %>
+        </div>
+
+        <%= f.submit 'Log In', class: 'btn formic-button', style: 'margin-top:0;' %>
+
+        <%= link_to '(forgot password)', new_password_reset_path, class: 'form-text' %>
+    <% end %>
+
+    <p class="form-text">Not registered with Formic Learning?<br><%= link_to 'Find out how you could be!', features_path %></p>
+  </div>
 </div>

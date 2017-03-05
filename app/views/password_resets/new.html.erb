@@ -1,14 +1,25 @@
 <% provide(:title, 'Forgot Password') %>
-<h1>Forgot Password</h1>
+<% provide(:static, 'static') %>
+<% provide(:login, 'login') %>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
+<div class="static-land"></div>
+<div class="static-center login-panel">
+  <div class="login-panel-head">
+    <h1>Forgot Password</h1>
+  </div>
+
+  <% flash.each do |message_type, message| %>
+      <%= content_tag(:div, message, class: "alert alert-#{message_type} login-alert") %>
+  <% end %>
+
+  <div class="login-panel-body">
     <%= form_for(:password_reset, url: password_resets_path) do |f| %>
 
-        <%= f.label :email %>
-        <%= f.email_field :email, class: 'form-control' %>
+        <%= f.email_field :email, class: 'formic-form', placeholder: 'Email Address' %>
 
-        <%= f.submit 'Submit', class: 'btn btn-primary' %>
+        <%= f.submit 'Submit', class: 'btn formic-button' %>
+
+        <%= link_to '(back to sign in)', login_path, class: 'form-text' %>
     <% end %>
   </div>
 </div>

@@ -1,21 +1,35 @@
 <% provide(:title, 'Reset Password') %>
-<h1>Reset Password</h1>
+<% provide(:static, 'static') %>
+<% provide(:login, 'login') %>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
+<div class="static-land"></div>
+<div class="static-center login-panel">
+  <div class="login-panel-head">
+    <h1>Reset Password</h1>
+  </div>
+
+  <% @error = @user %>
+  <% if @error.errors.any? %>
+      <div id="error_explanation">
+        <div class="alert alert-danger login-alert" style="margin-bottom: 10px;">
+          The form contains <%= pluralize(@error.errors.count, 'error') %>.
+        </div>
+        <ul style="margin-bottom: -15px;">
+          <% @error.errors.full_messages.each do |msg| %>
+              <li style="box-sizing:border-box; padding-right:20px;"><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+
+  <div class="login-panel-body">
     <%= form_for(@user, url: password_reset_path(params[:id])) do |f| %>
-        <% @error = @user %>
-        <%= render 'layouts/errors' %>
-
         <%= hidden_field_tag :email, @user.email %>
 
-        <%= f.label :password %>
-        <%= f.password_field :password, class: 'form-control' %>
+        <%= f.password_field :password, class: 'formic-form', placeholder: 'New Password' %>
+        <%= f.password_field :password_confirmation, class: 'formic-form', placeholder: 'Confirm Password' %>
 
-        <%= f.label :password_confirmation, 'Confirmation' %>
-        <%= f.password_field :password_confirmation, class: 'form-control' %>
-
-        <%= f.submit 'Update Password', class: 'btn btn-primary' %>
+        <%= f.submit 'Update Password', class: 'btn formic-button' %>
     <% end %>
   </div>
 </div>
