@@ -1,3 +1,9 @@
 <% provide(:title, 'About Us') %>
-<h1>Static#about</h1>
-<p>Find me in app/views/static/about.html.erb</p>
+<% provide(:static, 'static') %>
+<div class="static-land"></div>
+
+<div class="static-center">
+  <h1>About Formic Learning</h1>
+  <h2>This application is work-in-progress.</h2>
+  <%= link_to 'Get in touch!', contact_path, class: 'static-button' %>
+</div>
