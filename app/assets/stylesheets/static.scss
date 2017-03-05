@@ -1,0 +1,107 @@
+.top-nav-button, .login-button {
+  height: 100%;
+  @include box_sizing;
+  padding: 20px 20px;
+  float: left;
+  font-size: 18px;
+  font-weight: bold;
+
+  a {
+    display: block;
+  }
+
+  a:hover, a:focus {
+    text-decoration: none;
+  }
+}
+
+.login-button {
+  float: right;
+  margin-right: 3vw;
+}
+
+.static-land {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -5;
+  background: image-url("landing-2.jpg") no-repeat center center;
+  background-size: cover;
+  filter: brightness(35%)
+}
+
+.static-page, .static-page .footer-faded, .static-button {
+  color: $front;
+
+  a, a:visited {
+    color: #f5e0e0;
+  }
+
+  a:hover {
+    color: #fff5f5;
+  }
+
+  a:active {
+    color: #ffdddd;
+  }
+
+  .divider {
+    background-color: #ffffff;
+    opacity: 0.2;
+  }
+}
+
+.static-center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  cursor: default;
+
+  h1, h2 {
+    color: $text-light;
+    text-shadow: rgba(0,0,0,0.5) 0 0 10px;
+    font-size: 80px;
+  }
+
+  h2 {
+    color: #e0e0e0;
+    font-size: 50px;
+  }
+
+  h1 {
+    margin-bottom: 10px;
+  }
+}
+
+.static-button {
+  padding: 15px 40px;
+  font-size: 20px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.1);
+  border: solid 4px #f5e0e0;
+  width: 250px;
+  margin: 40px auto;
+  display: block;
+  color: #f5e0e0;
+  text-align: center;
+  transition: opacity .25s ease-in-out, background .25s ease-in-out;
+
+  &:visited {
+    color: #f5e0e0;
+  }
+
+  &:hover {
+    color: #fff5f5;
+    background: rgba(255,255,255,0.2);
+    text-decoration: none;
+  }
+
+  &:active {
+    transition: opacity .1s ease-in-out, background .1s ease-in-out;
+    color: #ffdddd;
+    background: rgba(255,255,255,0.3);
+  }
+}

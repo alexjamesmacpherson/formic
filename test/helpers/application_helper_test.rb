@@ -32,4 +32,15 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal 'http://localhost:3000/', Notification.last.link
     assert_equal @user, Notification.last.user
   end
+
+  test 'pretty count helper returns "9+" for any number over 9' do
+    (0..9).each do |n|
+      assert_equal n, pretty_count(n)
+    end
+
+    numbers = [10, 15, 100]
+    numbers.each do |n|
+      assert_equal '9+', pretty_count(n)
+    end
+  end
 end

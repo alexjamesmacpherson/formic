@@ -1,14 +1,22 @@
-<div class="footer">
+<div class="footer <%= 'static-page' if yield(:static) == 'static' %>">
   <div class="divider"></div>
-  <span style="float: left;">
+  <span style="float: left; margin-left: 3vw;">
     <%= link_to 'Formic Learning', root_path %>
     <span class="footer-faded" style="padding: 0;">by</span>
     <%= link_to 'Alex Macpherson', 'http://www.alexmacpherson.uk/' %>
     <span class="footer-faded" style="padding: 0;">© 2017 - All Rights Reserved</span>
   </span>
-  <span style="float: right;">
+  <span style="float: right; margin-right: 3vw;">
     <%= link_to 'About Formic Learning', about_path %>
     <span class="footer-faded">-</span>
     <%= link_to 'Contact Us', contact_path %>
   </span>
+  <% if logged_in? %>
+      <%= image_tag(current_user.school.logo, class: 'logo') if current_user.school.logo? %>
+      <% if yield(:static) == 'static' %>
+          <span class="footer-faded" style="padding:0;"><i><%= current_user.school.motto %></i></span>
+      <% else %>
+          <i><%= current_user.school.motto %></i>
+      <% end %>
+  <% end %>
 </div>

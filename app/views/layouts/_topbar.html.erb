@@ -1,9 +1,27 @@
-<div class="top-bar">
-  <%= form_tag users_path, :method => 'get' do %>
-      <%= text_field_tag :search, params[:search], class: '', placeholder: 'Search...', autocomplete: :off %>
-      <%= button_tag(type: 'submit', class: 'search-button') do %>
-          <i class="material-icons">search</i>
+<div class="top-bar <%= 'static-page' if yield(:static) == 'static' %>">
+  <% if yield(:static) == 'static' %>
+      <div class="top-nav-button" style="margin-left: 3vw;">
+        <%= link_to 'About Formic Learning', about_path %>
+      </div>
+      <div class="top-nav-button">
+        <%= link_to 'Features', features_path %>
+      </div>
+      <div class="top-nav-button">
+        <%= link_to 'Contact Us', contact_path %>
+      </div>
+  <% end %>
+
+  <% if logged_in? %>
+      <%= form_tag users_path, :method => 'get' do %>
+          <%= text_field_tag :search, params[:search], class: '', placeholder: 'Search...', autocomplete: :off %>
+          <%= button_tag(type: 'submit', class: 'search-button') do %>
+              <i class="material-icons">search</i>
+          <% end %>
       <% end %>
+  <% else %>
+      <div class="login-button">
+        <%= link_to 'Sign In', login_path %>
+      </div>
   <% end %>
   <div class="divider"></div>
 </div>
