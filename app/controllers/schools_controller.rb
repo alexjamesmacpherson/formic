@@ -32,7 +32,7 @@ class SchoolsController < ApplicationController
 private
 
   def school_params
-    params.require(:school).permit(:name, :address, :phone, :motto)
+    params.require(:school).permit(:name, :address, :phone, :motto, :logo, :logo_cache, :remove_logo)
   end
 
   # Redirect to show user's school if trying to access another school

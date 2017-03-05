@@ -149,8 +149,28 @@ class User < ApplicationRecord
   end
 
   # Generic equality method for any user attribute
-  def is?(attribute, value)
-    send(attribute) == value
+  def is?(attribute, values)
+    is_attr = false
+
+    # Method allows array to be passed, for example if checking several user groups at once
+    if values.is_a?(Array)
+      values.each do |value|
+        is_attr = is_attr || send(attribute) == value
+        break if is_attr
+      end
+    else
+      is_attr = send(attribute) == values
+    end
+
+    is_attr
+  end
+
+  def count_unread_chats
+    count = 0
+    self.chats.each do |chat|
+      count += 1 unless chat.read_by?(self)
+    end
+    count
   end
 
 private

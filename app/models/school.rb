@@ -6,6 +6,9 @@ class School < ApplicationRecord
   has_many :terms, dependent: :destroy
   has_many :locations, dependent: :destroy
 
+  # Mount logo uploader
+  mount_uploader :logo, LogoUploader
+
   # Remove whitespace
   auto_strip_attributes :name, :motto, :phone, :squish => true
   auto_strip_attributes :address, :convert_non_breaking_spaces => true

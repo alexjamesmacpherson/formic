@@ -1,0 +1,49 @@
+<div class="side-bar">
+  <%= link_to raw(image_tag(current_user.avatar.url, class: 'avatar')) +
+              raw('<span class="tip-text">View your profile</span>'),
+              current_user, class: 'nav-button tip' %>
+  <%= link_to raw("<i class=\"material-icons\">public</i>
+              <span class=\"tip-text\">Notifications</span>
+              <div class=\"notification-bubble notifications\"
+              #{current_user.notifications.where(seen: false).count > 0 ?
+                  ">#{pretty_count(current_user.notifications.where(seen: false).count)}</div>" :
+                  'style="display:none;"></div>'}"),
+              root_path, class: 'nav-button tip' %>
+  <%= link_to raw("<i class=\"material-icons\">mail</i>
+              <span class=\"tip-text\">Messages</span>
+              <div class=\"notification-bubble messages\"
+              #{current_user.count_unread_chats > 0 ?
+                  ">#{pretty_count(current_user.count_unread_chats)}</div>" :
+                  'style="display:none;"></div>'}"),
+              root_path, class: 'nav-button tip' %>
+
+  <%= link_to raw('<i class="material-icons">date_range</i>
+              <span class="tip-text">Timetable</span>'),
+              root_path, class: 'nav-button tip' if current_user.is?(:group, [1,2,3]) %>
+  <%= link_to raw('<i class="material-icons">local_library</i>
+              <span class="tip-text">Your classes</span>'),
+              root_path, class: 'nav-button tip' if current_user.is?(:group, [1,2,3]) %>
+
+  <%= link_to raw('<i class="material-icons">chrome_reader_mode</i>
+              <span class="tip-text">Homework</span>'),
+              root_path, class: 'nav-button tip' if current_user.is?(:group, [1,2]) %>
+  <%= link_to raw('<i class="material-icons">chrome_reader_mode</i>
+              <span class="tip-text">Student Assignments</span>'),
+              root_path, class: 'nav-button tip' if current_user.is?(:group, 3) %>
+
+  <%= link_to raw('<i class="material-icons">school</i>
+              <span class="tip-text">' + current_user.school.name + '</span>'),
+              current_user.school, class: 'nav-button tip' %>
+
+  <%= link_to raw('<i class="material-icons">person_add</i>
+              <span class="tip-text">Add new user</span>'),
+              new_user_path, class: 'nav-button tip' if current_user.is?(:group, 4) %>
+
+
+  <%= link_to raw('<i class="material-icons">settings</i>
+              <span class="tip-text">Account settings</span>'),
+              edit_user_path(current_user), class: 'nav-button tip settings' %>
+  <%= link_to raw('<i class="material-icons">exit_to_app</i>
+              <span class="tip-text">Logout</span>'),
+              logout_path, method: :delete, class: 'nav-button tip logout' %>
+</div>

@@ -7,7 +7,19 @@ ready = ->
     error = $(e.target)
     if error.hasClass('avatar')
       error.attr('src', '<%= image_path('balls.svg') %>')
+      error.after('<label><i class="material-icons" style="transform: translateY(6px);">perm_identity</i> Your avatar will be updated when you save your profile.</label>')
     return
   ), true
+
+  $('.alert').click (e) ->
+    alert = $('.alert')
+    alert.css('opacity', 0)
+    setTimeout (->
+      alert.css('display','none')
+    ), 600
+
+  setTimeout (->
+    $('.alert').css('display','none')
+  ), 6000
 
 $(document).on 'turbolinks:load', ready

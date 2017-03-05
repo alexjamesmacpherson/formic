@@ -1,0 +1,95 @@
+.side-bar {
+  position: fixed;
+  width: $sidebar-width;
+  height: 100%;
+  background-color: $back;
+  box-shadow: inset #000000 -20px 0px 25px -25px;
+  @include box_sizing;
+  z-index: 50;
+  padding: 16px 0;
+}
+
+.nav-button {
+  width: 72px;
+  height: 72px;
+  padding: 12px;
+  float: left;
+  @include box_sizing;
+
+  .material-icons {
+    font-size: 36px;
+    padding: 5px;
+  }
+
+  .avatar {
+    height: 100%;
+    width: 100%;
+    border-radius: 35px;
+  }
+
+  &:hover {
+    background: $back-alt;
+  }
+
+  &.settings, &.logout {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  &.settings {
+    bottom: 72px;
+  }
+}
+
+.tip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tip .tip-text {
+  top: 50%;
+  transform: translateY(-50%);
+  left: 105%;
+  width: 120px;
+  background-color: rgba(10,0,0,0.85);
+  color: #fff;
+  text-align: center;
+  font-size: 13px;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity .45s ease-in-out;
+}
+
+.tip:hover .tip-text {
+  opacity: 1;
+  transition: opacity .25s ease-in-out 0.5s;
+  visibility: visible;
+}
+
+.tip .tip-text::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border: 5px solid transparent;
+  border-right-color: rgba(10,0,0,0.85);
+}
+
+.notification-bubble {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: $front;
+  border-radius: 16px;
+  transform: translate3d(26px, -42px, 0);
+  @include box_sizing;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+}

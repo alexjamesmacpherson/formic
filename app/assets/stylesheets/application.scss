@@ -1,0 +1,15 @@
+// Default ting
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "mixins";
+@import "layouts";
+@import "sidebar";
+@import "inputs";
+
+// Pls delet system 34
+@import "style";
+
+// Controllers
+@import "static";
+@import "users";
+@import "schools";

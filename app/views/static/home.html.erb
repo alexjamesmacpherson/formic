@@ -1,3 +1,8 @@
-<h1>Static#home</h1>
-<p>Find me in app/views/static/home.html.erb</p>
-<%= link_to 'Log out', logout_path, method: :delete %>
+<% provide(:static, 'static') %>
+<div class="static-land"></div>
+
+<div class="static-center">
+  <h1>Formic Learning</h1>
+  <h2>Simplify your education.</h2>
+  <%= link_to 'Learn More', about_path, class: 'static-button' %>
+</div>

@@ -1,3 +1,9 @@
 <% provide(:title, 'Features') %>
-<h1>Static#features</h1>
-<p>Find me in app/views/static/features.html.erb</p>
+<% provide(:static, 'static') %>
+<div class="static-land"></div>
+
+<div class="static-center">
+  <h1>Features</h1>
+  <h2>Using the tools Formic provides to improve your school's teaching and learning.</h2>
+  <%= link_to 'Learn More', about_path, class: 'static-button' %>
+</div>
