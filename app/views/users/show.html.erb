@@ -1,4 +1,9 @@
 <% provide(:title, @user.name) %>
+<% provide(:top_title, "#{@user.type} Profile") %>
+<% provide(:top_link, edit_user_path(@user)) if current_user.is?(:group, 4) && !current_user?(@user) %>
+<% provide(:top_icon, 'settings') %>
+<% provide(:top_tip, "Edit #{@user.name}'s profile") %>
+
 <h1><%= @user.name %></h1>
 <h2><%= simple_format(@user.bio) %></h2>
 <h3><%= @user.email %></h3>

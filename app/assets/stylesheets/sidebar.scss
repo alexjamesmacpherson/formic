@@ -57,7 +57,9 @@
   color: #fff;
   text-align: center;
   font-size: 13px;
-  padding: 5px 0;
+  font-weight: normal;
+  padding: 5px 5px;
+  @include box_sizing;
   border-radius: 6px;
   position: absolute;
   z-index: 100;

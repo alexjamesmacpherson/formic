@@ -165,6 +165,21 @@ class User < ApplicationRecord
     is_attr
   end
 
+  def type
+    case group
+      when 1
+        'Student'
+      when 2
+        'Parent'
+      when 3
+        'Teacher'
+      when 4
+        'Staff'
+      else
+        'User'
+    end
+  end
+
   def count_unread_chats
     count = 0
     self.chats.each do |chat|

@@ -98,6 +98,51 @@ body {
   }
 }
 
+.top-title {
+  float: left;
+  font-size: 45px;
+  font-weight: bold;
+  margin-left: 3vw;
+  cursor: default;
+
+  .top-text {
+    float: left;
+    opacity: $secondary-text-dark;
+  }
+
+  .top-link {
+    float: left;
+    margin: 7px 15px 0 0;
+    height: 48px;
+    width: 48px;
+    border-radius: 25px;
+    color: $front;
+    background: $accent-dark;
+    box-shadow: #000000 0 0 10px -5px;
+
+    .material-icons {
+      font-size: 36px;
+      position: absolute;
+      margin: 6px;
+    }
+
+    &:visited {
+      color: $front;
+      background: $accent-dark;
+    }
+
+    &:hover, &:focus {
+      color: $front-alt;
+      background: $accent;
+    }
+
+    &:active {
+      color: $front;
+      background: $accent-alt;
+    }
+  }
+}
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -170,12 +215,14 @@ body {
 
 .alert {
   position: absolute;
-  width: calc(100% - 6vw);
-  transform: translateY(-75px);
-  padding: 20px;
+  width: 100%;
+  padding: 22px;
   animation: alert-fade 0.5s 5s forwards running;
   transition: opacity 0.5s ease-in-out;
   cursor: pointer !important;
+  z-index: 100;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
 }
 
 @keyframes alert-fade {

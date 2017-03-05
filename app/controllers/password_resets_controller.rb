@@ -4,6 +4,7 @@ class PasswordResetsController < ApplicationController
   before_action :get_user,         only: [:edit, :update]
   before_action :valid_user,       only: [:edit, :update]
   before_action :check_expiration, only: [:edit, :update]
+  before_action :require_logout
 
   def new
   end
@@ -59,5 +60,9 @@ private
       flash[:danger] = 'Password reset has expired.'
       redirect_to new_password_reset_url
     end
+  end
+
+  def require_logout
+    redirect_to current_user if logged_in?
   end
 end
