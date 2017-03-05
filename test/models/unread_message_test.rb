@@ -27,6 +27,10 @@ class UnreadMessageTest < ActiveSupport::TestCase
     assert_equal @recipient, @unread.recipient
   end
 
+  test 'chats with unread messages can be counted' do
+    assert_equal 1, @recipient.count_unread_chats
+  end
+
   test 'unread message must belong to message' do
     @unread.message = nil
     assert_not @unread.valid?

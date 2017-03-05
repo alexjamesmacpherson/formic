@@ -13,10 +13,8 @@
   <body>
     <% if logged_in? %>
       <%= render 'layouts/sidebar' %>
-      <div class="cont-side">
-    <% else %>
-      <div class="cont">
     <% end %>
+    <div class="cont<%= '-side' if logged_in? %>">
       <%= render 'layouts/topbar' %>
       <div class="main">
         <% flash.each do |message_type, message| %>

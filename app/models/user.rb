@@ -152,6 +152,7 @@ class User < ApplicationRecord
   def is?(attribute, values)
     is_attr = false
 
+    # Method allows array to be passed, for example if checking several user groups at once
     if values.is_a?(Array)
       values.each do |value|
         is_attr = is_attr || send(attribute) == value
@@ -162,6 +163,14 @@ class User < ApplicationRecord
     end
 
     is_attr
+  end
+
+  def count_unread_chats
+    count = 0
+    self.chats.each do |chat|
+      count += 1 unless chat.read_by?(self)
+    end
+    count
   end
 
 private

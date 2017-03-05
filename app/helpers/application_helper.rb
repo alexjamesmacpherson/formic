@@ -26,4 +26,8 @@ module ApplicationHelper
       grades[ix]
     end
   end
+
+  def pretty_count(count)
+    count > 9 ? '9+' : count
+  end
 end
