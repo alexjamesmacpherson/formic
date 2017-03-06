@@ -5,7 +5,8 @@ ready = ->
     update_notification_count()
 
   $('.read-all').click (e) ->
-    $('.unread-notification').children('.list-record').addClass('read-notification')
+    $('.unread-notification').children('.list-record')
+                             .addClass('read-notification')
     $('.unread-notification').removeClass('unread-notification')
     update_notification_count()
 

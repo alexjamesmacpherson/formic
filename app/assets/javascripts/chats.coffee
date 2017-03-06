@@ -37,15 +37,18 @@ ready = ->
     ), 1
 
     $convbody = $this.siblings('.conversation-body')
-    $convbody.append('<div class="sent-message"><div class="message-body">' + new_message + '</div></div>')
-    $convbody.scrollTop($convbody[0].scrollHeight);
+    $convbody.append('<div class="sent-message">' +
+                     '<div class="message-body">' +
+                      new_message + '</div></div>')
+    $convbody.scrollTop($convbody[0].scrollHeight)
 
     id = $convbody.parent().attr('id').substr(1)
     $convrecord = $('#c' + id)
     $convrecord.children('.list-date').html('just now')
-    $convrecord.children('.list-item').children('.list-subitem').html(new_message)
+    $convrecord.children('.list-item')
+               .children('.list-subitem').html(new_message)
 
   $('.conversation-body').each ->
-    $(this).scrollTop($(this)[0].scrollHeight);
+    $(this).scrollTop($(this)[0].scrollHeight)
 
 $(document).on 'turbolinks:load', ready

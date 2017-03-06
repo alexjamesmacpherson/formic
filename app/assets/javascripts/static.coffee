@@ -28,7 +28,8 @@ ready = ->
       $('.chats-panel').removeClass('visible')
 
     setTimeout (->
-      if $('.chats-panel').hasClass('visible') || $('.notification-panel').hasClass('visible')
+      if $('.chats-panel').hasClass('visible') ||
+            $('.notification-panel').hasClass('visible')
         $('.popout-back').addClass('visible')
       else
         $('.popout-back').removeClass('visible')
