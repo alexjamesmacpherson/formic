@@ -4,7 +4,7 @@
   box-sizing:         border-box;
 }
 
-textarea, input, button {
+textarea, input, button, select {
   outline: none !important;
 }
 
@@ -31,7 +31,7 @@ input {
   border-radius: 2px;
   background: none;
   box-shadow: none;
-  transition: .25s ease-in-out;
+  transition: .25s ease-in-out, height 1ms, width 1ms;
   color: #555555;
 }
 
@@ -133,4 +133,48 @@ input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+
+.file-upload {
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 5px 0 0;
+}
+
+.avatar-button {
+  cursor: pointer;
+  position: relative;
+
+  input {
+    display: none;
+  }
+
+  .avatar:before {
+    content: "";
+  }
+
+  input:checked + .avatar {
+    filter: brightness(40%);
+  }
+
+  .avatar-delete {
+    position: absolute;
+    transform: translateY(-30px);
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    color: #f5f5f5;
+    background: rgba(0,0,0,0.6);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+}
+
+.field_with_errors {
+  @extend .has-error;
+  .formic-form {
+    color: $state-danger-text;
+    border-color: $state-danger-text;
+  }
 }

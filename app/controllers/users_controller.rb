@@ -14,8 +14,13 @@ class UsersController < ApplicationController
   before_action :require_same_school,   only: [:show, :edit, :update, :destroy]
 
   def index
-    @school = School.find(current_user.school_id)
-    @users = @school.users.where(activated: true).paginate(page: params[:page], :per_page => 20)
+    if params.has_key?(:search) && !params[:search].strip.blank?
+      @users = current_user.school.users.where(activated: true).where('LOWER(name) LIKE LOWER(?) OR LOWER(email) LIKE LOWER(?)', "%#{params[:search]}%", "%#{params[:search]}%").paginate(page: params[:page], :per_page => 10)
+      @title = "Results For \"#{params[:search]}\""
+    else
+      @users = current_user.school.users.where(activated: true).paginate(page: params[:page], :per_page => 10)
+      @title = 'All Users'
+    end
   end
 
   def show
@@ -28,24 +33,51 @@ class UsersController < ApplicationController
   end
 
   def new
-    @school = School.find(current_user.school_id)
-    @user = @school.users.build
+    @user = current_user.school.users.new
+    @years = current_user.school.year_groups.order(:name)
   end
 
   def create
-    @school = School.find(current_user.school_id)
-    @user = @school.users.build(new_user_params)
+    @years = current_user.school.year_groups.order(:name)
+    @user = current_user.school.users.build(new_user_params)
+
+    if params[:user][:group] == '1' && params[:user][:year_group_id] == '-1' && params[:user].has_key?(:new_year_group) && !params[:user][:new_year_group].blank?
+      @user.year_group = current_user.school.year_groups.create!(name: params[:user][:new_year_group])
+    end
+
+    @user.year_group = nil unless @user.group == 1
 
     # Set random password on user creation
     random_password = User.new_token
     @user.password = random_password
     @user.password_confirmation = random_password
 
+    @user.tutor_id = nil unless @user.group == 1
+
     if @user.save
+      case @user.group
+        when 1
+          params[:parent_ids].each do |parent|
+            @user.parent_relations.create!(parent_id: parent)
+          end unless params[:parent_ids].blank?
+        when 2
+          params[:student_ids].each do |child|
+            @user.child_relations.create!(child_id: child)
+          end unless params[:student_ids].blank?
+        when 3
+          params[:student_ids].each do |pupil|
+            student = User.find(pupil)
+            student.tutor = @user
+            student.save!
+          end unless params[:student_ids].blank?
+      end
+
       @user.send_activation_email
       flash[:info] = "Account created: #{@user.name} has been sent an email to activate their account."
       redirect_to new_user_url
     else
+      @parent_cache = params[:parent_ids]
+      @student_cache = params[:student_ids]
       render 'new'
     end
   end
@@ -78,7 +110,7 @@ private
   end
 
   def new_user_params
-    params.require(:user).permit(:email, :group_id, :year_group_id, :name)
+    params.require(:user).permit(:email, :group, :year_group_id, :name, :tutor_id)
   end
 
   # Can only edit/update your own records (admin staff can edit anyone's records)
