@@ -18,7 +18,8 @@ a:hover, .nav-button:hover {
   color: $accent-light;
 }
 
-a:active, .nav-button:active {
+a:active, .nav-button:active, a:focus, .nav-button:focus {
+  outline: none !important;
   transition: opacity .1s ease-in-out;
   color: $accent-alt;
 }

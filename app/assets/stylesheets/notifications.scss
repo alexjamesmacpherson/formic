@@ -1,3 +1,117 @@
-// Place all the styles related to the notifications controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.notification-bubble {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: $front;
+  border-radius: 16px;
+  transform: translate3d(26px, -42px, 0);
+  @include box_sizing;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.notification-panel {
+  top: 89px;
+  left: 105%;
+  width: 400px;
+  background-color: #f5f5f5;
+  border: solid 1px #e0e0e0;
+  color: #555;
+  text-align: center;
+  font-size: 13px;
+  font-weight: normal;
+  @include box_sizing;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 100;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .25s ease-in-out, visibility 0s linear 0.5s;
+  box-shadow: #000000 0 0 20px -10px;
+  font-family: 'Ubuntu', sans-serif;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  li {
+    border-left: solid 0 $accent-light;
+    transition: .35s ease-in-out;
+  }
+
+  h3 {
+    margin: 10px;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+    cursor: default;
+  }
+
+  .read-all {
+    position: absolute;
+    right: 16px;
+    top: 8px;
+  }
+
+  p {
+    margin: 0;
+    padding: 24px;
+    color: #999999;
+    cursor: default;
+    border-top: solid 1px #dddddd;
+  }
+
+  .unread-notification {
+    border-left: solid 4px $accent-dark;
+  }
+
+  .unread-notification:hover {
+    border-left: solid 6px $accent;
+  }
+
+  .unread-notification:active {
+    border-left: solid 4px $accent-alt;
+    transition: border-left .1s ease-in-out;
+  }
+
+  .record-list {
+    .list-record {
+      text-align: left;
+      padding: 10px 20px;
+      position: relative;
+      transition: .35s ease-in-out;
+
+      &.read-notification {
+        color: #555555;
+      }
+
+      &:hover {
+        padding: 10px 20px 10px 22px;
+      }
+    }
+
+    .list-date {
+      position: absolute;
+      right: 20px;
+    }
+
+    max-height: 427px;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    @include scroll_bar;
+  }
+}
+
+.notification-panel::after {
+  content: " ";
+  position: absolute;
+  top: 34px;
+  right: 100%;
+  margin-top: -5px;
+  border: 5px solid transparent;
+  border-right-color: #ffffff;
+  box-shadow: #000000 0 0 20px -10px;
+}

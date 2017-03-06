@@ -11,10 +11,11 @@
         '<div class="notification-bubble notifications"style="display:none;"></div>'}") %>
   </div>
   <div class="notification-panel">
+    <%= link_to raw('<i class="material-icons">clear_all</i><span class="tip-text">Clear notifications</span>'), readall_path, method: :post, class: 'read-all tip' %>
     <h3>Your Notifications:</h3>
     <% if current_user.notifications.length > 0 %>
         <ul class="record-list">
-          <% current_user.notifications.each do |notification| %>
+          <% current_user.notifications.order(created_at: :desc).each do |notification| %>
               <%= render notification %>
           <% end %>
         </ul>
