@@ -46,11 +46,19 @@ input {
   border-bottom: solid 4px $accent-dark;
 }
 
+select.formic-form:hover, select.formic-form:focus {
+  padding: 6px 0 6px 12px;
+}
+
 input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
   -webkit-text-fill-color: #555555 !important;
   border-radius: 5px;
   padding: 6px 6px;
+}
+
+select {
+  @include scroll_bar;
 }
 
 .form-text {

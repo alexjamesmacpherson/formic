@@ -14,6 +14,7 @@
   height: 72px;
   padding: 12px;
   float: left;
+  cursor: pointer;
   @include box_sizing;
 
   .material-icons {
@@ -47,7 +48,6 @@
   display: inline-block;
 }
 
-/* Tooltip text */
 .tip .tip-text {
   top: 50%;
   transform: translateY(-50%);
@@ -64,13 +64,14 @@
   position: absolute;
   z-index: 100;
   opacity: 0;
-  transition: opacity .45s ease-in-out;
+  visibility: hidden;
+  transition: opacity .45s ease-in-out, visibility 0s linear 0.45s;
 }
 
 .tip:hover .tip-text {
   opacity: 1;
-  transition: opacity .25s ease-in-out 0.5s;
   visibility: visible;
+  transition: opacity .25s ease-in-out 0.5s, visibility 0s linear 0s;
 }
 
 .tip .tip-text::after {
@@ -81,17 +82,4 @@
   margin-top: -5px;
   border: 5px solid transparent;
   border-right-color: rgba(10,0,0,0.85);
-}
-
-.notification-bubble {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background-color: $front;
-  border-radius: 16px;
-  transform: translate3d(26px, -42px, 0);
-  @include box_sizing;
-  text-align: center;
-  font-size: 12px;
-  font-weight: bold;
 }

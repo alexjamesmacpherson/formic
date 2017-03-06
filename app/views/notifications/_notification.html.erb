@@ -1,0 +1,7 @@
+<li <%= raw('class="unread-notification"') unless notification.seen %>>
+  <%= link_to raw("<div class=\"list-date\">#{time_ago_in_words(notification.created_at)} ago</div>
+                  <div class=\"list-item\">
+                    #{notification.title}
+                    <div class=\"list-subitem\">#{notification.message}</div>
+                  </div>"), notification_path(notification), method: :patch, class: "list-record #{'read-notification' if notification.seen}" %>
+</li>

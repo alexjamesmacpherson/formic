@@ -1,0 +1,12 @@
+<li <%= raw('class="unread-chat"') unless chat.read_by?(current_user) %>>
+  <%= link_to raw("<div class=\"list-date\">#{time_ago_in_words(
+                      chat.messages.last ?
+                          chat.messages.last.created_at :
+                          chat.created_at
+                  )} ago</div>
+                  #{image_tag chat.messages.last ? chat.messages.last.sender.avatar : chat.users.where.not(id: current_user.id).first.avatar, class: 'avatar list-item'}
+                  <div class=\"list-item\">
+                    #{chat.users.where.not(id: current_user.id).first.name}
+                    <div class=\"list-subitem\">#{chat.messages.last.text if chat.messages.last}</div>
+                  </div>"), chat_path(chat), method: :patch, class: "list-record chat-record #{'read-chat' if chat.read_by?(current_user)}", id: "c#{chat.id}" %>
+</li>

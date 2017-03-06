@@ -4,11 +4,11 @@ class Notification < ApplicationRecord
   before_create :delete_old_notifications
 
   # Remove whitespace
-  auto_strip_attributes :message, :link, :squish => true
+  auto_strip_attributes :title, :message, :link, :squish => true
 
   validates :user,
             presence: true
-  validates :message,
+  validates :title, :message,
             presence: true,
             length: { maximum: 255 }
   validates :link,

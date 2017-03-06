@@ -9,8 +9,8 @@ module ApplicationHelper
     end
   end
 
-  def notify(user, message, link)
-    user.notifications.create(message: message, link: link)
+  def notify(user, title, message, link)
+    user.notifications.create(title: title, message: message, link: link)
   end
 
   def score_to_grade(score)

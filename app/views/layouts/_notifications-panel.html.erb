@@ -1,0 +1,23 @@
+<div class="nav-button tip notification">
+  <i class="material-icons">public</i>
+  <span class="tip-text">Notifications</span>
+  <%= raw("#{current_user.notifications.where(seen: false).count > 0 ?
+      "<div class=\"notification-bubble notifications\">
+        #{pretty_count(current_user.notifications.where(seen: false).count)}</div>" :
+      '<div class="notification-bubble notifications"style="display:none;"></div>'}") %>
+</div>
+<div class="notification-panel">
+  <div class="clipping-box">
+    <%= link_to raw('<i class="material-icons">clear_all</i><span class="tip-text">Clear notifications</span>'), readall_path, method: :post, class: 'read-all tip' %>
+    <h3>Your Notifications:</h3>
+    <% if current_user.notifications.length > 0 %>
+        <ul class="record-list">
+          <% current_user.notifications.order(created_at: :desc).each do |notification| %>
+              <%= render notification %>
+          <% end %>
+        </ul>
+    <% else %>
+        <p>No notifications to display at this time</p>
+    <% end %>
+  </div>
+</div>

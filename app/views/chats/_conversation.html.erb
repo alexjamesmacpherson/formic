@@ -1,0 +1,25 @@
+<div class="conversation" id="<%= "b#{@conversation.id}" %>">
+  <div class="chat-back tip">
+    <i class="material-icons">navigate_before</i>
+    <span class="tip-text">View all</span>
+  </div>
+  <%= link_to raw("#{image_tag(@conversation.messages.last ? @conversation.messages.last.sender.avatar : @conversation.users.where.not(id: current_user.id).first.avatar, class: 'avatar')}<span class=\"tip-text\">View profile</span>"), user_path(@conversation.users.where.not(id: current_user.id).first), class: 'conversation-profile tip' %>
+
+  <h3><%= @conversation.users.where.not(id: current_user.id).first.name %></h3>
+  <div class="conversation-body">
+    <% @conversation.messages.each do |message| %>
+        <div class="<%= current_user?(message.sender) ? 'sent-message' : 'received-message' %>">
+          <div class="message-body">
+            <%= message.text %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+  <%= form_tag send_path, method: :post, class: 'message-form' do %>
+      <%= hidden_field_tag :chat_id, @conversation.id %>
+      <%= text_field_tag :message, '', placeholder: 'Type a message...', autocomplete: :off, class: 'conversation-input' %>
+      <%= button_tag(type: 'submit', class: 'conversation-send') do %>
+          <i class="material-icons">send</i>
+      <% end %>
+  <% end %>
+</div>

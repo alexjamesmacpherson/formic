@@ -3,15 +3,37 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 ready = ->
-  $('.tip-text').css('visibility','hidden')
+  $('.cont-side').mouseup (e) ->
+    $('.notification-panel').removeClass('visible')
+    $('.chats-panel').removeClass('visible')
+    $('.popout-back').removeClass('visible')
+    $('.conversation').removeClass('visible')
 
-  $('.tip').mouseleave (e) ->
-    $this = this
+  $('.nav-button').mouseup (e) ->
+    e.stopPropagation()
+
+    $('.conversation').removeClass('visible')
+    if $(this).hasClass('notification')
+      setTimeout (->
+        $('.notification-panel').toggleClass('visible')
+      ), 1
+    else
+      $('.notification-panel').removeClass('visible')
+
+    if $(this).hasClass('message')
+      setTimeout (->
+        $('.chats-panel').toggleClass('visible')
+      ), 1
+    else
+      $('.chats-panel').removeClass('visible')
+
     setTimeout (->
-      $($this).children('.tip-text').css('visibility','hidden')
-    ), 500
+      if $('.chats-panel').hasClass('visible') ||
+            $('.notification-panel').hasClass('visible')
+        $('.popout-back').addClass('visible')
+      else
+        $('.popout-back').removeClass('visible')
+    ), 1
 
-  $('.tip').mouseover (e) ->
-    $(this).children('.tip-text').css('visibility','visible')
 
 $(document).on 'turbolinks:load', ready

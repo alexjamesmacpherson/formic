@@ -16,7 +16,7 @@ class ChatTest < ActiveSupport::TestCase
   end
 
   test 'chat has name of valid length' do
-    invalid_names = [nil, '', 'a' * 256]
+    invalid_names = ['a' * 256]
     invalid_names.each do |invalid|
       @chat.name = invalid
       assert_not @chat.valid?, "#{invalid.inspect} should not be a valid chat name"
