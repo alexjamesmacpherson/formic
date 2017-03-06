@@ -1,0 +1,27 @@
+.pagination .center {
+  color: $gray-light;
+  font-size: 0.9em;
+}
+
+.pagination a {
+  margin-bottom: 5px;
+}
+
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+  background-color: $accent-dark;
+  border-color: $accent-dark;
+}
+
+.pagination > li > a, .pagination > li > span {
+  color: $accent;
+  background-color: #f9f9f9;
+}
+
+.pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
+  color: $accent-dark;
+  background-color: $front-alt;
+}
+
+.pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus {
+  background-color: $front;
+}

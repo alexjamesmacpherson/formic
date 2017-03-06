@@ -4,11 +4,11 @@ def print_flush(str)
 end
 
 # Seed Counts:
-schools = 5 #25
+schools = 1 #25
 students = 50 #325
 parents = 10 #50
 teachers = 10 #75
-year_groups = 2 # per school
+year_groups = 3 # per school
 
 puts "\e[0m\nSEEDING SCHOOLS:"
 schools.times do
@@ -24,20 +24,20 @@ puts "\n\nSEEDING YEAR GROUPS:"
 years = schools * year_groups
 years.times do |n|
   YearGroup.create!(school_id: n.to_i % schools.to_i + 1,
-                    name: "Year #{(n%2 + 10)}")
+                    name: "Year #{(n%year_groups + 10)}")
   print_flush("\e[1;49;31m.\e[0m")
 end
 
 puts "\n\nSEEDING USERS:"
 # Students:
 students.times do |n|
-  school = rand(1...schools)
+  school = rand(1..schools)
   User.create!(school_id: school,
                email: "student-#{n}@test.com",
                group: 1,
                name: Faker::Name.name,
                bio: Faker::Hacker.say_something_smart,
-               year_group: YearGroup.all.where(school_id: school)[n%2],
+               year_group: YearGroup.all.where(school_id: school)[n%year_groups],
                password: 'password',
                password_confirmation: 'password',
                activated: true,
@@ -46,7 +46,7 @@ students.times do |n|
 end
 # Parents:
 parents.times do |n|
-  User.create!(school_id: rand(1...schools),
+  User.create!(school_id: rand(1..schools),
                email: "parent-#{n}@test.com",
                group: 2,
                name: Faker::Name.name,

@@ -1,4 +1,7 @@
 <div class="top-bar <%= 'static-page' if yield(:static) == 'static' %>">
+  <% flash.each do |message_type, message| %>
+      <%= content_tag(:div, message, class: "alert alert-#{message_type}") unless yield(:login) == 'login' %>
+  <% end %>
   <% if yield(:static) == 'static' %>
       <div class="top-nav-button" style="margin-left: 3vw;">
         <%= link_to 'About Formic Learning', about_path %>
@@ -9,11 +12,18 @@
       <div class="top-nav-button">
         <%= link_to 'Contact Us', contact_path %>
       </div>
+  <% elsif content_for(:top_title) %>
+      <div class="top-title">
+        <%= link_to raw("<i class=\"material-icons\">#{content_for?(:top_icon) ? yield(:top_icon) : 'navigate_before'}</i>
+                        #{"<span class=\"tip-text\">#{yield(:top_tip)}</span>" if content_for?(:top_tip)}"),
+                    yield(:top_link), class:'top-link tip' if content_for?(:top_link) %>
+        <div class="top-text"><%= yield(:top_title) %></div>
+      </div>
   <% end %>
 
   <% if logged_in? %>
       <%= form_tag users_path, :method => 'get' do %>
-          <%= text_field_tag :search, params[:search], class: '', placeholder: 'Search...', autocomplete: :off %>
+          <%= text_field_tag :search, params[:search], placeholder: 'Search...', autocomplete: :off %>
           <%= button_tag(type: 'submit', class: 'search-button') do %>
               <i class="material-icons">search</i>
           <% end %>

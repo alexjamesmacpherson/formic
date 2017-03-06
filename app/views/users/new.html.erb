@@ -1,19 +1,45 @@
 <% provide(:title, 'New User') %>
-<h1>Add New User to <%= @school.name %></h1>
+<% provide(:top_title, 'New User') %>
+<% provide(:top_link, school_path(current_user.school)) %>
+<% provide(:top_tip, "Back to #{current_user.school.name}") %>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for @user do |f| %>
+<%= form_for @user do |f| %>
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h1 class="rm-bottom">Add User To <%= current_user.school.name %></h1>
+        <h3>They'll be sent an email with information on how to setup their account.</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
         <% @error = @user %>
         <%= render 'layouts/errors' %>
+      </div>
+    </div>
 
-        <%= f.label :name %>
-        <%= f.text_field :name, class: 'form-control' %>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <%= f.text_field :name, class: 'formic-form', placeholder: 'Full Name' %>
+        <%= f.email_field :email, class: 'formic-form', placeholder: 'Email Address' %>
+        <%= f.select :group, options_for_select([['Student', 1], ['Parent', 2], ['Teacher', 3], ['Admin', 4]]), {}, class: 'formic-form' %>
+        <%= f.select :year_group_id, options_from_collection_for_select(@years, :id, :name), {}, class: 'formic-form' %>
 
-        <%= f.label :email %>
-        <%= f.text_field :email, class: 'form-control' %>
+        <h2 class="new-user-header user_tutor_id">Select Tutor:</h2>
+        <% teachers = current_user.school.users.where(group: 3, activated: true) %>
+        <%= f.select :tutor_id, options_from_collection_for_select(teachers, :id, :name), {}, class: 'formic-form user_tutor_id' %>
 
-        <%= f.submit 'Create Account', class: 'btn btn-primary' %>
-    <% end %>
-  </div>
-</div>
+        <h2 class="new-user-header student_ids tutees-head">Select Tutees:</h2>
+        <h2 class="new-user-header student_ids children-head">Select Children:</h2>
+        <% students = current_user.school.users.where(group: 1, activated: true) %>
+        <%= select_tag 'student_ids[]', options_from_collection_for_select(students, :id, :name, { selected: @student_cache }), { class: 'formic-form relation_selection student_ids', multiple: true, size: students.count > 10 ? 10 : students.count, id: 'student_ids' } %>
+
+        <h2 class="new-user-header parent_ids">Select Parents:</h2>
+        <% parents = current_user.school.users.where(group: 2, activated: true) %>
+        <%= select_tag 'parent_ids[]', options_from_collection_for_select(parents, :id, :name, { selected: @parent_cache }), { class: 'formic-form relation_selection parent_ids', multiple: true, size: parents.count > 10 ? 10 : parents.count, id: 'parent_ids' } %>
+
+        <%= f.submit 'Create Account', class: 'btn formic-button' %>
+      </div>
+    </div>
+<% end %>

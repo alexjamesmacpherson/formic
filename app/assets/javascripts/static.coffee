@@ -5,13 +5,13 @@
 ready = ->
   $('.tip-text').css('visibility','hidden')
 
-  $('.nav-button').mouseleave (e) ->
+  $('.tip').mouseleave (e) ->
     $this = this
     setTimeout (->
       $($this).children('.tip-text').css('visibility','hidden')
     ), 500
 
-  $('.nav-button').mouseover (e) ->
+  $('.tip').mouseover (e) ->
     $(this).children('.tip-text').css('visibility','visible')
 
 $(document).on 'turbolinks:load', ready

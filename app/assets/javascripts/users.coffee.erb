@@ -7,19 +7,83 @@ ready = ->
     error = $(e.target)
     if error.hasClass('avatar')
       error.attr('src', '<%= image_path('balls.svg') %>')
-      error.after('<label><i class="material-icons" style="transform: translateY(6px);">perm_identity</i> Your avatar will be updated when you save your profile.</label>')
+      if $('.av-error').length == 0
+        error.parent().after('<label class="av-error"><i class="material-icons" style="transform: translateY(6px);">perm_identity</i> Your avatar will be updated when you save your profile.</label>')
     return
   ), true
 
   $('.alert').click (e) ->
-    alert = $('.alert')
-    alert.css('opacity', 0)
-    setTimeout (->
-      alert.css('display','none')
-    ), 600
+    alert = $(this)
+    if !alert.hasClass('login-alert')
+      alert.css('opacity', 0)
+      setTimeout (->
+        alert.css('display','none')
+      ), 600
 
   setTimeout (->
-    $('.alert').css('display','none')
+    if !$('.alert').hasClass('login-alert')
+      $('.alert').css('display','none')
   ), 6000
+
+  $('.avatar-button').mousedown (e) ->
+    console.log $('.avatar-delete').html()
+    if $('.avatar-delete').html() == 'Click to remove'
+      $('.avatar-delete').html('Click again to keep')
+    else
+      $('.avatar-delete').html('Click to remove')
+
+  $('#user_year_group_id').append('<option value="-1">Create new year group</option>')
+
+  $('#user_year_group_id').mouseup (e) ->
+    if $(this).val() == '-1'
+      if $('#new_year_group').length == 0
+        $(this).after('<input class="formic-form" placeholder="Year Group Name" type="text" name="user[new_year_group]" id="new_year_group">')
+      else
+        $('#new_year_group').css('display','')
+    else if $('#new_year_group').length > 0
+      $('#new_year_group').css('display','none')
+
+  $('#user_group').mouseup (e) ->
+    display_selects(this)
+
+  display_selects = (el) ->
+    if $(el).val() == '1'
+      $('.user_year_group_id').css('display','')
+      $('.user_tutor_id').css('display','')
+      $('.parent_ids').css('display','')
+      $('#user_year_group_id').css('display','')
+      $('#new_year_group').css('display','')
+    else
+      $('.user_year_group_id').css('display','none')
+      $('.user_tutor_id').css('display','none')
+      $('.parent_ids').css('display','none')
+      $('#user_year_group_id').css('display','none')
+      $('#new_year_group').css('display','none')
+
+    if $(el).val() == '2' || $(el).val() == '3'
+      $('.student_ids').css('display','')
+      if $(el).val() == '2'
+        $('.tutees-head').css('display','none')
+      else
+        $('.children-head').css('display','none')
+    else
+      $('.student_ids').css('display','none')
+
+  display_selects($('#user_group'))
+
+  $('.relation_selection').mousedown((e) ->
+    e.preventDefault()
+    select = this
+    scroll = select.scrollTop
+    e.target.selected = !e.target.selected
+    setTimeout (->
+      select.scrollTop = scroll
+      return
+    ), 0
+    $(select).focus()
+    return
+  ).mousemove (e) ->
+    e.preventDefault()
+    return
 
 $(document).on 'turbolinks:load', ready

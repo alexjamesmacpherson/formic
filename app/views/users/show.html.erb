@@ -1,42 +1,37 @@
 <% provide(:title, @user.name) %>
-<h1><%= @user.name %></h1>
-<h2><%= simple_format(@user.bio) %></h2>
-<h3><%= @user.email %></h3>
-<h3><%= @user.school.name %></h3>
+<% provide(:top_title, "#{@user.type} Profile") %>
+<% provide(:top_link, edit_user_path(@user)) if current_user.is?(:group, 4) && !current_user?(@user) %>
+<% provide(:top_icon, 'settings') %>
+<% provide(:top_tip, "Edit #{@user.name}'s profile") %>
 
-<%= image_tag(@user.avatar.url, class: 'avatar') %>
-
-<ul class="record-list">
-  <% if @relations %>
-    <% @relations.each do |relation| %>
-      <li>
-        <%= link_to relation.name, relation %>
-      </li>
-    <% end %>
-  <% end %>
-  <% if @user.tutor %>
-    <li>
-      <%= link_to @user.tutor.name, @user.tutor %>
-    </li>
-  <% end %>
-</ul>
-
-<%= link_to 'Remove User', @user, method: :delete, data: { confirm: 'This action cannot be undone. Are you sure?' } %>
-
-<div class="box-row">
-  <div class="box box-half">
-    <p>Find me in app/views/static/home.html.erb</p>
+<div class="profile-block">
+  <%= image_tag(@user.avatar.url, class: 'avatar') %>
+  <div class="profile-info">
+    <h1><%= @user.name %></h1>
+    <h3 class="email"><%= @user.email %></h3>
+    <h3 class="school">
+      <%= image_tag(current_user.school.logo, class: 'logo') if current_user.school.logo? %><%= @user.school.name %>
+      <%= raw("&nbsp;&nbsp;-&nbsp;&nbsp;") + "#{@user.year_group.name}" if @user.is?(:group, 1) %>
+    </h3>
+    <h2><%= simple_format(@user.bio) %></h2>
   </div>
-  <div class="box box-half"></div>
 </div>
 
-<div class="box-row">
-  <div class="box box-two-third"></div>
-  <div class="box box-third"></div>
-</div>
-
-<div class="box-row">
-  <div class="box box-third"></div>
-  <div class="box box-third"></div>
-  <div class="box box-third"></div>
+<div class="profile-container">
+  <div class="profile-left">
+    mo munny mo problems
+  </div>
+  <% if @relations.length > 0 || @user.tutor %>
+      <div class="profile-right">
+        <h3 class="record-header">Related Users:</h3>
+        <ul class="record-list">
+          <% if @relations %>
+              <% @relations.each do |relation| %>
+                  <%= render relation %>
+              <% end %>
+          <% end %>
+          <%= render @user.tutor if @user.tutor %>
+        </ul>
+      </div>
+  <% end %>
 </div>
