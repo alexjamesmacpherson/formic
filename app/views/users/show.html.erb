@@ -11,7 +11,7 @@
     <h3 class="email"><%= @user.email %></h3>
     <h3 class="school">
       <%= image_tag(current_user.school.logo, class: 'logo') if current_user.school.logo? %><%= @user.school.name %>
-      <%= raw("&nbsp;&nbsp;-&nbsp;&nbsp;#{@user.year_group.name}") if @user.is?(:group, 1) %>
+      <%= raw("&nbsp;&nbsp;-&nbsp;&nbsp;") + "#{@user.year_group.name}" if @user.is?(:group, 1) %>
     </h3>
     <h2><%= simple_format(@user.bio) %></h2>
   </div>
