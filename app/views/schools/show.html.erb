@@ -1,6 +1,33 @@
 <% provide(:title, @school.name) %>
-<h1><%= @school.name %></h1>
-<h2><%= @school.motto %></h2>
-<h3><%= simple_format(@school.address) %></h3>
-<h3><%= @school.phone %></h3>
-<%= image_tag(@school.logo.url, class: 'logo') if @school.logo? %>
+<% provide(:top_title, 'School Profile') %>
+<% provide(:top_link, edit_school_path(@school)) if current_user.is?(:group, 4) %>
+<% provide(:top_icon, 'settings') %>
+<% provide(:top_tip, "Edit settings") %>
+
+<div class="profile-block">
+  <%= image_tag(@school.logo.url, class: 'logo') if @school.logo? %>
+  <div class="profile-info">
+    <h1><%= @school.name %></h1>
+    <h3 class="email"><%= @school.phone %></h3>
+    <h3 class="school">
+      <%= simple_format(@school.address) %>
+    </h3>
+    <h2><%= @school.motto %></h2>
+  </div>
+</div>
+
+<div class="profile-container">
+  <div class="profile-left">
+    mo munny mo problems
+  </div>
+  <% if @school.users.where(group: 4).length > 0 %>
+      <div class="profile-right">
+        <h3 class="record-header">School Admin Staff:</h3>
+        <ul class="record-list">
+          <% @school.users.where(group: 4).each do |admin| %>
+              <%= render admin %>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+</div>

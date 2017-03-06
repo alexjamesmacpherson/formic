@@ -40,15 +40,16 @@
 
 .profile-container {
   display: flex;
+  padding: 15px;
 }
 
 .profile-left {
-  flex: 2 1;
+  flex: 3 1;
 }
 
 .profile-right {
   background: $mid;
-  box-shadow: #000000 -4px 0 14px -10px;
+  box-shadow: #000000 -8px 0 15px -15px;
   flex: 1 1;
   max-height: 800px;
   overflow-x: hidden;
@@ -59,11 +60,10 @@
   position: relative;
   padding: 15px;
   display: flex;
-  box-shadow: #000000 0 4px 14px -10px;
-  margin-bottom: 20px;
+  box-shadow: #000000 0 8px 15px -15px;
 }
 
-.avatar {
+.avatar, .logo {
   object-fit: cover;
   width: 250px;
   height: 250px;

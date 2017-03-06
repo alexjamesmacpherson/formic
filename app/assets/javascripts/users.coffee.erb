@@ -25,12 +25,19 @@ ready = ->
       $('.alert').css('display','none')
   ), 6000
 
-  $('.avatar-button').mousedown (e) ->
-    console.log $('.avatar-delete').html()
-    if $('.avatar-delete').html() == 'Click to remove'
+
+  $('.avatar-button').mouseup (e) ->
+    setTimeout (->
+      delete_avatar()
+    ), 1
+
+  delete_avatar = ->
+    if $('#school_remove_logo').is(':checked')
       $('.avatar-delete').html('Click again to keep')
     else
       $('.avatar-delete').html('Click to remove')
+
+  delete_avatar()
 
   $('#user_year_group_id').append('<option value="-1">Create new year group</option>')
 

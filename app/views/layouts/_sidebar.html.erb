@@ -22,7 +22,10 @@
               root_path, class: 'nav-button tip' if current_user.is?(:group, [1,2,3]) %>
   <%= link_to raw('<i class="material-icons">local_library</i>
               <span class="tip-text">Your classes</span>'),
-              root_path, class: 'nav-button tip' if current_user.is?(:group, [1,2,3]) %>
+              root_path, class: 'nav-button tip' if current_user.is?(:group, [1,3]) %>
+  <%= link_to raw('<i class="material-icons">local_library</i>
+              <span class="tip-text">Child\'s classes</span>'),
+              root_path, class: 'nav-button tip' if current_user.is?(:group, 2) %>
 
   <%= link_to raw('<i class="material-icons">chrome_reader_mode</i>
               <span class="tip-text">Homework</span>'),

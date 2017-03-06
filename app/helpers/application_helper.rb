@@ -30,4 +30,32 @@ module ApplicationHelper
   def pretty_count(count)
     count > 9 ? '9+' : count
   end
+
+  # Method only called if @user exists
+  def related_user_type(type)
+    case @user.group
+      when 1
+        if type == 'Teacher'
+          'Tutor'
+        else
+          type
+        end
+      when 2
+        if type == 'Student'
+          'Child'
+        elsif type == 'Teacher'
+          'Tutor of Child'
+        else
+          type
+        end
+      when 3
+        if type == 'Student'
+          'Tutee'
+        else
+          type
+        end
+      else
+        type
+    end
+  end
 end
