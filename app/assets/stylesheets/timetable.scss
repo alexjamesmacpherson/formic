@@ -1,0 +1,26 @@
+.timetable-cont {
+  flex: 3 1;
+  padding: 10px;
+}
+
+.assignments-cont {
+  flex: 1 1;
+  padding: 10px;
+
+  h2 {
+    font-weight: bold;
+    font-size: 36px;
+  }
+}
+
+.simple-calendar table {
+  box-shadow: #000000 0 0 30px -15px;
+}
+
+.simple-calendar .day {
+  height: 250px;
+}
+
+.simple-calendar tr {
+  background: #f5f5f5;
+}

@@ -1,0 +1,14 @@
+<% provide(:title, 'Timetable') %>
+<% provide(:top_title, 'Your Timetable') %>
+
+<div style="display:flex;">
+  <div class="timetable-cont">
+    <%= week_calendar number_of_weeks: 2 do |date| %>
+        <%= date %>
+    <% end %>
+  </div>
+
+  <div class="assignments-cont">
+    <h2>Upcoming Assignments:</h2>
+  </div>
+</div>

@@ -34,8 +34,12 @@ gem 'bootstrap-will_paginate', '0.0.10'
 gem 'auto_strip_attributes', '~> 2.1'
 # CarrierWave for file uploads
 gem 'carrierwave', '~> 1.0'
+# AWS for cloud storage of images
 gem 'fog-aws'
+# Image manipulation post-upload (ie. resizing)
 gem 'mini_magick', '4.6.0'
+# Simple Calendar... does what it says on the tin
+gem 'simple_calendar', '~> 2.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
