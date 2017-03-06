@@ -25,10 +25,11 @@ class ApplicationHelperTest < ActionView::TestCase
 
   test 'notification can be pushed to given user and is correct' do
     assert_difference 'Notification.count', 1 do
-      notify(@user, 'Test Notification', 'http://localhost:3000/')
+      notify(@user, 'Test Notification', 'Notification Body', 'http://localhost:3000/')
     end
 
-    assert_equal 'Test Notification', Notification.last.message
+    assert_equal 'Test Notification', Notification.last.title
+    assert_equal 'Notification Body', Notification.last.message
     assert_equal 'http://localhost:3000/', Notification.last.link
     assert_equal @user, Notification.last.user
   end

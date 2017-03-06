@@ -3,7 +3,7 @@ require 'test_helper'
 class NotificationTest < ActiveSupport::TestCase
   def setup
     @user = users(:test_user)
-    @notification = @user.notifications.create(message: 'Test Notification', link: 'http://localhost:3000/')
+    @notification = @user.notifications.create(title: 'Test Notification', message: 'This is a new notification', link: 'http://localhost:3000/')
   end
 
   test 'notification is valid' do
@@ -26,6 +26,20 @@ class NotificationTest < ActiveSupport::TestCase
   test 'notification still valid if seen' do
     @notification.seen = true
     assert @notification.valid?
+  end
+
+  test 'notification has title of valid length' do
+    invalid_titles = [nil, '', 'a' * 256, 'a' * 1000]
+    invalid_titles.each do |invalid|
+      @notification.title = invalid
+      assert_not @notification.valid?, "#{invalid.inspect} should not be a valid notification"
+    end
+
+    valid_titles = ['a', 'a' * 50, 'a' * 255,]
+    valid_titles.each do |valid|
+      @notification.title = valid
+      assert @notification.valid?, "#{valid.inspect} should be a valid notification"
+    end
   end
 
   test 'notification has message of valid length' do
@@ -61,15 +75,15 @@ class NotificationTest < ActiveSupport::TestCase
 
     assert_difference 'Notification.count', 19 do
       19.times do |n|
-        @user.notifications.create(message: "Notification #{n + 1}", link: '')
+        @user.notifications.create(title: "Notification #{n + 1}", message: 'Notification body', link: '')
       end
     end
 
     assert_equal 20, @user.notifications.count
-    assert_equal 'Test Notification', Notification.where(user_id: @user.id).order(:created_at).first.message
+    assert_equal 'Test Notification', Notification.where(user_id: @user.id).order(:created_at).first.title
 
     @user.notifications.create(message: "Notification 20", link: '')
-    assert_equal 'Notification 1', Notification.where(user_id: @user.id).order(:created_at).first.message
-    assert_equal 'Notification 20', Notification.where(user_id: @user.id).order(:created_at).last.message
+    assert_equal 'Notification 1', Notification.where(user_id: @user.id).order(:created_at).first.title
+    assert_equal 'Notification 20', Notification.where(user_id: @user.id).order(:created_at).last.title
   end
 end
