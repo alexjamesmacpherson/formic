@@ -15,4 +15,9 @@ class LogoUploader < CarrierWave::Uploader::Base
   def extension_whitelist
     %w(jpg jpeg gif png)
   end
+
+  # Default image if no avatar set
+  def default_url
+    '/images/fallback/' + [version_name, 'default-s.png'].compact.join('_')
+  end
 end
