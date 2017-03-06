@@ -46,7 +46,7 @@ ready = ->
     $convrecord = $('#c' + id)
     $convrecord.children('.list-date').html('just now')
     $convrecord.children('.list-item')
-               .children('.list-subitem').html(new_message)
+        .children('.list-subitem').html(new_message)
 
   $('.conversation-body').each ->
     $(this).scrollTop($(this)[0].scrollHeight)
