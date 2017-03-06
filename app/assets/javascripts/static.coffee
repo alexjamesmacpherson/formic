@@ -3,15 +3,16 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 ready = ->
-  $('.tip-text').css('visibility','hidden')
+  $('.cont-side').mouseup (e) ->
+    $('.notification-panel').removeClass('visible')
 
-  $('.tip').mouseleave (e) ->
-    $this = this
-    setTimeout (->
-      $($this).children('.tip-text').css('visibility','hidden')
-    ), 500
-
-  $('.tip').mouseover (e) ->
-    $(this).children('.tip-text').css('visibility','visible')
+  $('.nav-button').mouseup (e) ->
+    e.stopPropagation()
+    if $(this).hasClass('notification')
+      setTimeout (->
+        $('.notification-panel').toggleClass('visible')
+      ), 1
+    else
+      $('.notification-panel').removeClass('visible')
 
 $(document).on 'turbolinks:load', ready

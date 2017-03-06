@@ -24,7 +24,7 @@
       <div class="profile-right">
         <h3 class="record-header">School Admin Staff:</h3>
         <ul class="record-list">
-          <% @school.users.where(group: 4).each do |admin| %>
+          <% @school.users.where(group: 4).order(:name).each do |admin| %>
               <%= render admin %>
           <% end %>
         </ul>

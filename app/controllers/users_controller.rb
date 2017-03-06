@@ -30,6 +30,7 @@ class UsersController < ApplicationController
       redirect_to users_url
     end
     @relations = @user.parents + @user.children + @user.tutees
+    @relations.sort! { |a, b| a.name <=> b.name }
   end
 
   def new

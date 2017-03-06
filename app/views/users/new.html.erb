@@ -27,16 +27,16 @@
         <%= f.select :year_group_id, options_from_collection_for_select(@years, :id, :name), {}, class: 'formic-form' %>
 
         <h2 class="new-user-header user_tutor_id">Select Tutor:</h2>
-        <% teachers = current_user.school.users.where(group: 3, activated: true) %>
+        <% teachers = current_user.school.users.where(group: 3, activated: true).order(:name) %>
         <%= f.select :tutor_id, options_from_collection_for_select(teachers, :id, :name), {}, class: 'formic-form user_tutor_id' %>
 
         <h2 class="new-user-header student_ids tutees-head">Select Tutees:</h2>
         <h2 class="new-user-header student_ids children-head">Select Children:</h2>
-        <% students = current_user.school.users.where(group: 1, activated: true) %>
+        <% students = current_user.school.users.where(group: 1, activated: true).order(:name) %>
         <%= select_tag 'student_ids[]', options_from_collection_for_select(students, :id, :name, { selected: @student_cache }), { class: 'formic-form relation_selection student_ids', multiple: true, size: students.count > 10 ? 10 : students.count, id: 'student_ids' } %>
 
         <h2 class="new-user-header parent_ids">Select Parents:</h2>
-        <% parents = current_user.school.users.where(group: 2, activated: true) %>
+        <% parents = current_user.school.users.where(group: 2, activated: true).order(:name) %>
         <%= select_tag 'parent_ids[]', options_from_collection_for_select(parents, :id, :name, { selected: @parent_cache }), { class: 'formic-form relation_selection parent_ids', multiple: true, size: parents.count > 10 ? 10 : parents.count, id: 'parent_ids' } %>
 
         <%= f.submit 'Create Account', class: 'btn formic-button' %>

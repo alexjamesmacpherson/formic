@@ -80,10 +80,10 @@ class NotificationTest < ActiveSupport::TestCase
     end
 
     assert_equal 20, @user.notifications.count
-    assert_equal 'Test Notification', Notification.where(user_id: @user.id).order(:created_at).first.title
+    assert_equal 'Test Notification', Notification.where(user_id: @user.id).first.title
 
     @user.notifications.create(message: "Notification 20", link: '')
-    assert_equal 'Notification 1', Notification.where(user_id: @user.id).order(:created_at).first.title
-    assert_equal 'Notification 20', Notification.where(user_id: @user.id).order(:created_at).last.title
+    assert_equal 'Notification 1', Notification.where(user_id: @user.id).first.title
+    assert_equal 'Notification 20', Notification.where(user_id: @user.id).last.title
   end
 end

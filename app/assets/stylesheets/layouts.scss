@@ -9,20 +9,16 @@ html {
   box-sizing: inherit;
 }
 
-a {
+a, a:visited, .nav-button {
   color: $accent;
   transition: color .25s ease-in-out, background .25s ease-in-out;
 }
 
-a:visited {
-  color: $accent-dark;
-}
-
-a:hover {
+a:hover, .nav-button:hover {
   color: $accent-light;
 }
 
-a:active {
+a:active, .nav-button:active {
   transition: opacity .1s ease-in-out;
   color: $accent-alt;
 }
@@ -36,7 +32,7 @@ body {
 
 .cont, .cont-side {
   margin: 0;
-  padding-bottom: 6rem;
+  padding-bottom: 5rem;
   position: relative;
   min-height: 100%;
   z-index: 1;

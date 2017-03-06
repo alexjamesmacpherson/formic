@@ -2,13 +2,27 @@
   <%= link_to raw(image_tag(current_user.avatar.url, class: 'avatar')) +
               raw('<span class="tip-text">View your profile</span>'),
               current_user, class: 'nav-button tip' %>
-  <%= link_to raw("<i class=\"material-icons\">public</i>
-              <span class=\"tip-text\">Notifications</span>
-              <div class=\"notification-bubble notifications\"
-              #{current_user.notifications.where(seen: false).count > 0 ?
-                  ">#{pretty_count(current_user.notifications.where(seen: false).count)}</div>" :
-                  'style="display:none;"></div>'}"),
-              root_path, class: 'nav-button tip' %>
+  <div class="nav-button tip notification">
+    <i class="material-icons">public</i>
+    <span class="tip-text">Notifications</span>
+    <%= raw("#{current_user.notifications.where(seen: false).count > 0 ?
+        "<div class=\"notification-bubble notifications\">
+        #{pretty_count(current_user.notifications.where(seen: false).count)}</div>" :
+        '<div class="notification-bubble notifications"style="display:none;"></div>'}") %>
+  </div>
+  <div class="notification-panel">
+    <h3>Your Notifications:</h3>
+    <% if current_user.notifications.length > 0 %>
+        <ul class="record-list">
+          <% current_user.notifications.each do |notification| %>
+              <%= render notification %>
+          <% end %>
+        </ul>
+    <% else %>
+        <p>No notifications to display at this time</p>
+    <% end %>
+  </div>
+
   <%= link_to raw("<i class=\"material-icons\">mail</i>
               <span class=\"tip-text\">Messages</span>
               <div class=\"notification-bubble messages\"
