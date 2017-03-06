@@ -1,0 +1,31 @@
+<div class="nav-button tip message">
+  <i class="material-icons">mail</i>
+  <span class="tip-text">Conversations</span>
+  <%= raw("#{current_user.count_unread_chats > 0 ?
+      "<div class=\"notification-bubble messages\">
+        #{pretty_count(current_user.count_unread_chats)}</div>" :
+      '<div class="notification-bubble messages"style="display:none;"></div>'}") %>
+</div>
+
+<div class="chats-panel">
+  <div class="clipping-box">
+    <%= link_to raw('<i class="material-icons">done_all</i><span class="tip-text">Read all</span>'), readchats_path, method: :post, class: 'read-chats tip' %>
+    <h3>Your Conversations:</h3>
+    <% if current_user.chats.length > 0 %>
+        <ul class="record-list">
+          <% chats = current_user.chats.sort{ |b, a|
+            (a.messages.last ? a.messages.last.created_at : a.created_at) <=> (b.messages.last ? b.messages.last.created_at : b.created_at)
+          } %>
+          <% chats.each do |chat| %>
+              <%= render chat %>
+          <% end %>
+        </ul>
+        <% chats.each do |conversation| %>
+            <% @conversation = conversation %>
+            <%= render 'chats/conversation' %>
+        <% end %>
+    <% else %>
+        <p>No conversations to display at this time</p>
+    <% end %>
+  </div>
+</div>

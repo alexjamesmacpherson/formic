@@ -16,6 +16,7 @@
       <%= render 'layouts/sidebar' %>
     <% end %>
     <div class="cont<%= '-side' if logged_in? %>">
+      <div class="popout-back"></div>
       <%= render 'layouts/topbar' %>
       <div class="main">
         <%= yield %>

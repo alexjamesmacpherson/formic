@@ -9,16 +9,17 @@ html {
   box-sizing: inherit;
 }
 
-a, a:visited, .nav-button {
+a, a:visited, .nav-button, .chat-back {
   color: $accent;
   transition: color .25s ease-in-out, background .25s ease-in-out;
+  cursor: pointer;
 }
 
-a:hover, .nav-button:hover {
+a:hover, .nav-button:hover, .chat-back:hover {
   color: $accent-light;
 }
 
-a:active, .nav-button:active, a:focus, .nav-button:focus {
+a:active, .nav-button:active, .chat-back:active, a:focus, .nav-button:focus, .chat-back:focus {
   outline: none !important;
   transition: opacity .1s ease-in-out;
   color: $accent-alt;

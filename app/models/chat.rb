@@ -9,7 +9,8 @@ class Chat < ApplicationRecord
 
   validates :name,
             presence: true,
-            length: { maximum: 255 }
+            length: { maximum: 255 },
+            allow_blank: true
   validates :converses,
             length: { minimum: 2 }
 
@@ -17,7 +18,7 @@ class Chat < ApplicationRecord
     unread = unread_messages.where(recipient_id: user.id)
     unread.each do |m|
       m.destroy!
-    end
+    end if unread
   end
 
   def unread_count_for(user)
