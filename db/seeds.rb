@@ -94,7 +94,8 @@ puts "\n\nSEEDING RELATIONS:"
 @parents.each do |parent|
   rand(1..3).times do
     child = User.where(school_id: parent.school_id, group: 1).sample
-    relation = ParentRelation.new(parent_id: parent.id, child_id: child.id)
+    relation = ParentRelation.new(parent_id: parent.id,
+                                  child_id: child.id)
     if relation.valid?
       relation.save
       print_flush("\e[0;35m.\e[0m")
@@ -104,7 +105,8 @@ end
 
 @students = User.where(group: 1)
 @students.each do |pupil|
-  tutor = User.where(school_id: pupil.school_id, group: 3).sample
+  tutor = User.where(school_id: pupil.school_id,
+                     group: 3).sample
   if tutor
     pupil.tutor = tutor
     pupil.save
@@ -116,20 +118,23 @@ puts "\n\nSEEDING DEPARTMENTS AND SUBJECTS:"
 schools.times do |n|
   departments.each do |d|
     dept = Department.create!(school_id: n + 1,
-                       name: d)
+                              name: d)
     print_flush("\e[0;35m.\e[0m")
     year_groups.times do |y|
       subject = dept.subjects.create!(name: "#{dept.name.gsub('Department', '')} #{y.to_i + 10}#{case rand(1..3) when 1 then 'X' when 2 then 'C' else 'K' end}",
-                            year_group_id: y + n + 1)
+                                      year_group_id: y + n + 1)
       print_flush("\e[1;49;34m.\e[0m")
 
       subject.teaches.create!(teacher: User.where(group: 3).sample)
       print_flush("\e[0;36m.\e[0m")
 
       rand(1..10).times do
-        student = User.where(group: 1, year_group: subject.year_group).sample
+        student = User.where(group: 1,
+                             year_group: subject.year_group).sample
         grade = rand(25..85)
-        study = subject.studies.new(pupil: student, expected: grade, target: grade + rand(1..15))
+        study = subject.studies.new(pupil: student,
+                                    expected: grade,
+                                    target: grade + rand(1..15))
         if study.valid?
           study.save
           print_flush("\e[1;49;34m.\e[0m")
@@ -192,6 +197,16 @@ Subject.all.each do |subject|
       end
       start = start + 1.week
     end while start < Term.second.ends
+  end
+end
+
+puts "\n\nSEEDING ASSIGNMENTS:"
+Subject.all.each do |subject|
+  rand(1..8).times do |a|
+    subject.assignments.create(name: "Assignment #{a.to_i + 1}",
+                               information: Faker::Lorem.paragraph,
+                               due: subject.lessons.sample.start_time + rand(1..3).weeks + 1.minute)
+    print_flush("\e[0;32m.\e[0m")
   end
 end
 

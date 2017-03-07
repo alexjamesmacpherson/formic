@@ -8,12 +8,13 @@
     <h1><%= @subject.name %></h1>
     <h3 class="email"><%= @subject.department.name %></h3>
     <h3 class="school">
-      <%= link_to @subject.teachers.first.name, @subject.teachers.first %>
+      <%= link_to @subject.teachers.first.name, @subject.teachers.first if @subject.teachers.first %>
     </h3>
     <% if current_user.is?(:group, 1) %>
         <h2>
-          Expected: <%= score_to_grade(current_user.grades.where(subject_id: @subject.id).first.expected) %>,
-          Target: <%= score_to_grade(current_user.grades.where(subject_id: @subject.id).first.target) %>
+          Expected Grade:
+          <b><%= score_to_grade(current_user.grades.where(subject_id: @subject.id).first.expected) %></b>&nbsp;&nbsp;-&nbsp;&nbsp;Target Grade:
+          <b><%= score_to_grade(current_user.grades.where(subject_id: @subject.id).first.target) %></b>
         </h2>
     <% end %>
   </div>

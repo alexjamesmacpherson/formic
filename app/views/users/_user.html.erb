@@ -3,6 +3,6 @@
           <div class=\"list-item\">
             #{user.name}
             <span class=\"list-subitem\">&nbsp;-&nbsp;&nbsp;#{@user ? related_user_type(user.type) : user.type}</span>
-            <div class=\"list-subitem\">#{@subject ? "Expected: <b>#{score_to_grade(user.grades.where(subject_id: @subject.id).first.expected)}</b> - Target: <b>#{score_to_grade(user.grades.where(subject_id: @subject.id).first.target)}</b>" : user.email}</div>
+            <div class=\"list-subitem\">#{@subject ? "Expected: <b>#{score_to_grade(user.grades.where(subject_id: @subject.id).first.expected)}</b>&nbsp;&nbsp;-&nbsp;&nbsp;Target: <b>#{score_to_grade(user.grades.where(subject_id: @subject.id).first.target)}</b>" : user.email}</div>
           </div>"), user, class: 'list-record' %>
 </li>
