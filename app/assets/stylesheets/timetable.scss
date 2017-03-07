@@ -13,14 +13,50 @@
   }
 }
 
+.simple-calendar {
+  .wday-0, .wday-6 {
+    display: none;
+  }
+}
+
 .simple-calendar table {
   box-shadow: #000000 0 0 30px -15px;
 }
 
 .simple-calendar .day {
-  height: 250px;
+  //height: 250px;
 }
 
 .simple-calendar tr {
   background: #f5f5f5;
+  text-align: center;
+}
+
+.simple-calendar .today {
+  background: #ffffff;
+}
+
+.tt-element {
+  margin: 15px 0;
+}
+
+.tt-time {
+  border-top: solid 1px #dddddd;
+  color: #aaaaaa;
+  font-size: 12px;
+}
+
+.tt-head {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.tt-loc {
+  font-style: italic;
+  font-size: 14px;
+  color: #777777;
+}
+
+.tt-tutor {
+  font-size: 12px;
 }
