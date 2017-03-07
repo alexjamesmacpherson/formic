@@ -128,7 +128,8 @@ schools.times do |n|
 
       rand(1..10).times do
         student = User.where(group: 1, year_group: subject.year_group).sample
-        study = subject.studies.new(pupil: student)
+        grade = rand(25..85)
+        study = subject.studies.new(pupil: student, expected: grade, target: grade + rand(1..15))
         if study.valid?
           study.save
           print_flush("\e[1;49;34m.\e[0m")

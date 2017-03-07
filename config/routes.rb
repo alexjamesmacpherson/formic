@@ -19,4 +19,5 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :notifications, only: [:update]
   resources :chats, only: [:update]
+  resources :subjects, only: [:show]
 end
