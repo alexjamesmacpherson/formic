@@ -7,7 +7,7 @@
 
   <%= link_to raw('<i class="material-icons">date_range</i>
               <span class="tip-text">Timetable</span>'),
-              root_path, class: 'nav-button tip' if current_user.is?(:group, [1,2,3]) %>
+              timetable_path, class: 'nav-button tip' if current_user.is?(:group, [1,2,3]) %>
   <%= link_to raw('<i class="material-icons">local_library</i>
               <span class="tip-text">Your classes</span>'),
               root_path, class: 'nav-button tip' if current_user.is?(:group, [1,3]) %>
