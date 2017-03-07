@@ -19,8 +19,8 @@ class TimetableController < ApplicationController
   def lessons_assignments_for(subjects)
     subjects.each do |subject|
       @lessons = @lessons + subject.lessons
-      @assignments = @assignments + subject.assignments
+      @assignments = @assignments + subject.assignments.where('due > ?', DateTime.now)
     end
-    @assignments.sort!{ |b, a| a.created_at <=> b.created_at }
+    @assignments.sort!{ |a, b| a.due <=> b.due }
   end
 end

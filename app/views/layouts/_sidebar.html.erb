@@ -11,10 +11,10 @@
 
   <%= link_to raw('<i class="material-icons">chrome_reader_mode</i>
               <span class="tip-text">Homework</span>'),
-              root_path, class: 'nav-button tip' if current_user.is?(:group, [1,2]) %>
+              assignments_path, class: 'nav-button tip' if current_user.is?(:group, [1,2]) %>
   <%= link_to raw('<i class="material-icons">chrome_reader_mode</i>
               <span class="tip-text">Student Assignments</span>'),
-              root_path, class: 'nav-button tip' if current_user.is?(:group, 3) %>
+              assignments_path, class: 'nav-button tip' if current_user.is?(:group, 3) %>
 
   <%= link_to raw('<i class="material-icons">school</i>
               <span class="tip-text">' + current_user.school.name + '</span>'),

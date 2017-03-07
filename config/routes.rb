@@ -20,4 +20,5 @@ Rails.application.routes.draw do
   resources :notifications, only: [:update]
   resources :chats, only: [:update]
   resources :subjects, only: [:show]
+  resources :assignments, only: [:index, :show]
 end

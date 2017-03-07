@@ -1,0 +1,7 @@
+<li>
+  <%= link_to raw("<div class=\"list-item\">
+            #{assignment.name}&nbsp;&nbsp;-&nbsp;&nbsp;<span class=\"list-subitem\">#{assignment.subject.name}
+            <div class=\"list-subitem\">#{assignment.due.strftime('%d/%m/%y')}
+            (#{time_ago_in_words(assignment.due)})</div></div>
+          </span>"), assignment, class: 'list-record' %>
+</li>

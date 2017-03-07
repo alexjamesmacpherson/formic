@@ -24,7 +24,7 @@
   <div class="profile-left">
   </div>
   <% if @relations && @relations.length > 0 %>
-      <div class="profile-right">
+      <div class="profile-right <%= 'assignments-cont' if @relation_name == 'Assignments' %>">
         <h3 class="record-header"><%= @relation_name %>:</h3>
         <ul class="record-list">
           <% if @relations %>

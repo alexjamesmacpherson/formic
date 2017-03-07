@@ -18,10 +18,12 @@
 
   <div class="assignments-cont">
     <h2>Upcoming Assignments:</h2>
-    <% if @assignments %>
-        <% @assignments.each do |assignment| %>
-            <%= render assignment %>
-        <% end %>
-    <% end %>
+    <ul class="record-list">
+      <% if @assignments %>
+          <% @assignments.each do |assignment| %>
+              <%= render assignment %>
+          <% end %>
+      <% end %>
+    </ul>
   </div>
 </div>
