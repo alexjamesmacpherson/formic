@@ -47,6 +47,11 @@
               <% end %>
           <% end %>
           <%= render @user.tutor if @user.tutor %>
+          <% if @assignments %>
+              <% @assignments.each do |assignment| %>
+                  <%= render assignment %>
+              <% end %>
+          <% end %>
         </ul>
       </div>
   <% end %>

@@ -3,15 +3,11 @@
     <%= image_tag(current_user.avatar.url, class: 'avatar') %>
   </div>
   <%= link_to raw('<i class="material-icons">home</i>
-              <span class="tip-text">View your profile</span>'),
+              <span class="tip-text">View your profile and timetable</span>'),
               current_user, class: 'nav-button tip' %>
 
   <%= render 'layouts/notifications-panel' %>
   <%= render 'layouts/chats-panel' %>
-
-  <%= link_to raw('<i class="material-icons">date_range</i>
-              <span class="tip-text">Timetable</span>'),
-              timetable_path, class: 'nav-button tip' if current_user.is?(:group, [1,2,3]) %>
 
   <%= link_to raw('<i class="material-icons">chrome_reader_mode</i>
               <span class="tip-text">Homework</span>'),
