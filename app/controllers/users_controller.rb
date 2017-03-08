@@ -31,6 +31,19 @@ class UsersController < ApplicationController
     end
     @relations = @user.parents + @user.children + @user.tutees
     @relations.sort! { |a, b| a.name <=> b.name }
+
+    @lessons = []
+    @assignments = []
+    case current_user.group
+      when 1
+        lessons_assignments_for(@user.studies)
+      when 2
+        @user.children.each do |child|
+          lessons_assignments_for(child.studies)
+        end
+      when 3
+        lessons_assignments_for(@user.teaches)
+    end
   end
 
   def new
@@ -127,5 +140,13 @@ private
       flash[:danger] = 'User not found.'
       redirect_to users_url
     end
+  end
+
+  def lessons_assignments_for(subjects)
+    subjects.each do |subject|
+      @lessons = @lessons + subject.lessons
+      @assignments = @assignments + subject.assignments.where('due > ?', DateTime.now)
+    end
+    @assignments.sort!{ |a, b| a.due <=> b.due }
   end
 end

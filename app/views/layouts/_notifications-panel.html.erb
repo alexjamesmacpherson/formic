@@ -1,5 +1,5 @@
 <div class="nav-button tip notification">
-  <i class="material-icons">public</i>
+  <i class="material-icons">notifications</i>
   <span class="tip-text">Notifications</span>
   <%= raw("#{current_user.notifications.where(seen: false).count > 0 ?
       "<div class=\"notification-bubble notifications\">

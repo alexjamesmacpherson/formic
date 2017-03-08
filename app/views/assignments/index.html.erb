@@ -1,0 +1,16 @@
+<% provide(:title, 'Homework') %>
+<% provide(:top_title, 'Your Homework') %>
+<% provide(:top_link, timetable_path) %>
+<% provide(:top_tip, 'Back to timetable') %>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1>Outstanding Assignments</h1>
+    <h2>Be sure to submit them on time!</h2>
+    <ul class="record-list assignments-cont">
+      <% @assignments.each do |assignment| %>
+          <%= render assignment %>
+      <% end %>
+    </ul>
+  </div>
+</div>

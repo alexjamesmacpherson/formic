@@ -1,0 +1,16 @@
+<% provide(:title, @assignment.name) %>
+<% provide(:top_title, 'Assignment Information') %>
+<% provide(:top_link, assignments_path) %>
+<% provide(:top_tip, 'View all homework') %>
+
+<div class="profile-block">
+  <div class="profile-info">
+    <h1><%= @assignment.name %></h1>
+    <h3 class="email"><%= "#{@assignment.due.strftime('%d/%m/%y')} (#{time_ago_in_words(@assignment.due)})" %></h3>
+    <h3 class="school">
+      <%= link_to @assignment.subject.teachers.first.name, @assignment.subject.teachers.first if @assignment.subject.teachers.first %>
+      &nbsp;-&nbsp;&nbsp;<%= @assignment.subject.name %>
+    </h3>
+    <h2><%= @assignment.information %></h2>
+  </div>
+</div>

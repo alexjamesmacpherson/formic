@@ -1,0 +1,38 @@
+<% provide(:title, @subject.name) %>
+<% provide(:top_title, 'Subject Overview') %>
+<% provide(:top_link, timetable_path) %>
+<% provide(:top_tip, 'Back to timetable') %>
+
+<div class="profile-block">
+  <div class="profile-info">
+    <h1><%= @subject.name %></h1>
+    <h3 class="email"><%= @subject.department.name %></h3>
+    <h3 class="school">
+      <%= link_to @subject.teachers.first.name, @subject.teachers.first if @subject.teachers.first %>
+    </h3>
+    <% if current_user.is?(:group, 1) %>
+        <h2>
+          Expected Grade:
+          <b><%= score_to_grade(current_user.grades.where(subject_id: @subject.id).first.expected) %></b>&nbsp;&nbsp;-&nbsp;&nbsp;Target Grade:
+          <b><%= score_to_grade(current_user.grades.where(subject_id: @subject.id).first.target) %></b>
+        </h2>
+    <% end %>
+  </div>
+</div>
+
+<div class="profile-container">
+  <div class="profile-left">
+  </div>
+  <% if @relations && @relations.length > 0 %>
+      <div class="profile-right <%= 'assignments-cont' if @relation_name == 'Assignments' %>">
+        <h3 class="record-header"><%= @relation_name %>:</h3>
+        <ul class="record-list">
+          <% if @relations %>
+              <% @relations.each do |relation| %>
+                  <%= render relation %>
+              <% end %>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+</div>

@@ -1,6 +1,7 @@
 .timetable-cont {
   flex: 3 1;
   padding: 10px;
+  margin-right: 35px;
 }
 
 .assignments-cont {
@@ -13,14 +14,59 @@
   }
 }
 
-.simple-calendar table {
-  box-shadow: #000000 0 0 30px -15px;
+.simple-calendar {
+  .wday-0, .wday-6 {
+    display: none;
+  }
+
+  .prev-month {
+    background: inherit;
+  }
+
+  table {
+    box-shadow: #000000 0 0 30px -15px;
+  }
+
+  tr {
+    background: $front;
+    text-align: center;
+  }
+
+  thead tr {
+    background: #f2f2f2;
+  }
+
+  .today {
+    background: #ffffff;
+  }
 }
 
-.simple-calendar .day {
-  height: 250px;
+.tt-element {
+  margin: 15px 0;
+  cursor: default;
 }
 
-.simple-calendar tr {
-  background: #f5f5f5;
+.tt-time {
+  border-top: solid 1px #dddddd;
+  color: #aaaaaa;
+  font-size: 12px;
+}
+
+.tt-head {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.tt-loc {
+  font-style: italic;
+  font-size: 14px;
+  color: #777777;
+}
+
+.tt-tutor {
+  font-size: 12px;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: $front;
 }

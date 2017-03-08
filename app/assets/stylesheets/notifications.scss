@@ -6,16 +6,17 @@
   border-radius: 16px;
   transform: translate3d(26px, -42px, 0);
   @include box_sizing;
+  color: $accent;
   text-align: center;
   font-size: 12px;
   font-weight: bold;
 }
 
 .notification-panel, .chats-panel {
-  top: 89px;
+  top: 161px;
   left: 105%;
   width: 400px;
-  background-color: #f5f5f5;
+  background-color: $front;
   color: #555;
   text-align: center;
   font-size: 13px;

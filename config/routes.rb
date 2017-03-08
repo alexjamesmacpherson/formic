@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   post    '/readall'  =>  'notifications#readall'
   post    '/readchats'=>  'chats#readall'
   post    '/send'     =>  'chats#send_message'
-  get     '/timetable'  =>  'timetable#index'
 
   # Schools added/deleted programmatically rather than through system - hence can only be performed by system admin.
   resources :schools, only: [:show, :edit, :update]
@@ -19,4 +18,6 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :notifications, only: [:update]
   resources :chats, only: [:update]
+  resources :subjects, only: [:show]
+  resources :assignments, only: [:index, :show]
 end

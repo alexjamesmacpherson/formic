@@ -4,7 +4,7 @@ class NotificationsController < ApplicationController
     if current_user?(@notification.user)
       @notification.seen = true
       @notification.save
-      redirect_to @notification.link if @notification.link
+      redirect_to URI.parse(@notification.link).path
     else
       redirect_to current_user
     end

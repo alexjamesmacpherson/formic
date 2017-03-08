@@ -17,11 +17,11 @@ class User < ApplicationRecord
 
   # Student's grades/subjects
   has_many :grades, class_name: 'Study', foreign_key: 'pupil_id', dependent: :destroy
-  has_many :studies, class_name: 'Subject', through: :studies
+  has_many :studies, class_name: 'Subject', through: :grades, source: :subject
 
   # Teacher's lessons
   has_many :teaching_relations, class_name: 'Teach', foreign_key: 'teacher_id', dependent: :destroy
-  has_many :teaches, class_name: 'Subject', through: :teaching_relations
+  has_many :teaches, class_name: 'Subject', through: :teaching_relations, source: :subject
 
   has_many :submissions, foreign_key: 'pupil_id', dependent: :destroy
   has_many :submitted, class_name: 'Submission', foreign_key: 'marker_id', dependent: :nullify

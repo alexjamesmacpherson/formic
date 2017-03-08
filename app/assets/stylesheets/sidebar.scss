@@ -9,24 +9,29 @@
   padding: 16px 0;
 }
 
-.nav-button {
+.nav-button, .nav-avatar {
   width: 72px;
   height: 72px;
   padding: 12px;
   float: left;
-  cursor: pointer;
   @include box_sizing;
 
   .material-icons {
     font-size: 36px;
     padding: 5px;
   }
+}
 
+.nav-avatar {
   .avatar {
     height: 100%;
     width: 100%;
     border-radius: 35px;
   }
+}
+
+.nav-button {
+  cursor: pointer;
 
   &:hover {
     background: $back-alt;
@@ -41,6 +46,22 @@
   &.settings {
     bottom: 72px;
   }
+}
+
+.nav-button, a.nav-button {
+  color: $accent-light;
+  transition: color .25s ease-in-out, background .25s ease-in-out;
+  cursor: pointer;
+}
+
+.nav-button:hover, a.nav-button:hover {
+  color: $accent-light;
+}
+
+.nav-button:active, .nav-button:focus, a.nav-button:active, a.nav-button:focus {
+  outline: none !important;
+  transition: opacity .1s ease-in-out;
+  color: $accent-alt;
 }
 
 .tip {

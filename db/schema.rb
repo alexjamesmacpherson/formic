@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306041128) do
+ActiveRecord::Schema.define(version: 20170307015118) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "subject_id"
@@ -50,14 +50,14 @@ ActiveRecord::Schema.define(version: 20170306041128) do
 
   create_table "lessons", force: :cascade do |t|
     t.integer  "subject_id"
-    t.integer  "period_id"
     t.integer  "location_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["location_id", "period_id"], name: "index_lessons_on_location_id_and_period_id", unique: true
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.index ["location_id", "start_time"], name: "index_lessons_on_location_id_and_start_time", unique: true
     t.index ["location_id"], name: "index_lessons_on_location_id"
-    t.index ["period_id"], name: "index_lessons_on_period_id"
-    t.index ["subject_id", "period_id"], name: "index_lessons_on_subject_id_and_period_id", unique: true
+    t.index ["subject_id", "start_time"], name: "index_lessons_on_subject_id_and_start_time", unique: true
     t.index ["subject_id"], name: "index_lessons_on_subject_id"
   end
 
