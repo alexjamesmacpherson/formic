@@ -19,10 +19,6 @@ class ApplicationRecord < ActiveRecord::Base
     is_record?(:subject, Subject, subject_id)
   end
 
-  def period_exists?
-    is_record?(:period, Period, period_id)
-  end
-
   def department_exists?
     is_record?(:department, Department, department_id)
   end

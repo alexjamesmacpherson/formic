@@ -210,4 +210,26 @@ Subject.all.each do |subject|
   end
 end
 
+puts "\n\nSEEDING MESSAGES AND NOTIFICATIONS:"
+emails = ['student', 'teacher', 'admin']
+emails.each do |email|
+  user = User.where(email: "#{email}-0@test.com").first
+=begin
+  3.times do
+    assignment = user.studies.first.assignments.sample
+    user.notifications.create!(title: "You've been set a new a new assignment", message: assignment.name, link: "/assignments/#{assignment.id}")
+  end
+=end
+  messages = ["Hey, #{user.name.split[0]}!", 'Hello', 'Hey, I have a question, do you mind answering it for me?']
+  2.times do
+    other_user = User.all.sample
+
+    chat = Chat.new(name: 'Test Conversation')
+    chat.converses.new(user: user)
+    chat.converses.new(user: other_user)
+    chat.save
+    chat.messages.create(sender: other_user, text: messages.sample)
+  end
+end
+
 puts "\n\nSEEDING COMPLETED SUCCESSFULLY!\n"

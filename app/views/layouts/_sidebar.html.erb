@@ -1,7 +1,11 @@
 <div class="side-bar">
-  <%= link_to raw(image_tag(current_user.avatar.url, class: 'avatar')) +
-              raw('<span class="tip-text">View your profile</span>'),
+  <div class="nav-avatar">
+    <%= image_tag(current_user.avatar.url, class: 'avatar') %>
+  </div>
+  <%= link_to raw('<i class="material-icons">home</i>
+              <span class="tip-text">View your profile</span>'),
               current_user, class: 'nav-button tip' %>
+
   <%= render 'layouts/notifications-panel' %>
   <%= render 'layouts/chats-panel' %>
 
@@ -16,13 +20,9 @@
               <span class="tip-text">Student Assignments</span>'),
               assignments_path, class: 'nav-button tip' if current_user.is?(:group, 3) %>
 
-  <%= link_to raw('<i class="material-icons">school</i>
-              <span class="tip-text">' + current_user.school.name + '</span>'),
-              current_user.school, class: 'nav-button tip' %>
-
   <%= link_to raw('<i class="material-icons">people</i>
               <span class="tip-text">All users</span>'),
-              users_path, class: 'nav-button tip' if current_user.is?(:group, 4) %>
+              users_path, class: 'nav-button tip' %>
   <%= link_to raw('<i class="material-icons">person_add</i>
               <span class="tip-text">Add new user</span>'),
               new_user_path, class: 'nav-button tip' if current_user.is?(:group, 4) %>

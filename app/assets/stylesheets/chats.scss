@@ -73,6 +73,7 @@
           padding: 10px 15px;
           margin: 0;
           transition: .25s ease-in-out;
+          text-align: right;
 
           &:hover {
             margin: 0 3px;
@@ -86,6 +87,7 @@
         .message-body {
           background: $front;
           color: #555555;
+          text-align: left;
         }
       }
     }

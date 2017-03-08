@@ -1,8 +1,12 @@
 <% provide(:title, @user.name) %>
 <% provide(:top_title, "#{@user.type} Profile") %>
-<% provide(:top_link, edit_user_path(@user)) if current_user.is?(:group, 4) && !current_user?(@user) %>
-<% provide(:top_icon, 'settings') %>
-<% provide(:top_tip, "Edit #{@user.name}'s profile") %>
+<% provide(:top_link, edit_user_path(@user) )if current_user.is?(:group, 4) || current_user?(@user) %>
+<% provide(:top_icon, 'mode_edit') %>
+<% if current_user.is?(:group, 4) && !current_user?(@user) %>
+    <% provide(:top_tip, "Edit #{@user.name}'s profile") %>
+<% elsif current_user?(@user) %>
+    <% provide(:top_tip, 'Edit your profile') %>
+<% end %>
 
 <div class="profile-block">
   <%= image_tag(@user.avatar.url, class: 'avatar') %>
@@ -10,7 +14,7 @@
     <h1><%= @user.name %></h1>
     <h3 class="email"><%= @user.email %></h3>
     <h3 class="school">
-      <%= image_tag(current_user.school.logo, class: 'logo') if current_user.school.logo? %><%= @user.school.name %>
+      <%= link_to raw("#{image_tag(current_user.school.logo, class: 'logo') if current_user.school.logo?} #{@user.school.name}"), current_user.school %>
       <%= raw("&nbsp;&nbsp;-&nbsp;&nbsp;") + "#{@user.year_group.name}" if @user.is?(:group, 1) %>
     </h3>
     <h2><%= simple_format(@user.bio) %></h2>
@@ -19,6 +23,19 @@
 
 <div class="profile-container">
   <div class="profile-left">
+    <div class="timetable-cont">
+      <%= week_calendar events: @lessons do |date, lessons| %>
+          <%= date %>
+          <% lessons.each do |lesson| %>
+              <div class="tt-element">
+                <div class="tt-time"><%= lesson.start_time.strftime('%H:%M') %> - <%= lesson.end_time.strftime('%H:%M') %></div>
+                <div class="tt-head"><%= link_to lesson.subject.name, lesson.subject %></div>
+                <div class="tt-loc">Room: <%= lesson.location.name %></div>
+                <%= link_to lesson.subject.teachers.first.name, lesson.subject.teachers.first, class: 'tt-tutor' if lesson.subject.teachers.first %>
+              </div>
+          <% end %>
+      <% end %>
+    </div>
   </div>
   <% if @relations.length > 0 || @user.tutor %>
       <div class="profile-right">

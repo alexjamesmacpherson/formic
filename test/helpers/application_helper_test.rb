@@ -44,4 +44,24 @@ class ApplicationHelperTest < ActionView::TestCase
       assert_equal '9+', pretty_count(n)
     end
   end
+
+  test 'function returns correct related user type' do
+    @user.group = 1
+    assert_equal 'Tutor', related_user_type('Teacher')
+    assert_equal 'Parent', related_user_type('Parent')
+
+    @user.group = 2
+    assert_equal 'Tutor of Child', related_user_type('Teacher')
+    assert_equal 'Parent', related_user_type('Parent')
+
+    assert_equal 'Child', related_user_type('Student')
+    assert_equal 'Parent', related_user_type('Parent')
+
+    @user.group = 3
+    assert_equal 'Tutee', related_user_type('Student')
+    assert_equal 'Parent', related_user_type('Parent')
+
+    @user.group = 4
+    assert_equal 'Tutor', related_user_type('Tutor')
+  end
 end

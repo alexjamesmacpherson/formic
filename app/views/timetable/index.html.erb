@@ -2,19 +2,7 @@
 <% provide(:top_title, 'Your Timetable') %>
 
 <div style="display:flex;">
-  <div class="timetable-cont">
-    <%= week_calendar events: @lessons do |date, lessons| %>
-        <%= date %>
-        <% lessons.each do |lesson| %>
-            <div class="tt-element">
-              <div class="tt-time"><%= lesson.start_time.strftime('%H:%M') %> - <%= lesson.end_time.strftime('%H:%M') %></div>
-              <div class="tt-head"><%= link_to lesson.subject.name, lesson.subject %></div>
-              <div class="tt-loc">Room: <%= lesson.location.name %></div>
-              <%= link_to lesson.subject.teachers.first.name, lesson.subject.teachers.first, class: 'tt-tutor' if lesson.subject.teachers.first %>
-            </div>
-        <% end %>
-    <% end %>
-  </div>
+
 
   <div class="assignments-cont">
     <h2>Upcoming Assignments:</h2>
