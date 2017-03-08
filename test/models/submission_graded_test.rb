@@ -5,7 +5,7 @@ class SubmissionGradedTest < ActiveSupport::TestCase
     @assignment = assignments(:test_assignment)
     @pupil = users(:test_user)
     @teacher = users(:test_teacher)
-    @submission = Submission.new(assignment: @assignment, pupil: @pupil, file: File.open(file_fixture('logo-v.jpg')), submitted: true, submitted_at: Time.zone.now, marker: @teacher, marked: true, marked_at: Time.zone.now, feedback: 'This is some test feedback.', grade: 50)
+    @submission = Submission.new(assignment: @assignment, pupil: @pupil, file: File.open(file_fixture('logo-v.jpg')), submitted: true, submitted_at: Time.zone.now, marker: @teacher, marked: true, marked_at: Time.zone.now, feedback: 'This is some test feedback.', grade: 2)
   end
 
   test 'submission is valid and can be saved' do
@@ -37,14 +37,14 @@ class SubmissionGradedTest < ActiveSupport::TestCase
     assert_not @submission.valid?
   end
 
-  test 'submission grade must be a number between 0 and 100' do
-    valid_grades = [0, 55, 100]
+  test 'submission grade must be a number between -2 and 2' do
+    valid_grades = [-2, 0, 1, 2]
     valid_grades.each do |valid|
       @submission.grade = valid
       assert @submission.valid?, "#{valid.inspect} should be a valid grade"
     end
 
-    invalid_grades = [nil, 101, -1, 1000]
+    invalid_grades = [nil, 3, -3, 1000]
     invalid_grades.each do |invalid|
       @submission.grade = invalid
       assert_not @submission.valid?, "#{invalid.inspect} should not be a valid grade"

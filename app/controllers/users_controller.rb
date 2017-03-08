@@ -35,7 +35,7 @@ class UsersController < ApplicationController
 
     @lessons = []
     @assignments = []
-    case current_user.group
+    case @user.group
       when 1
         lessons_assignments_for(@user.studies)
       when 2

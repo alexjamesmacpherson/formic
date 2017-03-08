@@ -5,12 +5,30 @@
 
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <h1>Outstanding Homework</h1>
-    <h2>Be sure to submit them on time!</h2>
-    <ul class="record-list assignments-cont">
-      <% @assignments.each do |assignment| %>
-          <%= render assignment %>
-      <% end %>
-    </ul>
+    <div class="assignments-cont">
+      <div class="assignment-head">
+        <i class="material-icons right-arrow">keyboard_arrow_right</i>
+        <i class="material-icons down-arrow">keyboard_arrow_down</i>
+        <h2>Pending Homework:</h2>
+      </div>
+      <ul class="record-list">
+        <% @pending.each do |assignment| %>
+            <%= render assignment %>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="assignments-cont no-show">
+      <div class="assignment-head">
+        <i class="material-icons right-arrow">keyboard_arrow_right</i>
+        <i class="material-icons down-arrow">keyboard_arrow_down</i>
+        <h2>Past Homework:</h2>
+      </div>
+      <ul class="record-list">
+        <% @past.each do |assignment| %>
+            <%= render assignment %>
+        <% end %>
+      </ul>
+    </div>
   </div>
 </div>

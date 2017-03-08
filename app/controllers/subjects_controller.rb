@@ -4,10 +4,10 @@ class SubjectsController < ApplicationController
     case current_user.group
       when 1
         @relations = @subject.assignments.where('due > ?', DateTime.now).order(:due)
-        @relation_name = 'Assignments'
+        @relation_name = 'Upcoming Homework'
       when 2
         @relations = @subject.assignments.where('due > ?', DateTime.now).order(:due)
-        @relation_name = "Child's Assignments"
+        @relation_name = "Child's Homework"
       else
         @relations = @subject.pupils
         @relation_name = 'Students'

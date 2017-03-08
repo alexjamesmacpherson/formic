@@ -4,7 +4,7 @@ class StudyTest < ActiveSupport::TestCase
   def setup
     @pupil = users(:test_user)
     @class = subjects(:test_subject)
-    @relation = Study.new(subject: @class, pupil: @pupil)
+    @relation = Study.new(subject: @class, pupil: @pupil, challenge_grade: 'A')
   end
 
   test 'relation is valid and can be saved' do
@@ -57,42 +57,26 @@ class StudyTest < ActiveSupport::TestCase
     assert_not @relation.valid?
   end
 
-  test 'expected grade can be blank but must be a number between 0 and 100' do
-    valid_grades = [nil, 0, 55, 100]
+  test 'challenge grade must be a grade between A and F' do
+    valid_grades = ('A'..'F').to_a
     valid_grades.each do |valid|
-      @relation.expected = valid
+      @relation.challenge_grade = valid
       assert @relation.valid?, "#{valid.inspect} should be a valid expected grade"
     end
 
-    invalid_grades = [101, -1, 1000]
+    invalid_grades = [nil, 'AA', 'Z', 'invalid']
     invalid_grades.each do |invalid|
-      @relation.expected = invalid
+      @relation.challenge_grade = invalid
       assert_not @relation.valid?, "#{invalid.inspect} should not be a valid expected grade"
     end
   end
 
-  test 'target grade can be blank but must be a number between 0 and 100' do
-    valid_grades = [nil, 0, 55, 100]
-    valid_grades.each do |valid|
-      @relation.target = valid
-      assert @relation.valid?, "#{valid.inspect} should be a valid target grade"
-    end
-
-    invalid_grades = [101, -1, 1000]
-    invalid_grades.each do |invalid|
-      @relation.target = invalid
-      assert_not @relation.valid?, "#{invalid.inspect} should not be a valid target grade"
-    end
-  end
-
   test 'pupil can fetch grades directly from self with has_many relation' do
-    @relation.target = 90
-    @relation.expected = 70
+    @relation.challenge_grade = 'A'
     @relation.save
 
     @pupil.grades.each do |grade|
-      assert_equal 90, grade.target
-      assert_equal 70, grade.expected
+      assert_equal 'A', grade.challenge_grade
     end
   end
 end

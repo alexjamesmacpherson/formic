@@ -4,10 +4,18 @@ class AssignmentsController < ApplicationController
   end
 
   def index
-    @assignments = []
+    @pending = []
+    @past = []
+
     current_user.studies.each do |subject|
-      @assignments = @assignments + subject.assignments.where('due > ?', DateTime.now)
+      @pending = @pending + subject.assignments.where('due > ?', DateTime.now)
     end
-    @assignments.sort!{ |a, b| a.due <=> b.due }
+
+    current_user.studies.each do |subject|
+      @past = @past + subject.assignments.where('due <= ?', DateTime.now)
+    end
+
+    @pending.sort!{ |a, b| a.due <=> b.due }
+    @past.sort!{ |a, b| b.due <=> a.due }
   end
 end

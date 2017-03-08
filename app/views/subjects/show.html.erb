@@ -7,14 +7,12 @@
   <div class="profile-info">
     <h1><%= @subject.name %></h1>
     <h3 class="email"><%= @subject.department.name %></h3>
-    <h3 class="school">
-      <%= link_to @subject.teachers.first.name, @subject.teachers.first if @subject.teachers.first %>
-    </h3>
-    <% if current_user.is?(:group, 1) %>
+    <h3 class="relation-title">Teacher:</h3>
+    <h3 class="relation-name"><%= link_to @subject.teachers.first.name, @subject.teachers.first if @subject.teachers.first %></h3>
+    <% if current_user.is?(:group, 1) && current_user.grades.where(subject_id: @subject.id).first %>
         <h2>
-          Expected Grade:
-          <b><%= score_to_grade(current_user.grades.where(subject_id: @subject.id).first.expected) %></b>&nbsp;&nbsp;-&nbsp;&nbsp;Target Grade:
-          <b><%= score_to_grade(current_user.grades.where(subject_id: @subject.id).first.target) %></b>
+          Challenge Grade:
+          <b><%= current_user.grades.where(subject_id: @subject.id).first.challenge_grade %></b>
         </h2>
     <% end %>
   </div>
@@ -24,7 +22,7 @@
   <div class="profile-left">
   </div>
   <% if @relations && @relations.length > 0 %>
-      <div class="profile-right <%= 'assignments-cont' if @relation_name == 'Assignments' %>">
+      <div class="profile-right <%= 'assignments-list' if @relation_name != 'Students' %>">
         <h3 class="record-header"><%= @relation_name %>:</h3>
         <ul class="record-list">
           <% if @relations %>

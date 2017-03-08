@@ -124,10 +124,9 @@ ActiveRecord::Schema.define(version: 20170307015118) do
   create_table "studies", force: :cascade do |t|
     t.integer  "subject_id"
     t.integer  "pupil_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "target"
-    t.integer  "expected"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "challenge_grade"
     t.index ["pupil_id"], name: "index_studies_on_pupil_id"
     t.index ["subject_id", "pupil_id"], name: "index_studies_on_subject_id_and_pupil_id", unique: true
     t.index ["subject_id"], name: "index_studies_on_subject_id"

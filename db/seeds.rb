@@ -20,7 +20,10 @@ schools.times do
                  motto: Faker::Lorem.sentence)
   print_flush("\e[0;32m.\e[0m")
   4.times do |n|
-    sch.locations.create!(name: "#{departments[n % 2][0]}#{n + rand(1..5)}")
+    begin
+      loc = sch.locations.build(name: "#{departments[n % 2][0]}#{n + rand(1..5)}")
+    end until loc.valid?
+    loc.save
     print_flush("\e[0;33m.\e[0m")
   end
 end
@@ -131,10 +134,8 @@ schools.times do |n|
       rand(1..10).times do
         student = User.where(group: 1,
                              year_group: subject.year_group).sample
-        grade = rand(25..85)
         study = subject.studies.new(pupil: student,
-                                    expected: grade,
-                                    target: grade + rand(1..15))
+                                    challenge_grade: ('A'..'F').to_a.sample)
         if study.valid?
           study.save
           print_flush("\e[1;49;34m.\e[0m")

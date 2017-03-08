@@ -1,17 +1,76 @@
-.assignments-cont .list-record {
-  padding: 10px 15px;
-
-  &.list-end, &.no-record {
-    padding: 20px;
-    text-align: center;
-  }
-
-  &.no-record {
-    color: #999999;
-    cursor: default;
+.assignments-list, .assignments-cont {
+  .list-record {
+    padding: 10px 15px;
+    transition: .25s ease-in-out;
 
     &:hover {
-      background: none;
+      padding: 10px 20px;
+    }
+
+    &.list-end, &.no-record {
+      padding: 20px;
+      text-align: center;
+
+      &:hover {
+        padding: 20px;
+      }
+    }
+
+    &.no-record {
+      color: #999999;
+      cursor: default;
+
+      &:hover {
+        background: none;
+      }
     }
   }
+}
+
+.assignments-cont {
+  background: #f5f5f5;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: #000000 0 0 30px -15px;
+  margin: 30px;
+
+  h2 {
+    font-weight: bold;
+    margin: 0;
+    text-align: left;
+    float: left;
+  }
+
+  i {
+    float: left;
+    font-size: 48px;
+    margin: -10px 5px 0 -5px;
+    color: #777777;
+  }
+
+  .list-record {
+    padding: 10px 25px;
+
+    &:hover {
+      padding: 10px 30px;
+    }
+  }
+
+  &.no-show .record-list, &.no-show .down-arrow {
+    display: none;
+  }
+
+  .right-arrow {
+    display: none;
+  }
+
+  &.no-show .right-arrow {
+    display: block;
+  }
+}
+
+.assignment-head {
+  padding: 20px;
+  cursor: pointer;
+  height: 65px;
 }
