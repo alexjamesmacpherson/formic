@@ -17,7 +17,7 @@
             <% if @user.avatar? %>
                 <%= f.label :remove_avatar, class: 'avatar-button' do %>
                     <%= f.check_box :remove_avatar %>
-                    <%= image_tag(@user.avatar.url, class: 'avatar') %>
+                    <%= image_tag(@user.avatar.url, class: 'avatar', style: 'border-radius:10px;') %>
                     <div class="avatar-delete">Click to remove</div>
                 <% end %>
                 <%= f.label 'Select New Avatar:', class: 'form-text', style: 'margin: 10px 0 0;' %>

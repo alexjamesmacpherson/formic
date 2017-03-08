@@ -3,7 +3,7 @@
     <%= image_tag(current_user.avatar.url, class: 'avatar') %>
   </div>
   <%= link_to raw('<i class="material-icons">home</i>
-              <span class="tip-text">View your profile and timetable</span>'),
+              <span class="tip-text">Profile and timetable</span>'),
               current_user, class: 'nav-button tip' %>
 
   <%= render 'layouts/notifications-panel' %>

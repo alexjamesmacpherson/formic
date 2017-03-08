@@ -69,19 +69,4 @@ class NotificationTest < ActiveSupport::TestCase
       assert @notification.valid?, "#{valid.inspect} should be a valid notification link"
     end
   end
-
-  test 'max 20 notifications stored per user' do
-    assert_equal 1, @user.notifications.count
-    assert_equal 'Test Notification', Notification.where(user_id: @user.id).order(:created_at).first.title
-
-    assert_difference 'Notification.count', 19 do
-      20.times do |n|
-        @user.notifications.create(title: "Notification #{n + 1}", message: 'Notification body', link: '')
-      end
-    end
-
-    assert_equal 20, @user.notifications.count
-    assert_equal 'Notification 1', Notification.where(user_id: @user.id).order(:created_at).first.title
-    assert_equal 'Notification 20', Notification.where(user_id: @user.id).order(:created_at).last.title
-  end
 end

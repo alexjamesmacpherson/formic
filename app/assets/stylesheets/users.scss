@@ -63,7 +63,7 @@
 
 .profile-block {
   position: relative;
-  padding: 15px;
+  padding: 15px 15px 25px;
   display: flex;
   box-shadow: #000000 0 8px 15px -15px;
 }
@@ -77,10 +77,14 @@
   transition: 0.25s ease-in-out;
 }
 
+.avatar {
+  border-radius: 250px;
+}
+
 .profile-info {
   flex: 1 1;
   @include box_sizing;
-  padding: 10px 30px;
+  padding: 0 30px;
   cursor: default;
 
   h1, h2, h3 {
@@ -106,6 +110,21 @@
     font-weight: bold;
     font-size: 24px;
     font-family: 'Ubuntu', sans-serif;
+  }
+
+  h3.school {
+    margin-bottom: 20px;
+  }
+
+  h3.relation-title {
+    margin: 10px 0 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  h3.relation-name {
+    margin: 5px 15px;
+    font-size: 20px;
   }
 
   .logo {

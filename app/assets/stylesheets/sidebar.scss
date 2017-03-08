@@ -58,10 +58,10 @@
   color: $accent-light;
 }
 
-.nav-button:active, .nav-button:focus, a.nav-button:active, a.nav-button:focus {
+.nav-button:active, a.nav-button:active {
   outline: none !important;
   transition: opacity .1s ease-in-out;
-  color: $accent-alt;
+  color: $accent;
 }
 
 .tip {

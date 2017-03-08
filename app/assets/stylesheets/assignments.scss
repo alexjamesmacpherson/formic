@@ -1,3 +1,17 @@
 .assignments-cont .list-record {
   padding: 10px 15px;
+
+  &.list-end, &.no-record {
+    padding: 20px;
+    text-align: center;
+  }
+
+  &.no-record {
+    color: #999999;
+    cursor: default;
+
+    &:hover {
+      background: none;
+    }
+  }
 }

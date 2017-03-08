@@ -9,7 +9,7 @@
 
 <div class="chats-panel">
   <div class="clipping-box">
-    <%= link_to raw('<i class="material-icons">done_all</i><span class="tip-text">Read all</span>'), readchats_path, method: :post, class: 'read-chats tip' %>
+    <%= link_to raw('<i class="material-icons">done_all</i><span class="tip-text">Read all</span>'), read_path, method: :post, class: 'read-chats tip' %>
     <h3>Your Conversations:</h3>
     <% if current_user.chats.length > 0 %>
         <ul class="record-list">

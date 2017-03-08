@@ -7,8 +7,9 @@ Rails.application.routes.draw do
   get     '/login'    =>  'sessions#new'
   post    '/login'    =>  'sessions#create'
   delete  '/logout'   =>  'sessions#destroy'
-  post    '/readall'  =>  'notifications#readall'
-  post    '/readchats'=>  'chats#readall'
+  post    '/clear'    =>  'notifications#clear'
+  post    '/remove'   =>  'notifications#destroy'
+  post    '/read'     =>  'chats#readall'
   post    '/send'     =>  'chats#send_message'
 
   # Schools added/deleted programmatically rather than through system - hence can only be performed by system admin.

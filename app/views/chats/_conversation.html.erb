@@ -3,7 +3,7 @@
     <i class="material-icons">navigate_before</i>
     <span class="tip-text">View all</span>
   </div>
-  <%= link_to raw("#{image_tag(@conversation.messages.last ? @conversation.messages.last.sender.avatar : @conversation.users.where.not(id: current_user.id).first.avatar, class: 'avatar')}<span class=\"tip-text\">View profile</span>"), user_path(@conversation.users.where.not(id: current_user.id).first), class: 'conversation-profile tip' %>
+  <%= link_to raw("#{image_tag(@conversation.messages.where.not(sender_id: current_user.id).last ? @conversation.messages.where.not(sender_id: current_user.id).last.sender.avatar : @conversation.users.where.not(id: current_user.id).first.avatar, class: 'avatar')}<span class=\"tip-text\">View profile</span>"), user_path(@conversation.users.where.not(id: current_user.id).first), class: 'conversation-profile tip' %>
 
   <h3><%= @conversation.users.where.not(id: current_user.id).first.name %></h3>
   <div class="conversation-body">

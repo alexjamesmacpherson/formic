@@ -8,7 +8,7 @@
 </div>
 <div class="notification-panel">
   <div class="clipping-box">
-    <%= link_to raw('<i class="material-icons">clear_all</i><span class="tip-text">Clear notifications</span>'), readall_path, method: :post, class: 'read-all tip' %>
+    <%= link_to raw('<i class="material-icons">clear_all</i><span class="tip-text">Clear notifications</span>'), clear_path, method: :post, class: 'read-all tip' %>
     <h3>Your Notifications:</h3>
     <% if current_user.notifications.length > 0 %>
         <ul class="record-list">
@@ -16,6 +16,7 @@
               <%= render notification %>
           <% end %>
         </ul>
+        <p style="display:none">No notifications to display at this time</p>
     <% else %>
         <p>No notifications to display at this time</p>
     <% end %>

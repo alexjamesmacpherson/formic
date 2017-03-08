@@ -28,8 +28,9 @@ class UsersController < ApplicationController
     unless @user.activated?
       flash[:danger] = 'User not found.'
       redirect_to users_url
+      return
     end
-    @relations = @user.parents + @user.children + @user.tutees
+    @relations = @user.parents + @user.children
     @relations.sort! { |a, b| a.name <=> b.name }
 
     @lessons = []
@@ -148,5 +149,8 @@ private
       @assignments = @assignments + subject.assignments.where('due > ?', DateTime.now)
     end
     @assignments.sort!{ |a, b| a.due <=> b.due }
+    if @assignments.length > 10
+      @assignments = @assignments[0..9]
+    end
   end
 end
