@@ -9,7 +9,7 @@
 <% end %>
 
 <div class="profile-block">
-  <%= image_tag(@user.avatar.url, class: 'avatar') %>
+  <%= raw(avatar_of @user) %>
   <div class="profile-info">
     <h1><%= @user.name %></h1>
     <h3 class="email"><%= @user.email %></h3>

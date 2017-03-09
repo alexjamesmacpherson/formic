@@ -40,6 +40,8 @@ gem 'fog-aws'
 gem 'mini_magick', '4.6.0'
 # Simple Calendar... does what it says on the tin
 gem 'simple_calendar', '~> 2.0'
+# Chartkick for graphing
+gem 'chartkick'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

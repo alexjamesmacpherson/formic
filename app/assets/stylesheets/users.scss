@@ -182,3 +182,17 @@
   font-family: 'Ubuntu', sans-serif;
   margin:10px;
 }
+
+.avatar {
+  position: relative;
+}
+
+#avatar-chart {
+  position: absolute;
+  width: 100% !important;
+  height: 100% !important;
+
+  &~ .avatar {
+    border: solid 15px transparent;
+  }
+}

@@ -203,11 +203,24 @@ end
 
 puts "\n\nSEEDING ASSIGNMENTS:"
 Subject.all.each do |subject|
-  rand(1..8).times do |a|
-    subject.assignments.create(name: "Assignment #{a.to_i + 1}",
-                               information: Faker::Lorem.paragraph,
-                               due: subject.lessons.sample.start_time + rand(1..3).weeks + 1.minute)
+  rand(1..10).times do |a|
+    assignment = subject.assignments.create(name: "Assignment #{a.to_i + 1}",
+                                            information: Faker::Lorem.paragraph,
+                                            due: subject.lessons.sample.start_time + rand(1..3).weeks + 1.minute)
     print_flush("\e[0;32m.\e[0m")
+
+    if assignment.due < Time.zone.now
+      subject.pupils.each do |pupil|
+        submission = pupil.submissions.create!(assignment: assignment,
+                                               file: File.open(File.join(Rails.root, '/public/images/fallback/default.png')),
+                                               marker: assignment.subject.teachers.first,
+                                               marked: true,
+                                               marked_at: assignment.due,
+                                               feedback: Faker::Lorem.sentence,
+                                               grade: rand(-2..2))
+        print_flush("\e[0;36m.\e[0m")
+      end
+    end
   end
 end
 

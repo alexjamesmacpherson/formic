@@ -4,6 +4,10 @@
 <% provide(:top_tip, 'Back to timetable') %>
 
 <div class="profile-block">
+  <% if current_user.is?(:group, [1,2]) %>
+      <% user = current_user.group == 1 ? current_user : current_user.children.first %>
+      <%= raw(challenge_grades_for user, @subject) %>
+  <% end %>
   <div class="profile-info">
     <h1><%= @subject.name %></h1>
     <h3 class="email"><%= @subject.department.name %></h3>
@@ -20,6 +24,26 @@
 
 <div class="profile-container">
   <div class="profile-left">
+    <% if current_user.is?(:group, [1,2]) %>
+        <%
+          user = current_user.group == 1 ? current_user : current_user.children.first
+          submissions = []
+          @subject.assignments.each do |a|
+            submissions += a.submissions.where(pupil_id: user.id) if a.submissions.where(pupil_id: user.id)
+          end
+        %>
+        <%= line_chart submissions.pluck(:marked_at, :grade), width: '65vw', height: '500px', min: -2, max: 2, curve: false, label: "Challenge Grade: #{@subject.studies.where(pupil_id: user.id).first.challenge_grade}", xtitle: 'Time', ytitle: 'Challenge Grade Attainment' %>
+    <% else %>
+        <%
+          submissions = []
+          @subject.assignments.each do |a|
+            a.submissions.each do |s|
+              submissions << s
+            end
+          end
+        %>
+        <%= line_chart submissions.pluck(:marked_at, :grade), width: '65vw', height: '500px', min: -2, max: 2, discrete: true, curve: false, xtitle: 'Time', ytitle: 'Challenge Grade Attainment' %>
+    <% end %>
   </div>
   <% if @relations && @relations.length > 0 %>
       <div class="profile-right <%= 'assignments-list' if @relation_name != 'Students' %>">

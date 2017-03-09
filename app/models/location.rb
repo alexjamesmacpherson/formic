@@ -7,7 +7,8 @@ class Location < ApplicationRecord
 
   # Record validation
   validates :school,
-            presence: true
+            presence: true,
+            uniqueness: { scope: :name }
   validates :name,
             presence: true,
             length: { maximum: 255 }

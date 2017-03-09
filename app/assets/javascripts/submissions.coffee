@@ -7,6 +7,6 @@ ready = ->
 
   $('.edit_submission').submit ->
     $(this).parent().siblings('.submission-status').html('check_box')
-    console.log($(this).parent())
+    $(this).parent().toggleClass('no-show')
 
 $(document).on 'turbolinks:load', ready
