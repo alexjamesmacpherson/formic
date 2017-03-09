@@ -16,11 +16,7 @@ class Submission < ApplicationRecord
   validates :pupil,
             presence: true
   validates :file,
-            presence: true,
-            if: :submitted?
-  validates :submitted_at,
-            presence: true,
-            if: :submitted?
+            presence: true
   validates :marker, :marked_at,
             presence: true,
             if: :marked?
@@ -33,10 +29,6 @@ class Submission < ApplicationRecord
             inclusion: -2..2,
             if: :marked?
   validate :users_correct_if_real?
-
-  def submitted?
-    submitted
-  end
 
   def marked?
     marked

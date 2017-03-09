@@ -5,7 +5,7 @@ class SubmissionGradedTest < ActiveSupport::TestCase
     @assignment = assignments(:test_assignment)
     @pupil = users(:test_user)
     @teacher = users(:test_teacher)
-    @submission = Submission.new(assignment: @assignment, pupil: @pupil, file: File.open(file_fixture('logo-v.jpg')), submitted: true, submitted_at: Time.zone.now, marker: @teacher, marked: true, marked_at: Time.zone.now, feedback: 'This is some test feedback.', grade: 2)
+    @submission = Submission.new(assignment: @assignment, pupil: @pupil, file: File.open(file_fixture('logo-v.jpg')), marker: @teacher, marked: true, marked_at: Time.zone.now, feedback: 'This is some test feedback.', grade: 2)
   end
 
   test 'submission is valid and can be saved' do

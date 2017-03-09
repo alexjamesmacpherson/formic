@@ -11,16 +11,11 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test 'grade can be determined by score' do
-    assert_equal 'A*', score_to_grade(100)
-    assert_equal 'A*', score_to_grade(95)
-    assert_equal 'A', score_to_grade(85)
-    assert_equal 'B', score_to_grade(75)
-    assert_equal 'C', score_to_grade(65)
-    assert_equal 'D', score_to_grade(55)
-    assert_equal 'E', score_to_grade(45)
-    assert_equal 'F', score_to_grade(35)
-    assert_equal 'U', score_to_grade(20)
-    assert_equal 'X', score_to_grade(5)
+    assert_equal 'Platinum', score_to_grade(2)
+    assert_equal 'Gold', score_to_grade(1)
+    assert_equal 'Green', score_to_grade(0)
+    assert_equal 'Yellow', score_to_grade(-1)
+    assert_equal 'Red', score_to_grade(-2)
   end
 
   test 'notification can be pushed to given user and is correct' do

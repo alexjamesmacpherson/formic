@@ -4,8 +4,6 @@ class CreateSubmissions < ActiveRecord::Migration[5.0]
       t.references :assignment, foreign_key: true
       t.references :pupil
       t.string :file
-      t.boolean :submitted, default: false
-      t.datetime :submitted_at
       t.references :marker
       t.boolean :marked, default: false
       t.datetime :marked_at

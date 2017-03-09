@@ -10,15 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307015118) do
+ActiveRecord::Schema.define(version: 20170309005707) do
 
   create_table "assignments", force: :cascade do |t|
     t.integer  "subject_id"
     t.string   "name"
     t.text     "information"
     t.datetime "due"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "submit_online", default: true
     t.index ["subject_id"], name: "index_assignments_on_subject_id"
   end
 
@@ -146,8 +147,6 @@ ActiveRecord::Schema.define(version: 20170307015118) do
     t.integer  "assignment_id"
     t.integer  "pupil_id"
     t.string   "file"
-    t.boolean  "submitted",     default: false
-    t.datetime "submitted_at"
     t.integer  "marker_id"
     t.boolean  "marked",        default: false
     t.datetime "marked_at"
@@ -155,6 +154,7 @@ ActiveRecord::Schema.define(version: 20170307015118) do
     t.integer  "grade"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.boolean  "resubmit",      default: false
     t.index ["assignment_id", "pupil_id"], name: "index_submissions_on_assignment_id_and_pupil_id", unique: true
     t.index ["assignment_id"], name: "index_submissions_on_assignment_id"
     t.index ["marker_id"], name: "index_submissions_on_marker_id"

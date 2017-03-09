@@ -6,7 +6,9 @@
 <div class="profile-block">
   <div class="profile-info">
     <h1><%= @assignment.name %></h1>
-    <h3 class="email"><%= "#{@assignment.due.strftime('%d/%m/%y')} (due in #{time_ago_in_words(@assignment.due)})" %></h3>
+    <h3 class="email"><%= "#{@assignment.due.strftime('%d/%m/%y')}
+                          (#{'due in ' if @assignment.due > Time.zone.now}#{time_ago_in_words(@assignment.due)}
+                          #{' ago' if @assignment.due <= Time.zone.now})" %></h3>
     <h3 class="school">
       <%= link_to @assignment.subject.teachers.first.name, @assignment.subject.teachers.first if @assignment.subject.teachers.first %>
       &nbsp;-&nbsp;&nbsp;<%= link_to @assignment.subject.name, @assignment.subject %>
@@ -14,3 +16,96 @@
     <h2><%= @assignment.information %></h2>
   </div>
 </div>
+
+<% if current_user.is?(:group, 1) %>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <% if @submission %>
+            <% if @submission.marked? %>
+                <h1>Challenge Grade Attainment Level:</h1>
+                <h2><%= score_to_grade(@submission.grade) %></h2>
+                <% unless @submission.marked.blank? %>
+                    <h1>Feedback:</h1>
+                    <h2><%= @submission.feedback %></h2>
+                <% end %>
+                <h3>Marked by <%= "#{@submission.marker.name}, #{@submission.created_at.strftime('%d/%m/%y at %H:%M')}" %></h3>
+            <% else %>
+                <h1>Resubmit Homework</h1>
+                <h3><b>You've already submitted this homework - <%= link_to 'click here', @submission.file.url, target: '_blank' %> to view your submission.</b></h3>
+                <h3>You may submit to this homework multiple times up to the deadline (<b><%= @assignment.due.strftime('%d/%m/%y') %></b>). Only the most recent submission will be marked.</h3>
+                <h3>Please note, you can only submit once after the deadline.</h3>
+                <%= form_for(@submission, url: resubmit_path) do |f| %>
+                    <%= f.hidden_field :id, value: @submission.id %>
+                    <%= f.file_field :file, class: 'file-upload' %>
+                    <p style="color:#999999;">Please submit your homework as a single file or .zip folder</p>
+                    <%= f.submit 'Submit', class: 'btn formic-button' %>
+                <% end %>
+            <% end %>
+        <% else %>
+            <h1>Submit Homework</h1>
+            <h3>You may submit to this homework multiple times up to the deadline (<b><%= @assignment.due.strftime('%d/%m/%y') %></b>). Only the most recent submission will be marked.</h3>
+            <h3>Please note, you can only submit once after the deadline.</h3>
+            <%= form_for(current_user.submissions.new, url: submit_path) do |f| %>
+                <%= f.hidden_field :assignment_id, value: @assignment.id %>
+                <%= f.file_field :file, class: 'file-upload' %>
+                <p style="color:#999999;">Please submit your homework as a single file or .zip folder</p>
+                <%= f.submit 'Submit', class: 'btn formic-button' %>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+<% elsif current_user.is?(:group, 2) %>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h1>Homework Submission</h1>
+        <% current_user.children.each do |child| %>
+            <% if child.studies.where(id: @assignment.subject.id).first %>
+                <% submission = child.submissions.where(assignment_id: @assignment.id).first %>
+                <% if submission %>
+                    <h3><%= child.name %> has submitted this homework - <%= link_to 'click here', submission.file.url, target: '_blank' %> to view their submission.</h3>
+                <% else %>
+                    <h3><%= child.name %> has not yet submitted this homework.</h3>
+                <% end %>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+<% else %>
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <h1>Student Submissions&nbsp;&nbsp;-&nbsp;&nbsp;(<b><%= "#{@assignment.submissions.count}/#{@assignment.subject.pupils.count}" %></b>)</h1>
+        <ul class="record-list submissions">
+        <% @class.each do |pupil| %>
+              <% submission = pupil.submissions.where(assignment_id: @assignment.id).first %>
+              <li>
+                <div class="list-record <%= 'submitted' if submission %>" style="position:relative;">
+                  <i class="material-icons submission-status"><%= submission ? (submission.marked? ? 'check_box' : 'indeterminate_check_box') : 'check_box_outline_blank' %></i>
+                  <div class="submission-name">
+                    <%= link_to pupil.name, pupil %><span class="challenge-grade">&nbsp;&nbsp;-&nbsp;&nbsp;Challenge Grade: <b><%= Study.find_by(pupil_id: pupil.id, subject_id: @assignment.subject.id).challenge_grade %></b></span>
+                  </div>
+                  <% if submission %>
+                      <p>Submitted <%= submission.created_at.strftime('%d/%m/%y at %H:%M') %>&nbsp;&nbsp;-&nbsp;&nbsp;<%= link_to 'click here', submission.file.url, target: '_blank' %> to view submission</p>
+                      <div class="submission-form no-show">
+                        <% if submission.marked? %>
+                            <h3><b>This submission has already been marked, but can be remarked below</b></h3>
+                        <% end %>
+                        <h3>Assign challenge grade attainment level and leave <%= submission.pupil.name %> some feedback</h3>
+                        <%= form_for(submission, url: mark_path) do |f| %>
+                            <%= f.hidden_field :id, value: submission.id %>
+                            <%= f.select :grade, options_for_select([['Platinum', 2], ['Gold', 1], ['Green', 0], ['Yellow', -1], ['Red', -2]], selected: submission.grade || 0), {}, class: 'formic-form' %>
+                            <%= f.text_field :feedback, class: 'formic-form', placeholder: 'Submission feedback' %>
+                            <%= f.submit 'Mark Homework', class: 'btn formic-button' %>
+                        <% end %>
+                      </div>
+                      <i class="material-icons left-arrow">keyboard_arrow_left</i>
+                      <i class="material-icons down-arrow">keyboard_arrow_down</i>
+                  <% else %>
+                      <p>Awaiting submission...</p>
+                  <% end %>
+                </div>
+              </li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+<% end %>

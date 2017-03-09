@@ -30,7 +30,7 @@ class UsersController < ApplicationController
       redirect_to users_url
       return
     end
-    @relations = @user.parents + @user.children
+    @relations = @user.parents + @user.children + @user.tutees
     @relations.sort! { |a, b| a.name <=> b.name }
 
     @lessons = []
@@ -149,8 +149,8 @@ private
       @assignments = @assignments + subject.assignments.where('due > ?', DateTime.now)
     end
     @assignments.sort!{ |a, b| a.due <=> b.due }
-    if @assignments.length > 10
-      @assignments = @assignments[0..9]
+    if @assignments.length > 7
+      @assignments = @assignments[0..6]
     end
   end
 end

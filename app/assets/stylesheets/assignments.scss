@@ -74,3 +74,18 @@
   cursor: pointer;
   height: 65px;
 }
+
+.assignment-submitted {
+  float: right;
+  transform: translate3d(22px, 6px, 0);
+}
+
+.assignment-count {
+  float: right;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.assignments-list .assignment-submitted {
+  transform: translate3d(6px, 6px, 0)
+}

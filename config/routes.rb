@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   post    '/remove'   =>  'notifications#destroy'
   post    '/read'     =>  'chats#readall'
   post    '/send'     =>  'chats#send_message'
+  post    '/submit'   =>  'submissions#create'
+  patch   '/resubmit' =>  'submissions#edit'
+  patch   '/mark'     =>  'submissions#mark'
 
   # Schools added/deleted programmatically rather than through system - hence can only be performed by system admin.
   resources :schools, only: [:show, :edit, :update]

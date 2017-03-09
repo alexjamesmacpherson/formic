@@ -1,0 +1,77 @@
+.submissions {
+  .list-record {
+    padding:10px 20px;
+    transition: .25s ease-in-out;
+
+    &:hover {
+      padding: 10px 25px;
+    }
+
+    &.submitted, &.submitted * {
+      cursor: pointer;
+    }
+  }
+
+  .submission-status {
+    float: left;
+    font-size: 48px;
+    transform: translateX(-12px);
+    cursor: default;
+  }
+
+  .submission-name {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  p, .challenge-grade {
+    margin: 0;
+    color: #777777;
+    cursor: default;
+  }
+
+  .challenge-grade {
+    font-weight: normal;
+  }
+}
+
+.submission-form {
+  padding: 0 80px;
+  margin-top: 10px;
+  border-top: solid 1px #dddddd;
+  cursor: initial !important;
+
+  * {
+    cursor: initial !important;
+  }
+
+  h3 {
+    margin: 10px 0;
+    cursor: default;
+  }
+
+  &~i.left-arrow, &~i.down-arrow {
+    color: #777777;
+    position: absolute;
+    transform: translate3d(-6px, 10px, 0);
+    top: 0;
+    right: 0;
+    font-size: 48px;
+  }
+
+  &~i.left-arrow {
+    display: none;
+  }
+
+  &.no-show {
+    display: none;
+
+    ~ i.down-arrow {
+      display: none;
+    }
+
+    ~ i.left-arrow {
+      display: block;
+    }
+  }
+}

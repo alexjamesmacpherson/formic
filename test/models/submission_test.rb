@@ -4,7 +4,7 @@ class SubmissionTest < ActiveSupport::TestCase
   def setup
     @assignment = assignments(:test_assignment)
     @pupil = users(:test_user)
-    @submission = Submission.new(assignment: @assignment, pupil: @pupil)
+    @submission = Submission.new(assignment: @assignment, pupil: @pupil, file: File.open(file_fixture('logo-v.jpg')))
   end
 
   test 'submission is valid and can be saved' do
@@ -49,5 +49,15 @@ class SubmissionTest < ActiveSupport::TestCase
     @pupil.update_attribute(:group, 3)
     assert_not @submission.valid?
     assert_not @submission.save
+  end
+
+  test 'submitted file cannot be nil' do
+    @submission.file = nil
+    assert_not @submission.valid?
+    assert_not @submission.save
+  end
+
+  test 'uploaded file is correct file' do
+    assert_equal 'logo-v.jpg', @submission.file.filename
   end
 end

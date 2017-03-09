@@ -14,16 +14,16 @@ module ApplicationHelper
   end
 
   def score_to_grade(score)
-    if score == 100
-      'A*'
-    elsif score < 10
-      'X'
-    elsif score < 30
-      'U'
+    if score >= 1.5
+      'Platinum'
+    elsif score >= 0.5
+      'Gold'
+    elsif score >= -0.5
+      'Green'
+    elsif score >= -1.5
+      'Yellow'
     else
-      grades = ['F', 'E', 'D', 'C', 'B' ,'A' ,'A*']
-      ix = (score / 10).floor - 3
-      grades[ix]
+      'Red'
     end
   end
 

@@ -21,7 +21,7 @@
         <h3 class="relation-title">Tutor:</h3>
         <h3 class="relation-name"><%= link_to @user.tutor.name, @user.tutor %></h3>
     <% end %>
-    <% if @relations.length > 0 %>
+    <% if @relations.length > 0 && @user.is?(:group, [1,2]) %>
         <h3 class="relation-title"><%= @user.parents.length > 0 ? 'Parents:' : 'Children:' %></h3>
         <h3 class="relation-name">
           <% @relations.each do |relation| %>
@@ -50,22 +50,33 @@
     </div>
   </div>
   <div class="profile-right">
-    <h3 class="record-header">Upcoming Homework:</h3>
-    <ul class="record-list assignments-list">
-      <% if @assignments.length > 0 %>
-          <% @assignments.each do |assignment| %>
-              <%= render assignment %>
+    <% if @user.is?(:group, 3) %>
+        <h3 class="record-header">Tutees:</h3>
+        <ul class="record-list">
+          <% if @relations.length > 0 %>
+              <% @relations.each do |relation| %>
+                  <%= render relation %>
+              <% end %>
           <% end %>
-      <% else %>
+        </ul>
+    <% else %>
+        <h3 class="record-header">Upcoming Homework:</h3>
+        <ul class="record-list assignments-list">
+          <% if @assignments.length > 0 %>
+              <% @assignments.each do |assignment| %>
+                  <%= render assignment %>
+              <% end %>
+          <% else %>
+              <li>
+                <div class="list-record no-record">
+                  No upcoming homework to display.
+                </div>
+              </li>
+          <% end %>
           <li>
-            <div class="list-record no-record">
-              No upcoming homework to display.
-            </div>
+            <%= link_to 'View all homework', assignments_path, class: 'list-record list-end' %>
           </li>
-      <% end %>
-      <li>
-        <%= link_to 'View all homework', assignments_path, class: 'list-record list-end' %>
-      </li>
-    </ul>
+        </ul>
+    <% end %>
   </div>
 </div>

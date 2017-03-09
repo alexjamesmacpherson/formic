@@ -51,14 +51,6 @@
   background: $mid;
   box-shadow: #000000 -8px 0 15px -15px;
   flex: 1 1;
-
-  ul {
-    max-height: 427px;
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    @include scroll_bar;
-  }
 }
 
 .profile-block {

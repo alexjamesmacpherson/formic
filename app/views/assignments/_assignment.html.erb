@@ -1,7 +1,19 @@
 <li>
-  <%= link_to raw("<div class=\"list-item\">
-            #{assignment.name}&nbsp;&nbsp;-&nbsp;&nbsp;<span class=\"list-subitem\">#{assignment.subject.name}
-            <div class=\"list-subitem\">#{assignment.due.strftime('%d/%m/%y')}
-            (#{'due in ' if assignment.due > Time.zone.now}#{time_ago_in_words(assignment.due)}#{' ago' if assignment.due <= Time.zone.now})</div></div>
-          </span>"), assignment, class: 'list-record' %>
+  <% case current_user.group
+       when 1
+          check = assignment.submissions.where(pupil_id: current_user.id).length > 0
+       when 2
+          current_user.children.each do |child|
+            check ||= assignment.submissions.where(pupil_id: child.id).length > 0
+          end
+      end
+      submitted = "<div class=\"assignment-submitted\"><i class=\"material-icons\">#{check ? 'check_box' : 'check_box_outline_blank'}</i></div>"
+  %>
+  <%= link_to raw("#{current_user.is?(:group, [1,2]) ? submitted :
+                  "<div class=\"assignment-count\">#{assignment.submissions.count}/#{assignment.subject.pupils.count}</div>" }
+                  <div class=\"list-item\">
+                  #{assignment.name}&nbsp;&nbsp;-&nbsp;&nbsp;<span class=\"list-subitem\">#{assignment.subject.name}
+                  <div class=\"list-subitem\">#{assignment.due.strftime('%d/%m/%y')}
+                  (#{'due in ' if assignment.due > Time.zone.now}#{time_ago_in_words(assignment.due)}
+                  #{' ago' if assignment.due <= Time.zone.now})</div></div></span>"), assignment, class: 'list-record' %>
 </li>
