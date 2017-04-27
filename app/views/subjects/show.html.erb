@@ -32,7 +32,91 @@
             submissions += a.submissions.where(pupil_id: user.id) if a.submissions.where(pupil_id: user.id)
           end
         %>
-        <%= line_chart submissions.pluck(:marked_at, :grade), width: '65vw', height: '500px', min: -2, max: 2, curve: false, label: "Challenge Grade: #{@subject.studies.where(pupil_id: user.id).first.challenge_grade}", xtitle: 'Time', ytitle: 'Challenge Grade Attainment' %>
+        <%= line_chart submissions.pluck(:marked_at, :grade), width: '65vw', height: '500px', label: 'Attainment Level', id: 'attainment_graph', library: {
+            chart: {
+                backgroundColor: 'none',
+                borderColor: 'none'
+            },
+            colors: ['#444444'],
+            tooltip: {
+                pointFormat: ''
+            },
+            yAxis: {
+                title: {
+                    text: 'Challenge Grade Attainment Level'
+                },
+                minorGridLineWidth: 0,
+                gridLineWidth: 0,
+                max: 2.5,
+                min: -2.5,
+                endOnTick: false,
+                startOnTick: false,
+                plotLines: [{
+                    value: 0,
+                    width: 2,
+                    color: 'rgba(0,0,0,0.2)'
+                }],
+                plotBands: [{
+                    from: -2.5,
+                    to: -1.5,
+                    color: 'rgba(238,29,35,0.5)',
+                    label: {
+                        text: 'Significant Underattainment',
+                        style: {
+                            fontStyle: 'italic',
+                            opacity: 0.5
+                        }
+                    }
+                }, {
+                    from: -1.5,
+                    to: -0.5,
+                    color: 'rgba(254,198,63,0.5)',
+                    label: {
+                        text: 'Slightly Off Track',
+                        style: {
+                            fontStyle: 'italic',
+                            opacity: 0.5
+                        }
+                    }
+                }, {
+                    from: -0.5,
+                    to: 0.5,
+                    color: 'rgba(139,198,62,0.5)',
+                    label: {
+                        text: 'On Target',
+                        style: {
+                            fontStyle: 'italic',
+                            opacity: 0.5
+                        }
+                    }
+                }, {
+                    from: 0.5,
+                    to: 1.5,
+                    color: 'rgba(195,180,155,0.5)',
+                    label: {
+                        text: 'High Standard',
+                        style: {
+                            fontStyle: 'italic',
+                            opacity: 0.5
+                        }
+                    }
+                },{
+                    from: 1.5,
+                    to: 2.5,
+                    color: 'rgba(209,210,212,0.5)',
+                    label: {
+                        text: 'Very High Standard',
+                        style: {
+                            fontStyle: 'italic',
+                            opacity: 0.5
+                        }
+                    }
+                }],
+                labels: {
+                    enabled: false
+                }
+            }
+        } %>
     <% else %>
         <%
           submissions = []
@@ -42,7 +126,7 @@
             end
           end
         %>
-        <%= line_chart submissions.pluck(:marked_at, :grade), width: '65vw', height: '500px', min: -2, max: 2, discrete: true, curve: false, xtitle: 'Time', ytitle: 'Challenge Grade Attainment' %>
+        <%= bar_chart submissions.pluck(:marked_at, :grade), width: '65vw', height: '500px', min: -2, max: 2, discrete: true, curve: false, xtitle: 'Time', ytitle: 'Challenge Grade Attainment' %>
     <% end %>
   </div>
   <% if @relations && @relations.length > 0 %>

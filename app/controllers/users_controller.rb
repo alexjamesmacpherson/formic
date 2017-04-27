@@ -15,8 +15,9 @@ class UsersController < ApplicationController
 
   def index
     if params.has_key?(:search) && !params[:search].strip.blank?
-      @users = current_user.school.users.where(activated: true).where('LOWER(name) LIKE LOWER(?) OR LOWER(email) LIKE LOWER(?)', "%#{params[:search]}%", "%#{params[:search]}%").order(:name).paginate(page: params[:page], :per_page => 10)
-      @title = "Results For \"#{params[:search]}\""
+      stripped_search = strip_tags(params[:search])
+      @users = current_user.school.users.where(activated: true).where('LOWER(name) LIKE LOWER(?) OR LOWER(email) LIKE LOWER(?)', "%#{stripped_search}%", "%#{stripped_search}%").order(:name).paginate(page: params[:page], :per_page => 10)
+      @title = "Results For \"#{stripped_search}\""
     else
       @users = current_user.school.users.where(activated: true).order(:name).paginate(page: params[:page], :per_page => 10)
       @title = 'All Users'

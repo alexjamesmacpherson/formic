@@ -59,6 +59,21 @@ module ApplicationHelper
     end
   end
 
+  def challenge_grade_colour(score)
+    case score.to_int
+      when 2
+        'Platinum'
+      when 1
+        'Gold'
+      when 0
+        'Green'
+      when -1
+        'Yellow'
+      when -2
+        'Red'
+    end
+  end
+
   def challenge_grades_for(user, subject)
     red = 0
     yellow = 0
@@ -87,7 +102,27 @@ module ApplicationHelper
     end
 
     if count > 0
-      "<div class=\"avatar tip\">#{pie_chart [["Red", red], ["Yellow", yellow], ["Green", green], ["Gold", gold], ["Platinum", platinum]], legend: false, id: 'avatar-chart', colors: ['#ee1d23', '#fec63f', '#8bc63e', '#c3b49b', '#d1d2d4']}<span class=\"tip-text\" style=\"background: rgba(25,25,25,0.95); width: 250px;\">Your challenge grade attainment indicator gives an overview of your performance in #{subject.name}, offering a snapshot as to how well you are progressing in your studies against your assigned challenge grade.</span></div>"
+      "<div class=\"avatar tip\">
+#{pie_chart [["Red", red], ["Yellow", yellow], ["Green", green], ["Gold", gold], ["Platinum", platinum]], legend: false, id: 'avatar-chart', colors: ['#ee1d23', '#fec63f', '#8bc63e', '#c3b49b', '#d1d2d4'], library: {
+          chart: {
+              backgroundColor: 'none',
+              borderColor: 'none',
+              margin: [0,0,0,0],
+              spacingTop: 0,
+              spacingBottom: 0,
+              spacingLeft: 0,
+              spacingRight: 0
+          },
+          plotOptions: {
+              pie: {
+                  size: '100%',
+                  dataLabels: {
+                      enabled: false
+                  }
+              }
+          }
+      }}
+<span class=\"tip-text\" style=\"background: rgba(25,25,25,0.95); width: 250px;\">Your challenge grade attainment indicator gives an overview of your performance in #{subject.name}, offering a snapshot as to how well you are progressing in your studies against your assigned challenge grade.</span></div>"
     end
   end
 
@@ -130,7 +165,25 @@ module ApplicationHelper
       end
 
       if total > 0
-        "<div class=\"avatar tip\">#{pie_chart [["Red", red], ["Yellow", yellow], ["Green", green], ["Gold", gold], ["Platinum", platinum]], donut: true, legend: false, id: 'avatar-chart', colors: ['#ee1d23', '#fec63f', '#8bc63e', '#c3b49b', '#d1d2d4']}#{image_tag(user.avatar.url, class: 'avatar')}<span class=\"tip-text\" style=\"background: rgba(25,25,25,0.95); width: 250px;\">Your challenge grade attainment indicator gives an overview of your performance across all your modules, offering a snapshot as to how well you are progressing in your studies.</span></div>"
+        "<div class=\"avatar tip\">#{pie_chart [["Red", red], ["Yellow", yellow], ["Green", green], ["Gold", gold], ["Platinum", platinum]], donut: true, legend: false, id: 'avatar-chart', colors: ['#ee1d23', '#fec63f', '#8bc63e', '#c3b49b', '#d1d2d4'], library: {
+            chart: {
+                backgroundColor: 'none',
+                borderColor: 'none',
+                margin: [0,0,0,0],
+                spacingTop: 0,
+                spacingBottom: 0,
+                spacingLeft: 0,
+                spacingRight: 0
+            },
+            plotOptions: {
+                pie: {
+                    size: '110%',
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+            }
+        }}#{image_tag(user.avatar.url, class: 'avatar')}<span class=\"tip-text\" style=\"background: rgba(25,25,25,0.95); width: 250px;\">Your challenge grade attainment indicator gives an overview of your performance across all your modules, offering a snapshot as to how well you are progressing in your studies.</span></div>"
       else
         image_tag(user.avatar.url, class: 'avatar')
       end
